@@ -34,4 +34,20 @@ public class View {
             child.paint(pen);
         }
     }
+    
+    public void addChild(View v) {
+        v.offsetPosition(myPosition);
+        myChildren.add(v);
+    }
+    
+    public void removeChild(View v) {
+        Point2D inverseOffset = new Point2D.Double(- myPosition.getX(), - myPosition.getY());
+        v.offsetPosition(inverseOffset);
+        myChildren.remove(v);
+    }
+    
+    public void offsetPosition(Point2D offset) {
+        myPosition = new Point2D.Double(myPosition.getX() + offset.getX(),
+                myPosition.getY() + offset.getY());
+    }
 }

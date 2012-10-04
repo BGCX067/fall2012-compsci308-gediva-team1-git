@@ -12,6 +12,10 @@ public class Menu extends View {
     private String myTitle;
     private Color myTextColor = Color.BLACK;
     
+    // constants
+    private int PADDING_TOP = 10;
+    private int PADDING_LEFT = 10;
+    
     public Menu(Point2D position, Dimension size, String title, Color bgColor, Color textcolor) {
         super(position, size, bgColor);
     }
@@ -25,6 +29,6 @@ public class Menu extends View {
         Font large = new Font("Helvetica", Font.BOLD, 18);
         pen.setColor(myTextColor);
         pen.setFont(large);
-        pen.drawString(myTitle, 0, 0);
+        pen.drawString(myTitle, PADDING_LEFT, PADDING_TOP);
     }
 }
