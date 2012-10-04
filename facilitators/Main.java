@@ -6,8 +6,8 @@ import views.Canvas;
 
 public class Main {
     
-    private static final Dimension SIZE = new Dimension(800, 600);
-    private static final String TITLE = "Gediva";
+    private static final Dimension SIZE = new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
+    private static final String TITLE = "GEDIVA";
     
     public static void main (String[] args) {
         Canvas display = new Canvas(SIZE);
