@@ -14,7 +14,7 @@ public class Main {
     
     public static void main (String[] args) {
         Canvas display = new Canvas(SIZE);
-        Point2D menuPosition = new Point2D.Double(0, 0);
+        Point2D menuPosition = new Point2D.Double(0, 100);
         Dimension menuSize = new Dimension(200, 300);
         
         Menu test = new Menu(menuPosition, menuSize, "Testing this Shit", Color.DARK_GRAY, Color.WHITE);

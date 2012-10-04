@@ -59,14 +59,14 @@ public class View {
     /**
      * @return the myPosition
      */
-    public Point2D getPosition () {
+    public Point2D getPosition() {
         return myPosition;
     }
 
     /**
      * @return the mySize
      */
-    public Dimension getSize () {
+    public Dimension getSize() {
         return mySize;
     }
 
