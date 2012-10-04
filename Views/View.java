@@ -11,6 +11,7 @@ public class View {
     private ArrayList<View> myChildren = new ArrayList<View>();
     private Color myBackgroundColor = Color.WHITE;
     private Point2D myPosition;
+
     private Dimension mySize;
     
     public View(Point2D position, Dimension size, Color bgcolor) {
@@ -39,7 +40,7 @@ public class View {
     }
     
     public void addChild(View v) {
-        //v.offsetPosition(myPosition);
+        v.offsetPosition(myPosition);
         myChildren.add(v);
     }
     
@@ -53,4 +54,20 @@ public class View {
         myPosition = new Point2D.Double(myPosition.getX() + offset.getX(),
                 myPosition.getY() + offset.getY());
     }
+    
+    
+    /**
+     * @return the myPosition
+     */
+    public Point2D getPosition () {
+        return myPosition;
+    }
+
+    /**
+     * @return the mySize
+     */
+    public Dimension getSize () {
+        return mySize;
+    }
+
 }
