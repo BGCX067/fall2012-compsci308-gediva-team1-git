@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import javax.swing.JFrame;
 import views.Canvas;
+import views.Header;
 import views.Menu;
 
 
@@ -17,7 +18,10 @@ public class Main {
         Point2D menuPosition = new Point2D.Double(0, 100);
         Dimension menuSize = new Dimension(200, 300);
         
-        Menu test = new Menu(menuPosition, menuSize, "Testing this Shit", Color.DARK_GRAY, Color.WHITE);
+//        Menu test = new Menu(menuPosition, menuSize, "Testing this Shit", Color.DARK_GRAY, Color.WHITE);
+//        display.addView(test);
+        
+        Header test = new Header(new Point2D.Double(0,0), new Dimension(Constants.CANVAS_WIDTH, 30), "name", "symbol", "price");
         display.addView(test);
 
         // create container that will work with Window manager
