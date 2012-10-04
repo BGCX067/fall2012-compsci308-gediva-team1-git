@@ -9,7 +9,9 @@ public abstract class AbstractModel {
      * initializer expects a Scanner. It calls helper methods to parse the data
      * and store it in the appropriate data structure(s)
      */
-    public abstract boolean initialize (BufferedReader s);
+    public boolean initialize (BufferedReader s) {
+        return false;
+    }
 
     public abstract String getIdentifier ();
 
