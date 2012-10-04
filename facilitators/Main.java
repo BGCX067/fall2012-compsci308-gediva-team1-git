@@ -1,3 +1,4 @@
+package facilitators;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import views.Canvas;
