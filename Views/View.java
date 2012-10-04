@@ -2,9 +2,36 @@ package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class View {
-    public View(Dimension size, Color bgcolor) {
-        
+    
+    private ArrayList<View> myChildren;
+    private Color myBackgroundColor = Color.WHITE;
+    private Point2D myPosition;
+    private Dimension mySize;
+    
+    public View(Point2D position, Dimension size, Color bgcolor) {
+        myPosition = position;
+        mySize = size;
+        myBackgroundColor = bgcolor;
+    }
+    
+    // if no bgcolor is provided, white is assumed
+    public View(Point2D position, Dimension size) {
+        myPosition = position;
+        mySize = size;
+    }
+    
+    public void paint(Graphics2D pen) {
+        pen.fillRect((int) myPosition.getX(), (int) myPosition.getY(),
+                (int) mySize.getWidth(), (int) mySize.getHeight());
+        for (View child : myChildren) {
+            child.paint(pen);
+        }
     }
 }
