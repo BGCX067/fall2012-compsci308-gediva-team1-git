@@ -1,11 +1,7 @@
 package model;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import databases.DataTable;
-import databases.RowElement;
 import databases.StockTable;
 
 
@@ -26,7 +22,7 @@ public class Stock extends AbstractModel {
             myDataTable.setColumnNames(s.readLine());
             String currentline="";
             while((currentline=s.readLine()) != null){
-                myDataTable.newRow(s);
+                myDataTable.newRow(currentline);
             }
   
             return true;

@@ -16,10 +16,7 @@ public class RowElement implements Comparable<RowElement> {
         return myData.get(myPrimaryIndex);
     }
     
-    public void addData (String rdata) {
-        // TODO Auto-generated method stub
-        myData.add(new Double(rdata));        
-    }
+    public abstract void addData (String rdata);
 
     @Override
     public int compareTo (RowElement r) {
