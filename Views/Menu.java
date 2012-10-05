@@ -3,7 +3,6 @@ package views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
@@ -13,11 +12,13 @@ public class Menu extends View {
     private Color myTextColor = Color.BLACK;
     
     // constants
-    private int PADDING_TOP = 10;
+    private int PADDING_TOP = 25;
     private int PADDING_LEFT = 10;
     
-    public Menu(Point2D position, Dimension size, String title, Color bgColor, Color textcolor) {
+    public Menu(Point2D position, Dimension size, String title, Color bgColor, Color textColor) {
         super(position, size, bgColor);
+        myTitle = title;
+        myTextColor = textColor;
     }
     
     // if no text color is specified, black is assumed
@@ -25,10 +26,14 @@ public class Menu extends View {
         super(position, size);
     }
     
+    @Override
     public void paint(Graphics2D pen) {
+        super.paintBackground(pen);
         Font large = new Font("Helvetica", Font.BOLD, 18);
         pen.setColor(myTextColor);
         pen.setFont(large);
-        pen.drawString(myTitle, PADDING_LEFT, PADDING_TOP);
+        pen.drawString(myTitle,
+                (int) getPosition().getX() + PADDING_LEFT,
+                (int) getPosition().getY() + PADDING_TOP);
     }
 }

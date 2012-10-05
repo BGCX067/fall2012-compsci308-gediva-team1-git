@@ -3,16 +3,15 @@ package views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class View {
     
-    private ArrayList<View> myChildren;
+    private ArrayList<View> myChildren = new ArrayList<View>();
     private Color myBackgroundColor = Color.WHITE;
     private Point2D myPosition;
+
     private Dimension mySize;
     
     public View(Point2D position, Dimension size, Color bgcolor) {
@@ -28,11 +27,16 @@ public class View {
     }
     
     public void paint(Graphics2D pen) {
-        pen.fillRect((int) myPosition.getX(), (int) myPosition.getY(),
-                (int) mySize.getWidth(), (int) mySize.getHeight());
+        paintBackground(pen);
         for (View child : myChildren) {
             child.paint(pen);
         }
+    }
+    
+    protected void paintBackground(Graphics2D pen) {
+        pen.setColor(myBackgroundColor);
+        pen.fillRect((int) myPosition.getX(), (int) myPosition.getY(),
+                (int) mySize.getWidth(), (int) mySize.getHeight());
     }
     
     public void addChild(View v) {
@@ -50,4 +54,20 @@ public class View {
         myPosition = new Point2D.Double(myPosition.getX() + offset.getX(),
                 myPosition.getY() + offset.getY());
     }
+    
+    
+    /**
+     * @return the myPosition
+     */
+    public Point2D getPosition() {
+        return myPosition;
+    }
+
+    /**
+     * @return the mySize
+     */
+    public Dimension getSize() {
+        return mySize;
+    }
+
 }
