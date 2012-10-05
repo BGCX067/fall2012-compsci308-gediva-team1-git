@@ -1,8 +1,11 @@
 package parsers;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import javax.imageio.IIOException;
 
 /**
  * 
@@ -15,12 +18,32 @@ public abstract class GenericParser {
         }
         
         public BufferedReader generateReader(String name){
-            
+            try{
+                return new BufferedReader(getReader(name));
+            }
+            catch(FileNotFoundException e){
+                System.err.println("File not found exception: "+ e.getMessage());  
+                e.printStackTrace();
+                throw new FileNotFoundException("FileNotFoundException:Make sure the file is accessible");
+
+            }
+            catch (IOException e) {
+                // TODO Auto-generated catch block
+                System.err.println("Caught IOException: "+ e.getMessage());
+                e.printStackTrace();
+                throw new IOException("IOException");
+            }
+            finally{
+             //reopen window?
+            }
         }
         
-        public BufferedReader isSupported(String name){
-            
-        }
+        /**
+         * 
+         * @param name
+         */
+        protected abstract Reader getReader (String name) throws IOException;
+
         
 
 }
