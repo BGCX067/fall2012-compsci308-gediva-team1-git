@@ -13,7 +13,7 @@ public class Main {
     private static final Dimension SIZE = new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
     private static final String TITLE = "GEDIVA";
     
-    public static void main (String[] args) {
+    public static void main (String[] args) { 
         Canvas display = new Canvas(SIZE);
         Point2D menuPosition = new Point2D.Double(0, 100);
         Dimension menuSize = new Dimension(200, 300);

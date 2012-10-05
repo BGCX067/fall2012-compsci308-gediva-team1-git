@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
+import databases.DataTable;
 import parsers.FileParser;
 import parsers.GenericParser;
 import parsers.WebParser;
@@ -16,8 +17,7 @@ import parsers.WebParser;
 
 public abstract class AbstractModel {
     
-
-    
+    protected DataTable myDataTable;
     private Map <String, GenericParser> myParsers = new HashMap<String,GenericParser>();
     
     public AbstractModel(){
@@ -57,7 +57,7 @@ public abstract class AbstractModel {
         //based on the specific input format, call a different 
         try{
             BufferedReader rawdata= generateReader(name); 
-            //parse that data
+            load(rawdata);
             return true;
         }
         catch(Exception e){
@@ -69,8 +69,6 @@ public abstract class AbstractModel {
 
     public boolean initialize(File file){
         return initialize(file.getPath());
-    //    FileParser fparser=(FileParser)myParsers.get("FileParser");
-    //    BufferedReader rawdata=new BufferedReader(fparser.getReader(file));
     }
     
     
@@ -82,7 +80,7 @@ public abstract class AbstractModel {
      * outside of init in case you wanted to reload the data or load different
      * data.
      */
-    public abstract boolean reload (BufferedReader s);
+    public abstract boolean load (BufferedReader s);
 
     /**
      * receives a Request object. The request contains the request it should

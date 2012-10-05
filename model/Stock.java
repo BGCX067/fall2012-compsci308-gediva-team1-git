@@ -1,24 +1,41 @@
 package model;
 
+import java.awt.List;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import databases.DataTable;
+import databases.RowElement;
+import databases.StockTable;
 
 
 public class Stock extends AbstractModel {
-
-    /**
-     * the constructor expects a Scanner. It just passes it to
-     * super.initialize()
-     */
-    public Stock (BufferedReader s) {
-        super.initialize(s); // TODO: handle false;
+    
+    public Stock(){
+        myDataTable=new StockTable();
     }
-
+    
+    
     /**
      * parses the data and performs some stock specific parsing, like extracting
      * the name and ticker symbol.
      */
-    public boolean reload (BufferedReader s) {
-        return false;
+    @Override
+    public boolean load (BufferedReader s) {
+        try {
+            myDataTable.setColumnNames(s.readLine());
+            String currentline="";
+            while((currentline=s.readLine()) != null){
+                myDataTable.newRow(s);
+            }
+  
+            return true;
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -37,12 +54,17 @@ public class Stock extends AbstractModel {
 
     }
 
-    /**
-     * all requests go in through the process command
-     * The process method calls on a helper method based on the RequestType
-     */
-    public DataSet process (RequestType r) {
 
+    @Override
+    public String getIdentifier () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DataSet process (int r) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -21,7 +21,7 @@ public class WebParser extends GenericParser{
     }
 
     @Override
-    protected Boolean isSupported (String name) {
+    public Boolean isSupported (String name) {
         return name.startsWith(HYPERTEXT_PROTOCOL);
     }
     

@@ -1,38 +1,70 @@
 package databases;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+
 public abstract class DataTable {
+    
+    private ArrayList<String> myColumnNames;
+    private ArrayList<RowElement> myDataRows;
+    
+    
     public DataTable(){
-        
+        myColumnNames=new ArrayList<String>();
+        myDataRows=new ArrayList<RowElement>();        
     }
     
+    public void setColumnNames(String s){
+        String[] sArray=s.split(",");
+        for(String cname:sArray){
+            myColumnNames.add(cname);
+        }
+    }
     
+    public void newRow(String s){
+        RowElement row=new RowElement();
+        myDataRows.add(row);
+        String[] sarray=s.split(",");
+        for(String rdata:sarray){
+            row.addData(rdata);
+        }
+    }
     /**
      * Setting a column as the primary key 
      * @param colname
      * @return
      */
-    public String setPrimaryKey(String colname){
-        
+    public void setPrimaryKey(String colname){
+        int primaryindex=myColumnNames.indexOf(colname);
+        for (RowElement row:myDataRows){
+            row.setPrimaryIndex(primaryindex);
+        }
     }
     
-    public boolean sortbyColumn(String colname){
-        
+    public void sortbyColumn(String colname){
+        setPrimaryKey(colname);
+        Collections.sort(myDataRows);
     }
     
-    public boolean sortbyColumn(String colname, Comparator<T> comp){
-        
+    
+    public void addColumn(String colname){
+        myColumnNames.add(colname);
+
     }
     
-    public boolean addColumn(String colname){
-        
+    public void setColumnValues(String colname, Iterator<String> it){
+        for(RowElement row:myDataRows){
+            row.addData(it.next());
+        }
     }
     
-    public boolean clear(){
-        
+    public void clear(){
+        myDataRows.clear();
     }
     
-    public boolean reverse(){
-        
+    public void reverse(){
+        Collections.reverse(myDataRows);
     }
     
 }
