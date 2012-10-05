@@ -1,18 +1,80 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.List;
+import parsers.FileParser;
+import parsers.GenericParser;
+import parsers.WebParser;
+
 
 
 public abstract class AbstractModel {
+    
 
+    
+    private Map <String, GenericParser> myParsers = new HashMap<String,GenericParser>();
+    
+    public AbstractModel(){
+        myParsers.put("FileParser",new FileParser());
+        myParsers.put("WebParser", new WebParser());
+    }
+    
+    /**
+     * Returns an unmodifiable list of supported parsers
+     * @return
+     */
+    public List<String> supportedParsers(){
+        return Collections.unmodifiableList(new ArrayList<String>(myParsers.keySet()));
+    }
+    
+
+    protected BufferedReader generateReader (String name) throws IOException {
+        try{
+            for (GenericParser g : myParsers.values()) {
+                if (g.isSupported(name)) {
+                    return g.generateReader(name);
+                }
+            }
+            return null;
+        }
+        catch(IOException e){
+            throw new IOException("Cannot handle source");
+        }
+    }
+    
+    
     /**
      * initializer expects a Scanner. It calls helper methods to parse the data
      * and store it in the appropriate data structure(s)
      */
-    public boolean initialize (BufferedReader s) {
-        return false;
+    public boolean initialize (String name) {
+        //based on the specific input format, call a different 
+        try{
+            BufferedReader rawdata= generateReader(name); 
+            //parse that data
+            return true;
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            return false;            
+        }
+
     }
 
+    public boolean initialize(File file){
+        return initialize(file.getPath());
+    //    FileParser fparser=(FileParser)myParsers.get("FileParser");
+    //    BufferedReader rawdata=new BufferedReader(fparser.getReader(file));
+    }
+    
+    
+    
     public abstract String getIdentifier ();
 
     /**

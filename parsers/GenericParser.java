@@ -17,15 +17,14 @@ public abstract class GenericParser {
         public GenericParser(){
         }
         
-        public BufferedReader generateReader(String name){
+        public BufferedReader generateReader(String name) throws FileNotFoundException,IOException{
             try{
                 return new BufferedReader(getReader(name));
             }
             catch(FileNotFoundException e){
                 System.err.println("File not found exception: "+ e.getMessage());  
                 e.printStackTrace();
-                throw new FileNotFoundException("FileNotFoundException:Make sure the file is accessible");
-
+                throw new FileNotFoundException("FileNotFoundException: Make sure the file is accessible");
             }
             catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -43,6 +42,8 @@ public abstract class GenericParser {
          * @param name
          */
         protected abstract Reader getReader (String name) throws IOException;
+        
+        public abstract Boolean isSupported(String name);
 
         
 
