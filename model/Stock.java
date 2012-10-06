@@ -2,12 +2,17 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import databases.StockTable;
 
 
 public class Stock extends AbstractModel {
     
+    private Map<String,String> stockInfo;
+    
     public Stock(){
+        stockInfo= new HashMap<String,String>();
         myDataTable=new StockTable();
     }
     
@@ -46,7 +51,7 @@ public class Stock extends AbstractModel {
     /**
      * returns basic info about the stock– name, ticker symbol, etc
      */
-    public DataSet getInfo () {
+    public DataSet getStockInfo () {
 
     }
 

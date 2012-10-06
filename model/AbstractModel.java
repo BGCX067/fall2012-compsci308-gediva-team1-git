@@ -17,7 +17,7 @@ import parsers.WebParser;
 
 public abstract class AbstractModel {
     
-    protected DataTable myDataTable;
+    protected DataTable<?> myDataTable;
     private Map <String, GenericParser> myParsers = new HashMap<String,GenericParser>();
     
     public AbstractModel(){

@@ -2,7 +2,7 @@ package databases;
 
 import java.util.ArrayList;
 
-public class StockTable extends DataTable{
+public class StockTable extends DataTable <Double>{
     
     private ArrayList<StockRowElement> myDataRows;
     
