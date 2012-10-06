@@ -2,7 +2,7 @@ package databases;
 
 import java.util.ArrayList;
 
-public abstract class RowElement <T> implements Comparable<Object> {
+public abstract class RowElement <T> implements Comparable<RowElement <T>> {
     
     protected int myPrimaryIndex=0;
     protected ArrayList<T> myData;
@@ -17,6 +17,6 @@ public abstract class RowElement <T> implements Comparable<Object> {
     public abstract void addData (String rdata);
 
     @Override
-    public abstract int compareTo (Object r);
+    public abstract int compareTo (RowElement<T> r);
     
 }

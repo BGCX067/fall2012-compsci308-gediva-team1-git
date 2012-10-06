@@ -2,14 +2,14 @@ package databases;
 
 import java.util.ArrayList;
 
-public class StockRowElement extends RowElement {
+public class StockRowElement extends RowElement<Double> {
+    ArrayList<Double> myData;
     
     public StockRowElement(){
-        myData=new ArrayList<Double>();
+        myData=(ArrayList<Double>) new ArrayList<Double>();
     }
     
     public void addData (String rdata) {
-        // TODO Auto-generated method stub
         myData.add(new Double(rdata));        
     }
     
@@ -19,8 +19,9 @@ public class StockRowElement extends RowElement {
     }
 
     @Override
-    public int compareTo (Object r) {
-        return ((Double) myData.get(myPrimaryIndex)).compareTo(((StockRowElement) r).getPrimaryValue());
+    public int compareTo (RowElement<Double> r) {
+        return myData.get(myPrimaryIndex).compareTo(((StockRowElement) r).getPrimaryValue());
     }
+
     
 }

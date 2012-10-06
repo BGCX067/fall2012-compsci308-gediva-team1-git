@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public abstract class DataTable {
+public abstract class DataTable <T> {
     
     private ArrayList<String> myColumnNames;
-    private ArrayList<RowElement> myDataRows;
+    private ArrayList<RowElement<T>> myDataRows;
     
     
     public DataTable(){
         myColumnNames=new ArrayList<String>();
-        myDataRows=new ArrayList<RowElement>();        
+        myDataRows=new ArrayList<RowElement<T>>();        
     }
     
     public void setColumnNames(String s){
@@ -22,14 +22,8 @@ public abstract class DataTable {
         }
     }
     
-    public void newRow(String s){
-        RowElement row=new RowElement();
-        myDataRows.add(row);
-        String[] sarray=s.split(",");
-        for(String rdata:sarray){
-            row.addData(rdata);
-        }
-    }
+    public abstract void newRow(String s);
+    
     /**
      * Setting a column as the primary key 
      * @param colname
@@ -37,7 +31,7 @@ public abstract class DataTable {
      */
     public void setPrimaryKey(String colname){
         int primaryindex=myColumnNames.indexOf(colname);
-        for (RowElement row:myDataRows){
+        for (RowElement<T> row:myDataRows){
             row.setPrimaryIndex(primaryindex);
         }
     }
@@ -54,7 +48,7 @@ public abstract class DataTable {
     }
     
     public void setColumnValues(String colname, Iterator<String> it){
-        for(RowElement row:myDataRows){
+        for(RowElement<T> row:myDataRows){
             row.addData(it.next());
         }
     }
