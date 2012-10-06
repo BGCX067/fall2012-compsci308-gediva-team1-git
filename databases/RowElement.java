@@ -2,26 +2,21 @@ package databases;
 
 import java.util.ArrayList;
 
-public class RowElement implements Comparable<RowElement> {
+public abstract class RowElement <T> implements Comparable<Object> {
     
-    private int myPrimaryIndex=0;
-    //make this extendable
-    private ArrayList<Double> myData=new ArrayList<Double>();
+    protected int myPrimaryIndex=0;
+    protected ArrayList<T> myData;
     
     public void setPrimaryIndex(int index){
         myPrimaryIndex=index;
     }
     
-    public double getPrimaryValue(){
-        return myData.get(myPrimaryIndex);
-    }
+    
+    public abstract T getPrimaryValue();
     
     public abstract void addData (String rdata);
 
     @Override
-    public int compareTo (RowElement r) {
-        // TODO Auto-generated method stub
-        return myData.get(myPrimaryIndex).compareTo(r.getPrimaryValue());
-    }
-
+    public abstract int compareTo (Object r);
+    
 }
