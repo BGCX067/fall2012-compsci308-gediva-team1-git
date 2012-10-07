@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Iterator;
+import javax.media.jai.util.Range;
+
 public class DataSet {
     
     public Iterator getData(){
