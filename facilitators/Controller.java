@@ -51,7 +51,11 @@ public class Controller {
     }
     
     private void showError() {
-        
+        Point2D errorPosition = new Point2D.Double(Constants.CANVAS_WIDTH - 200, Constants.HEADER_HEIGHT);
+        Dimension errorSize = new Dimension(1000, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
+        Menu errorMessage = new Menu(errorPosition, errorSize,
+                "Either the file was invalid or not found :( Please close the app and try again.");
+        myCanvas.addView(errorMessage);
     }
     
 }
