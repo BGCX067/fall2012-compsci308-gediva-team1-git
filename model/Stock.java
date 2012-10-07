@@ -3,6 +3,7 @@ package model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import databases.StockTable;
 
@@ -65,6 +66,15 @@ public class Stock extends AbstractModel {
     @Override
     public DataSet process (int r) {
         // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public List<String> getRequestTypes () {
+        // TODO Auto-generated method stub
+        // return the available request types so we can make buttons for them
+        // expected response is List<String> (or something more generic)
+        // see StockController to see what we want
         return null;
     }
 
