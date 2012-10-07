@@ -17,7 +17,6 @@ public class Main {
     public static void main (String[] args) { 
         
         Canvas display = new Canvas(SIZE);
-        Controller controller = new Controller(display);
         
         // create container that will work with Window manager
         JFrame frame = new JFrame(TITLE);
@@ -26,6 +25,8 @@ public class Main {
         frame.getContentPane().add(display);
         frame.pack();
         frame.setVisible(true);
+        
+        Controller controller = new StockController(display);
 
     }
 }
