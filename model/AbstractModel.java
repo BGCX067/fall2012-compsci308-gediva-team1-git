@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
-import model.Stock.RequestType;
 import databases.DataTable;
 import parsers.FileParser;
 import parsers.GenericParser;
