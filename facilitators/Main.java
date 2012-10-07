@@ -2,6 +2,7 @@ package facilitators;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import views.Canvas;
 import views.Header;
@@ -14,16 +15,10 @@ public class Main {
     private static final String TITLE = "GEDIVA";
     
     public static void main (String[] args) { 
+        
         Canvas display = new Canvas(SIZE);
-        Point2D menuPosition = new Point2D.Double(0, 100);
-        Dimension menuSize = new Dimension(200, 300);
+        Controller controller = new Controller(display);
         
-//        Menu test = new Menu(menuPosition, menuSize, "Testing this Shit", Color.DARK_GRAY, Color.WHITE);
-//        display.addView(test);
-        
-        Header test = new Header(new Point2D.Double(0,0), new Dimension(Constants.CANVAS_WIDTH, 30), "name", "symbol", "price");
-        display.addView(test);
-
         // create container that will work with Window manager
         JFrame frame = new JFrame(TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

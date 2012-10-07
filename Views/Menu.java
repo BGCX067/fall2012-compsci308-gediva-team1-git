@@ -21,14 +21,14 @@ public class Menu extends View {
         myTextColor = textColor;
     }
     
-    // if no text color is specified, black is assumed
+    // if no text color or background color is specified, assume bg = white, text = black
     public Menu(Point2D position, Dimension size, String title) {
         super(position, size);
     }
     
     @Override
     public void paint(Graphics2D pen) {
-        super.paintBackground(pen);
+        super.paint(pen);
         Font large = new Font("Helvetica", Font.BOLD, 18);
         pen.setColor(myTextColor);
         pen.setFont(large);

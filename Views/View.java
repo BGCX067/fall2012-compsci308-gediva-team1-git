@@ -3,10 +3,13 @@ package views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import javax.swing.JComponent;
 
-public class View {
+public class View extends JComponent {
     
     private ArrayList<View> myChildren = new ArrayList<View>();
     private Color myBackgroundColor = Color.WHITE;
@@ -53,6 +56,18 @@ public class View {
     public void offsetPosition(Point2D offset) {
         myPosition = new Point2D.Double(myPosition.getX() + offset.getX(),
                 myPosition.getY() + offset.getY());
+    }
+    
+    public void mouseClicked(Point point) {
+        // if the point is inside the bound of a child view,
+        // the child takes over click interaction.
+        for (View child : myChildren) {
+            Point p = new Point((int) child.getPosition().getX(), (int) child.getPosition().getY());
+            Rectangle bounds = new Rectangle(p, child.getSize());
+            if (bounds.contains(point)) {
+                child.mouseClicked(point);
+            }
+        }
     }
     
     
