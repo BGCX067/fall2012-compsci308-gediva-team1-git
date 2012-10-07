@@ -39,4 +39,8 @@ public abstract class Controller {
         myCanvas.addView(errorMessage);
     }
     
+    protected Canvas getCanvas() {
+        return myCanvas;
+    }
+    
 }
