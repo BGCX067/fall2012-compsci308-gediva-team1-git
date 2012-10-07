@@ -6,7 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
-public class Error extends View {
+public class ErrorView extends View {
     private String myMessage;
     private Color myTextColor = Color.RED;
     
@@ -14,15 +14,16 @@ public class Error extends View {
     private int PADDING_TOP = 25;
     private int PADDING_LEFT = 10;
     
-    public Error(Point2D position, Dimension size, String message, Color bgColor, Color textColor) {
+    public ErrorView(Point2D position, Dimension size, String message, Color bgColor, Color textColor) {
         super(position, size, bgColor);
         myMessage = message;
         myTextColor = textColor;
     }
     
     // if no text color or background color is specified, assume bg = white, text = black
-    public Error(Point2D position, Dimension size, String title) {
+    public ErrorView(Point2D position, Dimension size, String message) {
         super(position, size);
+        myMessage = message;
     }
     
     @Override
