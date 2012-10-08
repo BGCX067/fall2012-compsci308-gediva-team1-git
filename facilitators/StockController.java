@@ -13,11 +13,11 @@ import views.Button;
 import views.Canvas;
 import views.Header;
 import views.Menu;
-import model.Stock;
+import model.StockModel;
 
 public class StockController extends Controller{
 
-    private Stock currentStock;
+    private StockModel currentStock;
     
     public StockController(Canvas c) {
         super.init(c);
@@ -25,7 +25,7 @@ public class StockController extends Controller{
     
     @Override
     protected void startModel (File f) {
-        currentStock = new Stock();
+        currentStock = new StockModel();
         currentStock.initialize(f);
     }
 
