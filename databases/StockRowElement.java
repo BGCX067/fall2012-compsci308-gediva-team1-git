@@ -9,8 +9,14 @@ public class StockRowElement extends RowElement<Double> {
         myData=(ArrayList<Double>) new ArrayList<Double>();
     }
     
-    public void addData (String rdata) {
+    @Override
+    public void parseData (String rdata) {
         myData.add(new Double(rdata));        
+    }
+    
+    @Override
+    public void addData (Double rdata) {
+        myData.add(rdata);        
     }
     
     @Override
@@ -20,7 +26,7 @@ public class StockRowElement extends RowElement<Double> {
 
     @Override
     public int compareTo (RowElement<Double> r) {
-        return myData.get(myPrimaryIndex).compareTo(((StockRowElement) r).getPrimaryValue());
+        return getPrimaryValue().compareTo(((StockRowElement) r).getPrimaryValue());
     }
 
     

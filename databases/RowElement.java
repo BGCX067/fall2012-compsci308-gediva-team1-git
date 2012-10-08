@@ -11,10 +11,15 @@ public abstract class RowElement <T> implements Comparable<RowElement <T>> {
         myPrimaryIndex=index;
     }
     
+    protected T getEntry(int index) {
+        return myData.get(index);
+    }
     
     public abstract T getPrimaryValue();
     
-    public abstract void addData (String rdata);
+    public abstract void parseData (String rdata);
+    
+    public abstract void addData (T rdata);
 
     @Override
     public abstract int compareTo (RowElement<T> r);

@@ -9,15 +9,19 @@ public class StockTable extends DataTable<Double> {
 
     public StockTable () {
         super();
-
+    }
+    
+    public StockTable (DataTable<Double> st) {
+        super(st);
     }
 
+    @Override
     public void newRow (String s) {
         StockRowElement row = new StockRowElement();
         myDataRows.add(row);
         String[] sarray = s.split(",");
         for (String rdata : sarray) {
-            row.addData(rdata);
+            row.parseData(rdata);
         }
     }
 }

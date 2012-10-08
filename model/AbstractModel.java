@@ -8,15 +8,20 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
-import databases.DataTable;
 import parsers.FileParser;
 import parsers.GenericParser;
 import parsers.WebParser;
+import model.responses.IDataSet;
+import databases.DataTable;
 
 
 
 public abstract class AbstractModel {
     
+    /**
+     * the database that this model uses
+     * it is strongly recommended that this is overridden by a specific child of DataTable
+     */
     protected DataTable<?> myDataTable;
     private Map <String, GenericParser> myParsers = new HashMap<String,GenericParser>();
     
@@ -71,8 +76,6 @@ public abstract class AbstractModel {
         return initialize(file.getPath());
     }
     
-    public static enum RequestType{};
-    
     public abstract String getIdentifier ();
 
     /**
@@ -86,7 +89,8 @@ public abstract class AbstractModel {
      * receives a Request object. The request contains the request it should
      * respond to.
      */
-    public abstract DataSet process (String requestType);
+    public abstract IDataSet<?> process (String requestType);
 
-
+    public abstract List<String> getRequestTypes ();
+    
 }

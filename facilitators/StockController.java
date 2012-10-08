@@ -15,11 +15,11 @@ import views.Canvas;
 import views.Header;
 import views.Menu;
 import views.StockLineGraph;
-import model.Stock;
+import model.StockModel;
 
 public class StockController extends Controller{
 
-    private Stock currentStock;
+    private StockModel currentStock;
     
     public StockController(Canvas c) {
         super.init(c);
@@ -27,15 +27,15 @@ public class StockController extends Controller{
     
     @Override
     protected void startModel (File f) {
-        currentStock = new Stock();
+        currentStock = new StockModel();
         currentStock.initialize(f);
     }
 
     @Override
     protected void startCanvas () {
         // set up menu
-        Point2D menuPosition = new Point2D.Double(1000 - 200, 1000);
-        Dimension menuSize = new Dimension(1000, 1000 - 30);
+        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - 200, Constants.HEADER_HEIGHT);
+        Dimension menuSize = new Dimension(1000, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
         
@@ -51,6 +51,7 @@ public class StockController extends Controller{
                 info.get("price"));
         getCanvas().addView(defaultHeader);
         
+        //practice graph
         TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
         tree.put(new Date(2012, 10, 20), 50.0);
         tree.put(new Date(2011, 10, 15), 60.0);
