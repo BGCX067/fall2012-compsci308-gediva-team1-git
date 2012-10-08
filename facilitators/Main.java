@@ -1,12 +1,8 @@
 package facilitators;
-import java.awt.Color;
+
 import java.awt.Dimension;
-import java.awt.geom.Point2D;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import views.Canvas;
-import views.Header;
-import views.Menu;
 
 
 public class Main {

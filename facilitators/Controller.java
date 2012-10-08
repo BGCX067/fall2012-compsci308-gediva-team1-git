@@ -8,7 +8,6 @@ import views.Canvas;
 import views.ErrorView;
 
 public abstract class Controller {
-
     private Canvas myCanvas;
     private static final JFileChooser CHOOSER = new JFileChooser(
             System.getProperties().getProperty("user.dir"));
