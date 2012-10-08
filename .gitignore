@@ -1,2 +1,7 @@
 #java specific
 *.class
+/views/Canvas.class
+/views/Menu.class
+/views/View.class
+/facilitators/Main.class
+/model/Stock$RequestType.class
