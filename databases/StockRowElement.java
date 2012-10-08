@@ -26,7 +26,7 @@ public class StockRowElement extends RowElement<Double> {
 
     @Override
     public int compareTo (RowElement<Double> r) {
-        return myData.get(myPrimaryIndex).compareTo(((StockRowElement) r).getPrimaryValue());
+        return getPrimaryValue().compareTo(((StockRowElement) r).getPrimaryValue());
     }
 
     
