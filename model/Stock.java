@@ -2,22 +2,34 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import databases.StockTable;
 
 
 public class Stock extends AbstractModel {
-    
-    private Map<String,String> stockInfo;
-    
-    public Stock(){
-        stockInfo= new HashMap<String,String>();
-        myDataTable=new StockTable();
+
+    // Holds stock name, symbol, last closing price (formatted $xx.xx)
+    private Map<String, String> stockInfo;
+
+    /**
+     * a list of the different available request types for any instance of this
+     * Model. Different AbstractModel instances will have different request
+     * types.
+     */
+    public static final Set<String> RequestType =
+            new HashSet<String>(Arrays.asList(new String[] { "moving_avg" }));
+
+    public Stock () {
+        stockInfo = new HashMap<String, String>();
+        myDataTable = new StockTable();
     }
-    
-    
+
     /**
      * parses the data and performs some stock specific parsing, like extracting
      * the name and ticker symbol.
@@ -26,11 +38,11 @@ public class Stock extends AbstractModel {
     public boolean load (BufferedReader s) {
         try {
             myDataTable.setColumnNames(s.readLine());
-            String currentline="";
-            while((currentline=s.readLine()) != null){
+            String currentline = "";
+            while ((currentline = s.readLine()) != null) {
                 myDataTable.newRow(currentline);
             }
-  
+
             return true;
         }
         catch (IOException e) {
@@ -41,21 +53,11 @@ public class Stock extends AbstractModel {
     }
 
     /**
-     * a list of the different available request types for any instance of this
-     * Model. Different AbstractModel instances will have different request
-     * types.
-     */
-    public static enum RequestType {
-        MOVING_AVG
-    }
-
-    /**
      * returns basic info about the stock– name, ticker symbol, etc
      */
-    public DataSet getStockInfo () {
-        return null;
+    public Map<String, String> getStockInfo () {
+        return Collections.unmodifiableMap(stockInfo);
     }
-
 
     @Override
     public String getIdentifier () {
@@ -64,11 +66,10 @@ public class Stock extends AbstractModel {
     }
 
     @Override
-    public DataSet process (int r) {
+    public DataSet process (String requestType) {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     public List<String> getRequestTypes () {
         // TODO Auto-generated method stub

@@ -2,19 +2,21 @@ package databases;
 
 import java.util.ArrayList;
 
-public class StockTable extends DataTable <Double>{
-    
+
+public class StockTable extends DataTable<Double> {
+
     private ArrayList<StockRowElement> myDataRows;
-    
-    public StockTable(){
+
+    public StockTable () {
         super();
-        
+
     }
-    public void newRow(String s){
-        StockRowElement row=new StockRowElement();
+
+    public void newRow (String s) {
+        StockRowElement row = new StockRowElement();
         myDataRows.add(row);
-        String[] sarray=s.split(",");
-        for(String rdata:sarray){
+        String[] sarray = s.split(",");
+        for (String rdata : sarray) {
             row.addData(rdata);
         }
     }

@@ -3,11 +3,12 @@ package databases;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 public abstract class DataTable <T> {
     
-    private ArrayList<String> myColumnNames;
-    private ArrayList<RowElement<T>> myDataRows;
+    private List<String> myColumnNames;
+    private List<RowElement<T>> myDataRows;
     
     
     public DataTable(){
