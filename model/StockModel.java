@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import model.responses.IDataSet;
 import model.responses.StockDataSet;
-import databases.DataTable;
 import databases.StockTable;
 
 
@@ -23,14 +22,14 @@ public class StockModel extends AbstractModel {
 
     /**
      * contains a list of possible evaluation methods
+     * we also support "no-action" calls with the empty string () as an argument
      * 
      * these must correspond to methods in this.RequestProcessor
      * a method must exist with name: "process" + string.removeWhitespace()
-     * the empty string is an exception
      */
     private static final List<String> RequestTypes =
-            new ArrayList<String>(Arrays.asList(new String[] { "",
-                                                            "Moving Average" }));
+            new ArrayList<String>(
+                                  Arrays.asList(new String[] { "Moving Average" }));
 
     public StockModel () {
         stockInfo = new HashMap<String, String>();
@@ -68,15 +67,16 @@ public class StockModel extends AbstractModel {
 
     @Override
     public String getIdentifier () {
-        // TODO Auto-generated method stub
-        return null;
+        return new String(stockInfo.get("symbol"));
     }
 
     @Override
     public IDataSet process (String requestType) {
         if ("".equals(requestType)) {
+            // do nothing - this is an empty request
         }
         else if (myDataTable.columnNames().contains(requestType)) {
+            // do nothing...? - we already computed this
         }
         else {
             try {
@@ -114,27 +114,29 @@ public class StockModel extends AbstractModel {
     }
 
     private static class RequestProcessor {
-        
-        @SuppressWarnings("unused") // used through reflection
+
+        @SuppressWarnings("unused")
+        // used through reflection
         static void processMovingAverage (StockTable st) {
-            
+
             // need in order time to get moving avg
-            st.sortbyColumn("Timestamp"); //TODO: make this work????
-            
+            st.sortbyColumn("Date"); // TODO: make this work????
+
             // ready/initialize calculations
             List<Double> list = st.columnValues("Close");
             List<Double> result = new ArrayList<Double>(list.size());
             double alpha = 0.9;
             result.set(0, list.get(0));
-            
-            for (int i = 1; i < list.size() ; i++) {
-                result.set(i, result.get(i-1) * (1 - alpha) + list.get(i-1) * alpha);
+
+            for (int i = 1; i < list.size(); i++) {
+                result.set(i, result.get(i - 1) * (1 - alpha) +
+                              list.get(i - 1) * alpha);
             }
-            
+
             // fill in results
             st.addColumn("Moving Average");
             st.setColumnValues("Moving Average", result.listIterator());
         }
-        
+
     }
 }
