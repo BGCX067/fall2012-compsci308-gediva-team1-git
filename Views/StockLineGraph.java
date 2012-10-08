@@ -1,22 +1,20 @@
 package views;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class StockLineGraph extends Graph<Point2D> {
 
-    private Point2D myOrigin;
-    private int yMax;
-    private int xMax;
     private ArrayList<Point2D> myPoints;
     
     public StockLineGraph(Point2D position, Dimension size, 
-            ArrayList<Point2D> points, String xAxisLabel, String yAxisLabel) {
+            Map<String, ArrayList<Integer>> values, String xAxisLabel, String yAxisLabel) {
         super(position, size, xAxisLabel, yAxisLabel);
-        myPoints = points;
+        
+        getPoints(values);
     }
 
     /**
@@ -48,5 +46,12 @@ public class StockLineGraph extends Graph<Point2D> {
             pen.drawLine((int) curPoint.getX(), (int) curPoint.getY(),
                     (int) nextPoint.getX(), (int) nextPoint.getY()); 
         }
+    }
+    
+    private void getPoints(Map<String, ArrayList<Integer>> values) {
+        int xScale;
+        int yScale;
+        
+        
     }
 }
