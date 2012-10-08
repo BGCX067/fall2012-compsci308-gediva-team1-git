@@ -13,7 +13,7 @@ import model.responses.IDataSet;
 import databases.StockTable;
 
 
-public class Stock extends AbstractModel {
+public class StockModel extends AbstractModel {
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
@@ -26,7 +26,7 @@ public class Stock extends AbstractModel {
     public static final Set<String> RequestType =
             new HashSet<String>(Arrays.asList(new String[] { "moving_avg" }));
 
-    public Stock () {
+    public StockModel () {
         stockInfo = new HashMap<String, String>();
         myDataTable = new StockTable();
     }
