@@ -28,8 +28,7 @@ public class StockModel extends AbstractModel {
      * a method must exist with name: "process" + string.removeWhitespace()
      */
     private static final List<String> RequestTypes =
-            new ArrayList<String>(
-                                  Arrays.asList(new String[] { "Moving Average" }));
+            new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
 
     public StockModel () {
         stockInfo = new HashMap<String, String>();
@@ -72,16 +71,10 @@ public class StockModel extends AbstractModel {
 
     @Override
     public IDataSet<Double> process (String requestType) {
-        if ("".equals(requestType)) {
-            // do nothing - this is an empty request
-        }
-        else if (myDataTable.columnNames().contains(requestType)) {
-            // do nothing...? - we already computed this
-        }
-        else {
+        // do nothing if the requestType is empty or if the value is already computed
+        if (!"".equals(requestType) && !myDataTable.columnNames().contains(requestType)) {
             try {
-                RequestProcessor.class
-                        .getMethod("process" + requestType.replaceAll(" ", ""))
+                RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
                         .invoke(null, myDataTable);
             }
             catch (SecurityException e) {
@@ -115,8 +108,8 @@ public class StockModel extends AbstractModel {
 
     private static class RequestProcessor {
 
-        @SuppressWarnings("unused")
         // used through reflection
+        @SuppressWarnings("unused")
         static void processMovingAverage (StockTable st) {
 
             // need in order time to get moving avg
@@ -129,8 +122,7 @@ public class StockModel extends AbstractModel {
             result.set(0, list.get(0));
 
             for (int i = 1; i < list.size(); i++) {
-                result.set(i, result.get(i - 1) * (1 - alpha) +
-                              list.get(i - 1) * alpha);
+                result.set(i, result.get(i - 1) * (1 - alpha) + list.get(i - 1) * alpha);
             }
 
             // fill in results
