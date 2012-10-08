@@ -89,7 +89,7 @@ public abstract class AbstractModel {
      * receives a Request object. The request contains the request it should
      * respond to.
      */
-    public abstract IDataSet process (String requestType);
+    public abstract IDataSet<?> process (String requestType);
 
     public abstract List<String> getRequestTypes ();
     

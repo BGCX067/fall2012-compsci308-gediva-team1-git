@@ -71,7 +71,7 @@ public class StockModel extends AbstractModel {
     }
 
     @Override
-    public IDataSet process (String requestType) {
+    public IDataSet<Double> process (String requestType) {
         if ("".equals(requestType)) {
             // do nothing - this is an empty request
         }

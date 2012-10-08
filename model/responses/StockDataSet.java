@@ -2,14 +2,15 @@ package model.responses;
 
 import java.util.List;
 import javax.media.jai.util.Range;
+import databases.DataTable;
 import databases.StockTable;
 
 
-public class StockDataSet implements IDataSet {
+public class StockDataSet implements IDataSet<Double> {
 
     private StockTable myTable;
 
-    public StockDataSet (StockTable st) {
+    public StockDataSet (DataTable<Double> st) {
         myTable = new StockTable(st);
     }
 

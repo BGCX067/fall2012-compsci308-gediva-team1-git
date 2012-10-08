@@ -11,7 +11,7 @@ public class StockTable extends DataTable<Double> {
         super();
     }
     
-    public StockTable (StockTable st) {
+    public StockTable (DataTable<Double> st) {
         super(st);
     }
 
