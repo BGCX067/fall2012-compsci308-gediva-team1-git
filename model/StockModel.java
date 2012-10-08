@@ -16,10 +16,6 @@ import databases.StockTable;
 
 public class StockModel extends AbstractModel {
 
-    // Holds stock name, symbol, last closing price (formatted $xx.xx)
-    private Map<String, String> stockInfo;
-    private StockTable myDataTable;
-
     /**
      * contains a list of possible evaluation methods
      * we also support "no-action" calls with the empty string () as an argument
@@ -27,8 +23,12 @@ public class StockModel extends AbstractModel {
      * these must correspond to methods in this.RequestProcessor
      * a method must exist with name: "process" + string.removeWhitespace()
      */
-    private static final List<String> RequestTypes =
+    private static final List<String> REQUEST_TYPES =
             new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
+
+    // Holds stock name, symbol, last closing price (formatted $xx.xx)
+    private Map<String, String> stockInfo;
+    private StockTable myDataTable;
 
     public StockModel () {
         stockInfo = new HashMap<String, String>();
@@ -71,7 +71,12 @@ public class StockModel extends AbstractModel {
 
     @Override
     public IDataSet<Double> process (String requestType) {
-        // do nothing if the requestType is empty or if the value is already computed
+        /*
+         * do nothing if the requestType is empty or if the value is already
+         * computed
+         * 
+         * else, call the request type
+         */
         if (!"".equals(requestType) && !myDataTable.columnNames().contains(requestType)) {
             try {
                 RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
@@ -103,10 +108,11 @@ public class StockModel extends AbstractModel {
 
     @Override
     public List<String> getRequestTypes () {
-        return RequestTypes;
+        return REQUEST_TYPES;
     }
 
     private static class RequestProcessor {
+        private static final double MOVING_AVERAGE_WEIGHT = 0.9;
 
         // used through reflection
         @SuppressWarnings("unused")
@@ -118,11 +124,11 @@ public class StockModel extends AbstractModel {
             // ready/initialize calculations
             List<Double> list = st.columnValues("Close");
             List<Double> result = new ArrayList<Double>(list.size());
-            double alpha = 0.9;
             result.set(0, list.get(0));
 
             for (int i = 1; i < list.size(); i++) {
-                result.set(i, result.get(i - 1) * (1 - alpha) + list.get(i - 1) * alpha);
+                result.set(i, result.get(i - 1) * (1 - MOVING_AVERAGE_WEIGHT) + list.get(i - 1) *
+                              MOVING_AVERAGE_WEIGHT);
             }
 
             // fill in results
