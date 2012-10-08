@@ -9,6 +9,7 @@ public class StockRowElement extends RowElement<Double> {
         myData=(ArrayList<Double>) new ArrayList<Double>();
     }
     
+    @Override
     public void addData (String rdata) {
         myData.add(new Double(rdata));        
     }

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
-import model.responses.DataSet;
+import model.responses.IDataSet;
 import databases.DataTable;
 import parsers.FileParser;
 import parsers.GenericParser;
@@ -87,7 +87,7 @@ public abstract class AbstractModel {
      * receives a Request object. The request contains the request it should
      * respond to.
      */
-    public abstract DataSet process (String requestType);
+    public abstract IDataSet process (String requestType);
 
 
 }

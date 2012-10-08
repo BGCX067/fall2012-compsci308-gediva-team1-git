@@ -15,6 +15,7 @@ public class StockTable extends DataTable<Double> {
         super(dt);
     }
 
+    @Override
     public void newRow (String s) {
         StockRowElement row = new StockRowElement();
         myDataRows.add(row);

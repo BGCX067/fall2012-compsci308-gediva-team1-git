@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import model.responses.DataSet;
+import model.responses.IDataSet;
 import databases.StockTable;
 
 
@@ -67,7 +67,7 @@ public class Stock extends AbstractModel {
     }
 
     @Override
-    public DataSet process (String requestType) {
+    public IDataSet process (String requestType) {
         // TODO Auto-generated method stub
         return null;
     }
