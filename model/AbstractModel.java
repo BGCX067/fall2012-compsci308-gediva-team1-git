@@ -10,9 +10,9 @@ import java.util.Collections;
 import java.util.List;
 import model.responses.IDataSet;
 import databases.DataTable;
-import parsers.FileParser;
-import parsers.GenericParser;
-import parsers.WebParser;
+import readers.parsers.FileParser;
+import readers.parsers.GenericParser;
+import readers.parsers.WebParser;
 
 
 
