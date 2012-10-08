@@ -11,8 +11,8 @@ public class StockTable extends DataTable<Double> {
         super();
     }
     
-    public StockTable (DataTable<Double> dt) {
-        super(dt);
+    public StockTable (StockTable st) {
+        super(st);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class StockTable extends DataTable<Double> {
         myDataRows.add(row);
         String[] sarray = s.split(",");
         for (String rdata : sarray) {
-            row.addData(rdata);
+            row.parseData(rdata);
         }
     }
 }

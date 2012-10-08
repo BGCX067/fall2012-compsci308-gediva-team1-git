@@ -2,14 +2,16 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import model.responses.IDataSet;
+import model.responses.StockDataSet;
+import databases.DataTable;
 import databases.StockTable;
 
 
@@ -17,14 +19,18 @@ public class StockModel extends AbstractModel {
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
+    private StockTable myDataTable;
 
     /**
-     * a list of the different available request types for any instance of this
-     * Model. Different AbstractModel instances will have different request
-     * types.
+     * contains a list of possible evaluation methods
+     * 
+     * these must correspond to methods in this.RequestProcessor
+     * a method must exist with name: "process" + string.removeWhitespace()
+     * the empty string is an exception
      */
-    public static final Set<String> RequestType =
-            new HashSet<String>(Arrays.asList(new String[] { "moving_avg" }));
+    private static final List<String> RequestTypes =
+            new ArrayList<String>(Arrays.asList(new String[] { "",
+                                                            "Moving Average" }));
 
     public StockModel () {
         stockInfo = new HashMap<String, String>();
@@ -68,16 +74,67 @@ public class StockModel extends AbstractModel {
 
     @Override
     public IDataSet process (String requestType) {
-        // TODO Auto-generated method stub
-        return null;
+        if ("".equals(requestType)) {
+        }
+        else if (myDataTable.columnNames().contains(requestType)) {
+        }
+        else {
+            try {
+                RequestProcessor.class
+                        .getMethod("process" + requestType.replaceAll(" ", ""))
+                        .invoke(null, myDataTable);
+            }
+            catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (NoSuchMethodException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (IllegalAccessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (InvocationTargetException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return new StockDataSet(myDataTable);
     }
 
+    @Override
     public List<String> getRequestTypes () {
-        // TODO Auto-generated method stub
-        // return the available request types so we can make buttons for them
-        // expected response is List<String> (or something more generic)
-        // see StockController to see what we want
-        return null;
+        return RequestTypes;
     }
 
+    private static class RequestProcessor {
+        
+        @SuppressWarnings("unused") // used through reflection
+        static void processMovingAverage (StockTable st) {
+            
+            // need in order time to get moving avg
+            st.sortbyColumn("Timestamp"); //TODO: make this work????
+            
+            // ready/initialize calculations
+            List<Double> list = st.columnValues("Close");
+            List<Double> result = new ArrayList<Double>(list.size());
+            double alpha = 0.9;
+            result.set(0, list.get(0));
+            
+            for (int i = 1; i < list.size() ; i++) {
+                result.set(i, result.get(i-1) * (1 - alpha) + list.get(i-1) * alpha);
+            }
+            
+            // fill in results
+            st.addColumn("Moving Average");
+            st.setColumnValues("Moving Average", result.listIterator());
+        }
+        
+    }
 }

@@ -10,8 +10,13 @@ public class StockRowElement extends RowElement<Double> {
     }
     
     @Override
-    public void addData (String rdata) {
+    public void parseData (String rdata) {
         myData.add(new Double(rdata));        
+    }
+    
+    @Override
+    public void addData (Double rdata) {
+        myData.add(rdata);        
     }
     
     @Override

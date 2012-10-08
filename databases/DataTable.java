@@ -16,9 +16,9 @@ public abstract class DataTable<T> {
         myDataRows = new ArrayList<RowElement<T>>();
     }
 
-    public DataTable (DataTable<T> dt) {
-        myColumnNames = new ArrayList<String>(dt.myColumnNames);
-        myDataRows = new ArrayList<RowElement<T>>(dt.myDataRows);
+    public DataTable (DataTable<T> st) {
+        myColumnNames = new ArrayList<String>(st.myColumnNames);
+        myDataRows = new ArrayList<RowElement<T>>(st.myDataRows);
     }
 
     public void setColumnNames (String s) {
@@ -53,7 +53,13 @@ public abstract class DataTable<T> {
 
     }
 
-    public void setColumnValues (String colname, Iterator<String> it) {
+    public void parseColumnValues (String colname, Iterator<String> it) {
+        for (RowElement<T> row : myDataRows) {
+            row.parseData(it.next());
+        }
+    }
+    
+    public void setColumnValues (String colname, Iterator<T> it) {
         for (RowElement<T> row : myDataRows) {
             row.addData(it.next());
         }
