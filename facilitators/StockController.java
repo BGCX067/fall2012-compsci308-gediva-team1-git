@@ -9,10 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import views.Button;
 import views.Canvas;
 import views.Header;
 import views.Menu;
+import views.StockLineGraph;
 import model.Stock;
 
 public class StockController extends Controller{
@@ -32,8 +34,8 @@ public class StockController extends Controller{
     @Override
     protected void startCanvas () {
         // set up menu
-        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - 200, Constants.HEADER_HEIGHT);
-        Dimension menuSize = new Dimension(1000, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
+        Point2D menuPosition = new Point2D.Double(1000 - 200, 1000);
+        Dimension menuSize = new Dimension(1000, 1000 - 30);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
         
@@ -43,11 +45,19 @@ public class StockController extends Controller{
         info.put("symbol", "AAPL");
         info.put("price", "652.59");
         Header defaultHeader = new Header(new Point2D.Double(0,0),
-                new Dimension(Constants.CANVAS_WIDTH, 30),
+                new Dimension(1000, 30),
                 info.get("name"),
                 info.get("symbol"),
                 info.get("price"));
         getCanvas().addView(defaultHeader);
+        
+        TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
+        tree.put(new Date(2012, 10, 20), 50.0);
+        tree.put(new Date(2011, 10, 15), 60.0);
+        tree.put(new Date(2000, 5, 9), 10.0);
+        StockLineGraph g = new StockLineGraph(new Point2D.Double(200, 200), new Dimension(500, 500), 
+                tree, "time", "yaxis");
+        getCanvas().addView(g);
         
         //createButtons(currentStock.getRequestTypes(), defaultMenu);
         Set<String> types = new HashSet<String>();

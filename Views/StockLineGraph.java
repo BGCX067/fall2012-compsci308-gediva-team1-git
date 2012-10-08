@@ -4,17 +4,19 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.TreeMap;
+import facilitators.Date;
 
-public class StockLineGraph extends Graph<Point2D> {
+public class StockLineGraph extends Graph<Date, Double> {
 
     private ArrayList<Point2D> myPoints;
     
     public StockLineGraph(Point2D position, Dimension size, 
-            Map<String, ArrayList<Integer>> values, String xAxisLabel, String yAxisLabel) {
-        super(position, size, xAxisLabel, yAxisLabel);
-        
-        getPoints(values);
+            TreeMap<Date, Double> values, String xAxisLabel, String yAxisLabel) {
+
+        super(position, size, values, xAxisLabel, yAxisLabel); 
+        yValuesToPoints = new TreeMap<Double, Number>();
+        myPoints = new ArrayList<Point2D>();
     }
 
     /**
@@ -23,12 +25,14 @@ public class StockLineGraph extends Graph<Point2D> {
     @Override 
     public void paint(Graphics2D pen) {
         super.paint(pen);
-        
+
+        getPoints();
+
         //fill in the points
         for(Point2D p : myPoints) {
             pen.fillOval((int) p.getX(), (int) p.getY(), 5, 5);
         }
-        
+
         //connect the points
         connectPoints(pen);
     }
@@ -39,6 +43,10 @@ public class StockLineGraph extends Graph<Point2D> {
      * @param pen
      */
     private void connectPoints(Graphics2D pen) {
+        //draw line from origin to start
+        pen.drawLine((int) myOrigin.getX(), (int) myOrigin.getY(), (int) myPoints.get(0).getX(), (int) myPoints.get(0).getY());
+        
+        //connect the rest of the points
         for(int x = 0; x < myPoints.size() - 1; x ++) {
             Point2D curPoint = myPoints.get(x);
             Point2D nextPoint = myPoints.get(x + 1);
@@ -47,11 +55,24 @@ public class StockLineGraph extends Graph<Point2D> {
                     (int) nextPoint.getX(), (int) nextPoint.getY()); 
         }
     }
-    
-    private void getPoints(Map<String, ArrayList<Integer>> values) {
-        int xScale;
-        int yScale;
+
+    /**
+     * Get the point values specific to this line graph.
+     * 
+     * @param values
+     */
+    private void getPoints() {
+        int count = 1;
         
-        
+        for(Date d : myValues.keySet()) {
+            Point2D point = new Point2D.Double(getXScale() * count + myOrigin.getX(), 
+                    yValuesToPoints.get(myValues.get(d)).doubleValue());
+            
+            if(!myPoints.contains(point)) {
+                myPoints.add(point);
+            }
+            
+            count ++;
+        }
     }
 }
