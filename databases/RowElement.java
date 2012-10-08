@@ -11,6 +11,9 @@ public abstract class RowElement <T> implements Comparable<RowElement <T>> {
         myPrimaryIndex=index;
     }
     
+    protected T getEntry(int index) {
+        return myData.get(index);
+    }
     
     public abstract T getPrimaryValue();
     

@@ -9,7 +9,10 @@ public class StockTable extends DataTable<Double> {
 
     public StockTable () {
         super();
-
+    }
+    
+    public StockTable (DataTable<Double> dt) {
+        super(dt);
     }
 
     public void newRow (String s) {
