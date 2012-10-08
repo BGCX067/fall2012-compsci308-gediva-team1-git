@@ -24,6 +24,7 @@ public class Menu extends View {
     // if no text color or background color is specified, assume bg = white, text = black
     public Menu(Point2D position, Dimension size, String title) {
         super(position, size);
+        myTitle = title;
     }
     
     @Override

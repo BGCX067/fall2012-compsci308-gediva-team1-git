@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -13,6 +14,7 @@ public class View extends JComponent {
     
     private ArrayList<View> myChildren = new ArrayList<View>();
     private Color myBackgroundColor = Color.WHITE;
+    private Color myBorderColor = Color.BLACK;
     private Point2D myPosition;
 
     private Dimension mySize;
@@ -39,6 +41,9 @@ public class View extends JComponent {
     protected void paintBackground(Graphics2D pen) {
         pen.setColor(myBackgroundColor);
         pen.fillRect((int) myPosition.getX(), (int) myPosition.getY(),
+                (int) mySize.getWidth(), (int) mySize.getHeight());
+        pen.setColor(myBorderColor);
+        pen.drawRect((int) myPosition.getX(), (int) myPosition.getY(),
                 (int) mySize.getWidth(), (int) mySize.getHeight());
     }
     
