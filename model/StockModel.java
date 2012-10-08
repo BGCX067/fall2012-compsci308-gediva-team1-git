@@ -71,7 +71,7 @@ public class StockModel extends AbstractModel {
 
     @Override
     public IDataSet<Double> process (String requestType) {
-        /* 
+        /*
          * do nothing if the requestType is empty or if the value is already
          * computed
          * 
@@ -112,6 +112,7 @@ public class StockModel extends AbstractModel {
     }
 
     private static class RequestProcessor {
+        private static final double MOVING_AVERAGE_WEIGHT = 0.9;
 
         // used through reflection
         @SuppressWarnings("unused")
@@ -123,11 +124,11 @@ public class StockModel extends AbstractModel {
             // ready/initialize calculations
             List<Double> list = st.columnValues("Close");
             List<Double> result = new ArrayList<Double>(list.size());
-            double alpha = 0.9;
             result.set(0, list.get(0));
 
             for (int i = 1; i < list.size(); i++) {
-                result.set(i, result.get(i - 1) * (1 - alpha) + list.get(i - 1) * alpha);
+                result.set(i, result.get(i - 1) * (1 - MOVING_AVERAGE_WEIGHT) + list.get(i - 1) *
+                              MOVING_AVERAGE_WEIGHT);
             }
 
             // fill in results
