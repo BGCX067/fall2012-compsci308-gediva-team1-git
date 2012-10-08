@@ -1,12 +1,12 @@
 package facilitators;
 
-/*
+/**
  * A basic utility class for storing dates in a readable
  * and manipulatable format
  * 
  */
 
-public class Date {
+public class Date implements Comparable<Date>{
     private int myYear;
     private int myMonth;
     private int myDay;
@@ -22,9 +22,9 @@ public class Date {
     }
     
     public String getLongFormat() {
-        String months[] = {"January", "Febuary", "March", "April", "May",
-                "June", "July", "August", "September", "October",
-                "November", "December"};
+        String months[] = {"Jan", "Feb", "Mar", "Apr", "May",
+                "June", "July", "Aug", "Sept", "Oct",
+                "Nov", "Dec"};
         String month = months[myMonth];
         
         return month + " " + myDay + ", " + myYear;
@@ -70,6 +70,24 @@ public class Date {
      */
     public void setDay (int day) {
         this.myDay = day;
+    }
+
+    /**
+     * Sorts date by year, then month, then day
+     *
+     * @param d the day to compare against
+     */
+    @Override
+    public int compareTo (Date d) {
+        if(getYear() != d.getYear()) {
+            return getYear() - d.getYear();
+        }
+        
+        if(getMonth() != d.getMonth()) {
+            return getMonth() - d.getMonth();
+        }
+        
+        return getDay() - d.getDay();
     }
     
     

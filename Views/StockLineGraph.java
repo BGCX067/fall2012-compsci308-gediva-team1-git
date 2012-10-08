@@ -8,13 +8,12 @@ import java.util.TreeMap;
 import facilitators.Date;
 
 public class StockLineGraph extends Graph<Date, Double> {
-
-    private ArrayList<Point2D> myPoints;
     
     public StockLineGraph(Point2D position, Dimension size, 
             TreeMap<Date, Double> values, String xAxisLabel, String yAxisLabel) {
 
         super(position, size, values, xAxisLabel, yAxisLabel); 
+
         yValuesToPoints = new TreeMap<Double, Number>();
         myPoints = new ArrayList<Point2D>();
     }
@@ -26,7 +25,7 @@ public class StockLineGraph extends Graph<Date, Double> {
     public void paint(Graphics2D pen) {
         super.paint(pen);
 
-        getPoints();
+        myPoints = (ArrayList<Point2D>) getPoints();
 
         //fill in the points
         for(Point2D p : myPoints) {
@@ -44,8 +43,9 @@ public class StockLineGraph extends Graph<Date, Double> {
      */
     private void connectPoints(Graphics2D pen) {
         //draw line from origin to start
-        pen.drawLine((int) myOrigin.getX(), (int) myOrigin.getY(), (int) myPoints.get(0).getX(), (int) myPoints.get(0).getY());
-        
+        pen.drawLine((int) myOrigin.getX(), (int) myOrigin.getY(), 
+                (int) myPoints.get(0).getX(), (int) myPoints.get(0).getY());
+
         //connect the rest of the points
         for(int x = 0; x < myPoints.size() - 1; x ++) {
             Point2D curPoint = myPoints.get(x);
@@ -53,26 +53,6 @@ public class StockLineGraph extends Graph<Date, Double> {
 
             pen.drawLine((int) curPoint.getX(), (int) curPoint.getY(),
                     (int) nextPoint.getX(), (int) nextPoint.getY()); 
-        }
-    }
-
-    /**
-     * Get the point values specific to this line graph.
-     * 
-     * @param values
-     */
-    private void getPoints() {
-        int count = 1;
-        
-        for(Date d : myValues.keySet()) {
-            Point2D point = new Point2D.Double(getXScale() * count + myOrigin.getX(), 
-                    yValuesToPoints.get(myValues.get(d)).doubleValue());
-            
-            if(!myPoints.contains(point)) {
-                myPoints.add(point);
-            }
-            
-            count ++;
         }
     }
 }
