@@ -1,4 +1,4 @@
-package readers.parsers;
+package parsers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

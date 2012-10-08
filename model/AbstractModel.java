@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
+import parsers.FileParser;
+import parsers.GenericParser;
+import parsers.WebParser;
 import model.responses.IDataSet;
 import databases.DataTable;
-import readers.parsers.FileParser;
-import readers.parsers.GenericParser;
-import readers.parsers.WebParser;
 
 
 
