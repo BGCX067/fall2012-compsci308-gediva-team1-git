@@ -1,10 +1,12 @@
 package views;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import javax.swing.JComponent;
 
@@ -62,8 +64,7 @@ public class Canvas extends JComponent {
             }
 
             @Override
-            public void mouseReleased (MouseEvent e) {
-                
+            public void mouseReleased (MouseEvent e) {   
             }
         });
     }

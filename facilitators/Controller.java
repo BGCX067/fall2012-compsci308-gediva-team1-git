@@ -21,7 +21,7 @@ public abstract class Controller {
         int response = CHOOSER.showOpenDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
             startModel(CHOOSER.getSelectedFile());
-            showError();
+            startCanvas();
         }
         else showError();
     }

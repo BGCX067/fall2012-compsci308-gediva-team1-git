@@ -16,7 +16,7 @@ public class View extends JComponent {
     private Color myBackgroundColor = Color.WHITE;
     private Color myBorderColor = Color.BLACK;
     private Point2D myPosition;
-
+ 
     private Dimension mySize;
     
     public View(Point2D position, Dimension size, Color bgcolor) {
@@ -75,7 +75,6 @@ public class View extends JComponent {
         }
     }
     
-    
     /**
      * @return the myPosition
      */
@@ -89,5 +88,6 @@ public class View extends JComponent {
     public Dimension getSize() {
         return mySize;
     }
+    
 
 }
