@@ -27,6 +27,8 @@ public class StockModel extends AbstractModel {
             new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
     public static final String SYMBOL = "Symbol";
     public static final String COMPANY_NAME = "Company Name";
+    public static final String LAST_PRICE = "Last Price";
+    public static final String DATE = "Date";
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
@@ -54,6 +56,10 @@ public class StockModel extends AbstractModel {
             while ((currentline = s.readLine()) != null) {
                 myDataTable.newRow(currentline);
             }
+
+            myDataTable.sortbyColumn(DATE);
+            List<Double> list = myDataTable.columnValues(DATE);
+            stockInfo.put(LAST_PRICE, list.get(list.size() - 1).toString());
 
             return true;
         }
@@ -126,7 +132,7 @@ public class StockModel extends AbstractModel {
         static void processMovingAverage (StockTable st) {
 
             // need in order time to get moving avg
-            st.sortbyColumn("Date"); // TODO: check this assumption
+            st.sortbyColumn(DATE); // TODO: check this assumption
 
             // ready/initialize calculations
             List<Double> list = st.columnValues("Close");
