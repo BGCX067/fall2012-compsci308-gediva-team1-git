@@ -25,6 +25,8 @@ public class StockModel extends AbstractModel {
      */
     private static final List<String> REQUEST_TYPES =
             new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
+    public static final String SYMBOL = "Symbol";
+    public static final String COMPANY_NAME = "Company Name";
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
@@ -34,8 +36,8 @@ public class StockModel extends AbstractModel {
         super();
         stockInfo = new HashMap<String, String>();
 
-        stockInfo.put("symbol", symbol);
-        stockInfo.put("companyName", companyName);
+        stockInfo.put(SYMBOL, symbol);
+        stockInfo.put(COMPANY_NAME, companyName);
 
         myDataTable = new StockTable();
     }
@@ -71,7 +73,7 @@ public class StockModel extends AbstractModel {
 
     @Override
     public String getIdentifier () {
-        return new String(stockInfo.get("symbol"));
+        return new String(stockInfo.get(SYMBOL));
     }
 
     @Override
@@ -124,7 +126,7 @@ public class StockModel extends AbstractModel {
         static void processMovingAverage (StockTable st) {
 
             // need in order time to get moving avg
-            st.sortbyColumn("Date"); // TODO: make this work????
+            st.sortbyColumn("Date"); // TODO: check this assumption
 
             // ready/initialize calculations
             List<Double> list = st.columnValues("Close");
