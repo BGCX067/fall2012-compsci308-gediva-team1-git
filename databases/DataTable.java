@@ -85,5 +85,9 @@ public abstract class DataTable<T> {
         }
         return Collections.unmodifiableList(result);
     }
+    
+    public void removeRow (int index) {
+        myDataRows.remove(index);
+    }
 
 }

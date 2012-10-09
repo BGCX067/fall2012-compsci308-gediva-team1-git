@@ -22,6 +22,12 @@ public class StockDataSet implements IDataSet<Double> {
     @Override
     public StockDataSet range (String attribute, Range range) {
         myTable.sortbyColumn(attribute);
+        List<Double> list = myTable.columnValues(attribute);
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (!range.contains(list.get(i))) {
+                myTable.removeRow(i);
+            }
+        }
         return this;
     }
 
