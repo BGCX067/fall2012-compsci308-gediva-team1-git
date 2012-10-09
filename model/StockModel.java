@@ -59,7 +59,7 @@ public class StockModel extends AbstractModel {
 
             myDataTable.sortbyColumn(DATE);
             List<Double> list = myDataTable.columnValues(DATE);
-            stockInfo.put(LAST_PRICE, list.get(list.size() - 1).toString());
+            stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
 
             return true;
         }
