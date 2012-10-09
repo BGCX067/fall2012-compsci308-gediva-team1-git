@@ -23,7 +23,7 @@ public class StockModel extends AbstractModel {
      * these must correspond to methods in this.RequestProcessor
      * a method must exist with name: "process" + string.removeWhitespace()
      */
-    public static final List<String> REQUEST_TYPES =
+    private static final List<String> REQUEST_TYPES =
             new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
