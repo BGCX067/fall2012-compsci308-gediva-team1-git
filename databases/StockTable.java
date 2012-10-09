@@ -21,7 +21,7 @@ public class StockTable extends DataTable<Double> {
         myDataRows.add(row);
         String[] sarray = s.split(",");
         for (String rdata : sarray) {
-            row.parseData(rdata);
+            row.addData(rdata);
         }
     }
 }

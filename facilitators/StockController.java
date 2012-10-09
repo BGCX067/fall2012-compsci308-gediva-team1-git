@@ -27,7 +27,7 @@ public class StockController extends Controller{
     
     @Override
     protected void startModel (File f) {
-        currentStock = new StockModel();
+        currentStock = new StockModel("TRLL", "Troll Technologies LLC");
         currentStock.initialize(f);
     }
 

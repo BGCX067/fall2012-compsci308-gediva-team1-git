@@ -55,7 +55,7 @@ public abstract class DataTable<T> {
 
     public void parseColumnValues (String colname, Iterator<String> it) {
         for (RowElement<T> row : myDataRows) {
-            row.parseData(it.next());
+            row.addData(it.next());
         }
     }
     
