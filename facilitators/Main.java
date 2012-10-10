@@ -21,7 +21,7 @@ public class Main {
         
         
         //Sample model code 
-        StockModel myStockModel= new StockModel("SIMO","Silicon Motion");
+        StockModel myStockModel= new StockModel("MS","Morgan Stanley");
         
         
       //  myStockModel.initialize("/data/data.csv");
@@ -33,7 +33,6 @@ public class Main {
         System.out.println(myStockModel.getStockInfo());
         System.out.println(myStockModel.getRequestTypes());
         StockDataSet resultSet=(StockDataSet) myStockModel.process("");
-     //   System.out.println(resultSet.attributes());
         System.out.println(resultSet.getData("Volume"));
         
      //   Canvas display = new Canvas(SIZE);

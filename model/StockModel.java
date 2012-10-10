@@ -29,6 +29,7 @@ public class StockModel extends AbstractModel {
     public static final String COMPANY_NAME = "Company Name";
     public static final String LAST_PRICE = "Last Price";
     public static final String DATE = "Date";
+    public static final String CLOSE = "Close";
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
@@ -43,7 +44,13 @@ public class StockModel extends AbstractModel {
 
         myDataTable = new StockTable();
     }
-
+    
+    public void setStockInfo(){
+        myDataTable.sortbyColumn(DATE);
+        List<Double> list = myDataTable.columnValues(CLOSE);
+        stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
+    }
+    
     /**
      * parses the data and performs some stock specific parsing, like extracting
      * the name and ticker symbol.
@@ -54,13 +61,9 @@ public class StockModel extends AbstractModel {
             myDataTable.setColumnNames(s.readLine());
             String currentline = "";
             while ((currentline = s.readLine()) != null) {
-                System.out.println(currentline);
                 myDataTable.newRow(currentline);
             }
-            myDataTable.sortbyColumn(DATE);
-            List<Double> list = myDataTable.columnValues(DATE);
-            stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
-
+            setStockInfo();
             return true;
         }
         catch (IOException e) {
