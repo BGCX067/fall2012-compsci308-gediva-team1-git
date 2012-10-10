@@ -54,9 +54,9 @@ public class StockModel extends AbstractModel {
             myDataTable.setColumnNames(s.readLine());
             String currentline = "";
             while ((currentline = s.readLine()) != null) {
+                System.out.println(currentline);
                 myDataTable.newRow(currentline);
             }
-
             myDataTable.sortbyColumn(DATE);
             List<Double> list = myDataTable.columnValues(DATE);
             stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
@@ -92,29 +92,15 @@ public class StockModel extends AbstractModel {
          */
         if (!"".equals(requestType) && !myDataTable.columnNames().contains(requestType)) {
             try {
-                RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
-                        .invoke(null, myDataTable);
+                RequestProcessor.processMovingAverage(myDataTable);
+             //   RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
+              //          .invoke(myDataTable);
             }
             catch (SecurityException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+
         }
         return new StockDataSet(myDataTable);
     }

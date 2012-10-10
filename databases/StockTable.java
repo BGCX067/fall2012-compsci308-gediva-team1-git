@@ -9,6 +9,7 @@ public class StockTable extends DataTable<Double> {
 
     public StockTable () {
         super();
+        myDataRows= new ArrayList<StockRowElement>();
     }
     
     public StockTable (DataTable<Double> st) {
@@ -16,12 +17,14 @@ public class StockTable extends DataTable<Double> {
     }
 
     @Override
-    public void newRow (String s) {
+    public void newRow (String sRow) {
         StockRowElement row = new StockRowElement();
-        myDataRows.add(row);
-        String[] sarray = s.split(",");
+        String[] sarray = sRow.split(",");
         for (String rdata : sarray) {
-            row.addData(rdata);
+            String mdata=rdata.replace("-","");
+            System.out.println(mdata);
+            row.addData(mdata);
         }
+        myDataRows.add(row);
     }
 }

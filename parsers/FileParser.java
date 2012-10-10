@@ -22,7 +22,7 @@ public class FileParser extends GenericParser{
 
     @Override
     public Boolean isSupported (String name) {
-        File file = new File("/demo.txt");
+        File file = new File(name);
         return file.canRead();
     }
     
