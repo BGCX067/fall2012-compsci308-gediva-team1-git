@@ -5,11 +5,9 @@ import java.util.ArrayList;
 
 public class StockTable extends DataTable<Double> {
 
-    private ArrayList<StockRowElement> myDataRows;
 
     public StockTable () {
         super();
-        myDataRows= new ArrayList<StockRowElement>();
     }
     
     public StockTable (DataTable<Double> st) {
@@ -25,6 +23,6 @@ public class StockTable extends DataTable<Double> {
             System.out.println(mdata);
             row.addData(mdata);
         }
-        myDataRows.add(row);
+        super.myDataRows.add(row);
     }
 }

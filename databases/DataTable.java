@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class DataTable<T> {
 
     private List<String> myColumnNames;
-    private List<RowElement<T>> myDataRows;
+    protected List<RowElement<T>> myDataRows;
 
     public DataTable () {
         myColumnNames = new ArrayList<String>();
@@ -17,8 +17,8 @@ public abstract class DataTable<T> {
     }
 
     public DataTable (DataTable<T> st) {
-        myColumnNames = new ArrayList<String>(st.myColumnNames);
-        myDataRows = new ArrayList<RowElement<T>>(st.myDataRows);
+        myColumnNames = new ArrayList<String>(st.columnNames());//blantant error
+        myDataRows = new ArrayList<RowElement<T>>(st.getDataRows());
     }
 
     public void setColumnNames (String s) {
@@ -80,6 +80,7 @@ public abstract class DataTable<T> {
     public List<T> columnValues (String attribute) {
         int index = myColumnNames.indexOf(attribute);
         List<T> result = new ArrayList<T>();
+        System.out.println("hi:"+ myDataRows.get(0).getPrimaryValue());
         for (RowElement<T> row : myDataRows) {
             result.add(row.getEntry(index));
         }
@@ -88,6 +89,10 @@ public abstract class DataTable<T> {
     
     public void removeRow (int index) {
         myDataRows.remove(index);
+    }
+        
+    public List<RowElement<T>> getDataRows(){
+        return myDataRows;
     }
 
 }

@@ -16,8 +16,8 @@ public class StockDataSet implements IDataSet<Double> {
 
     @Override
     public List<Double> getData (String attribute) {
-        System.out.println(attribute);
           List<Double> list = myTable.columnValues(attribute);
+          System.out.println(list);
         //  for (int i = list.size() - 1; i >= 0; i--) {
         //      if (!range.contains(list.get(i))) {
         //          myTable.removeRow(i);
