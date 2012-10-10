@@ -34,7 +34,7 @@ public class Main {
         System.out.println(myStockModel.getRequestTypes());
         StockDataSet resultSet=(StockDataSet) myStockModel.process("");
      //   System.out.println(resultSet.attributes());
-        System.out.println(resultSet.getData("Open"));
+        System.out.println(resultSet.getData("Volume"));
         
      //   Canvas display = new Canvas(SIZE);
         

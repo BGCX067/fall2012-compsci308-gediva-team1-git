@@ -80,10 +80,12 @@ public abstract class DataTable<T> {
     public List<T> columnValues (String attribute) {
         int index = myColumnNames.indexOf(attribute);
         List<T> result = new ArrayList<T>();
-        System.out.println("hi:"+ myDataRows.get(0).getPrimaryValue());
-        for (RowElement<T> row : myDataRows) {
-            result.add(row.getEntry(index));
+        System.out.println("hiloo:"+ myDataRows.get(0).getPrimaryValue());
+        for(int i=0; i<myDataRows.size();i++){
+            System.out.println("lalala:" +myDataRows.get(i).getPrimaryValue());
+            result.add(myDataRows.get(i).getEntry(index));
         }
+        System.out.println("this:" + result);
         return Collections.unmodifiableList(result);
     }
     
