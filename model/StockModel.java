@@ -117,14 +117,13 @@ public class StockModel extends AbstractModel {
         private static final double MOVING_AVERAGE_WEIGHT = 0.9;
 
         // used through reflection
-        @SuppressWarnings("unused")
         static void processMovingAverage (StockTable st) {
 
             // need in order time to get moving avg
             st.sortbyColumn(DATE); // TODO: check this assumption
 
             // ready/initialize calculations
-            List<Double> list = st.columnValues("Close");
+            List<Double> list = st.columnValues(CLOSE);
             List<Double> result = new ArrayList<Double>(list.size());
             result.set(0, list.get(0));
 
