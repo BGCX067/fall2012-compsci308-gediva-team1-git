@@ -20,7 +20,6 @@ public class StockTable extends DataTable<Double> {
         String[] sarray = sRow.split(",");
         for (String rdata : sarray) {
             String mdata=rdata.replace("-","");
-            System.out.println(mdata);
             row.addData(mdata);
         }
         super.myDataRows.add(row);
