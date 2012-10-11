@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import views.Canvas;
 import model.StockModel;
 //import views.Canvas;
 import model.responses.StockDataSet;
@@ -33,17 +34,17 @@ public class Main {
         StockDataSet resultSet=(StockDataSet) myStockModel.process("");
         System.out.println(resultSet.getData("Close"));
         
-     //   Canvas display = new Canvas(SIZE);
+        Canvas display = new Canvas(SIZE);
         
         // create container that will work with Window manager
         JFrame frame = new JFrame(TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // add our user interface components to Frame and show it
-     //   frame.getContentPane().add(display);
+        frame.getContentPane().add(display);
         frame.pack();
         frame.setVisible(true);
         
-      //  Controller controller = new StockController(display);
+        Controller controller = new StockController(display);
 
     }
 }

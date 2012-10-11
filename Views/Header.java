@@ -5,6 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
+/**
+ * 
+ * @author Jesse Starr
+ * 
+ * Creates the header for the current view screen.
+ * Dependent on current stock that is loaded.
+ *
+ */
 public class Header extends View{
 
     private String myTitle;
