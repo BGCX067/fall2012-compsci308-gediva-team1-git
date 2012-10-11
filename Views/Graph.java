@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
-import facilitators.Date;
+import java.util.TreeMap;
 
 /**
  * Generic graph class, used to make
@@ -29,13 +29,13 @@ import facilitators.Date;
  * @param <K> the type of xValue (usually dates)
  * @param <V> the type of yValue
  */
-public class Graph<K extends Comparable<? super K>, 
+public abstract class Graph<K extends Comparable<? super K>, 
         V extends Comparable<? super V>> extends View {
 
-    protected Point2D myOrigin;
-    protected Map<K, V> myValues;
-    protected Map<V, Number> yValuesToPoints;
-    protected List<Point2D> myPoints;
+    private Point2D myOrigin;
+    private Map<K, V> myValues;
+    private Map<V, Number> yValuesToPoints;
+    private List<Point2D> myPoints;
     private int yMax;
     private int xMax;
     private String yLabel;
@@ -46,16 +46,19 @@ public class Graph<K extends Comparable<? super K>,
         super(position, size);
 
         //offset origin to make room for axis labels
-        myOrigin = new Point2D.Double(getPosition().getX() + 10,
-                getPosition().getY() + getSize().height - 10);
+        setMyOrigin(new Point2D.Double(getPosition().getX() + 10,
+                getPosition().getY() + getSize().height - 10));
 
-        yMax = (int) myOrigin.getY() - getSize().height + 20;
-        xMax = getSize().width + (int) myOrigin.getX() - 20;
+        yMax = (int) getMyOrigin().getY() - getSize().height + 20;
+        xMax = getSize().width + (int) getMyOrigin().getX() - 20;
 
         yLabel = yAxisLabel;
         xLabel = xAxisLabel;
 
         myValues = values;
+
+        yValuesToPoints = new TreeMap<V, Number>();
+        setMyPoints(new ArrayList<Point2D>());
     }
 
     /**
@@ -66,25 +69,28 @@ public class Graph<K extends Comparable<? super K>,
         super.paintBackground(pen);
 
         //draw y axis
-        pen.drawLine((int) myOrigin.getX(), (int) myOrigin.getY(),
-                (int) myOrigin.getX(), yMax);
+        pen.drawLine((int) getMyOrigin().getX(), (int) getMyOrigin().getY(),
+                (int) getMyOrigin().getX(), yMax);
 
         //draw x axis
-        pen.drawLine((int) myOrigin.getX(), (int) myOrigin.getY(),
-                xMax, (int) myOrigin.getY());
+        pen.drawLine((int) getMyOrigin().getX(), (int) getMyOrigin().getY(),
+                xMax, (int) getMyOrigin().getY());
 
         //draw axes labels
         pen.drawString(yLabel, (int) getPosition().getX() - 10,
-                ((int) myOrigin.getY() + yMax) / 2);
+                ((int) getMyOrigin().getY() + yMax) / 2);
 
-        pen.drawString(xLabel, ((int) myOrigin.getX() + xMax) / 2,
-                (int) myOrigin.getY() + 10);
+        pen.drawString(xLabel, ((int) getMyOrigin().getX() + xMax) / 2,
+                (int) getMyOrigin().getY() + 10);
 
         //draw axes values and tick marks
         writeAxesValues(pen);
+        paintGraph(pen);
     }
+    
+    protected abstract void paintGraph(Graphics2D pen);
 
-    public void writeAxesValues(Graphics2D pen) {
+    private void writeAxesValues(Graphics2D pen) {
         int xScale = getXScale();      //spacing of x values
         int yScale = getYScale();      //spacing of y values
 
@@ -102,8 +108,8 @@ public class Graph<K extends Comparable<? super K>,
 
         //xPos - current x position on the x axis
         //yPos - current y position on the y axis
-        int xPos = (int) myOrigin.getX() + xScale;
-        int yPos = (int) myOrigin.getY() - yScale;
+        int xPos = (int) getMyOrigin().getX() + xScale;
+        int yPos = (int) getMyOrigin().getY() - yScale;
 
         pen.setColor(Color.BLACK);
         Font label = new Font("Helvetica", Font.BOLD, 14);
@@ -113,16 +119,16 @@ public class Graph<K extends Comparable<? super K>,
         // with its y position relative to the origin (for use by 
         // subclasses to determine all their (x,y) points)
         while (xVals.hasNext()) {
-            pen.drawLine(xPos, (int) myOrigin.getY() - 2, 
-                    xPos, (int) myOrigin.getY() + 2); //draw tick mark on x axis
+            pen.drawLine(xPos, (int) getMyOrigin().getY() - 2, 
+                    xPos, (int) getMyOrigin().getY() + 2); //draw tick mark on x axis
 
-            pen.drawLine((int) myOrigin.getX() - 2, 
-                    yPos, (int) myOrigin.getX() + 2, yPos); //draw tick mark on y axis
+            pen.drawLine((int) getMyOrigin().getX() - 2, 
+                    yPos, (int) getMyOrigin().getX() + 2, yPos); //draw tick mark on y axis
 
             K x = xVals.next();
             V y = yVals.next();
-            pen.drawString(x.toString(), xPos, (int) myOrigin.getY() - 5);   //draw next x value
-            pen.drawString(y.toString(), (int) myOrigin.getX() - 5, yPos);   //draw next y value
+            pen.drawString(x.toString(), xPos, (int) getMyOrigin().getY() - 5);   //draw next x value
+            pen.drawString(y.toString(), (int) getMyOrigin().getX() - 5, yPos);   //draw next y value
 
             yValuesToPoints.put(y, yPos);
 
@@ -136,7 +142,7 @@ public class Graph<K extends Comparable<? super K>,
      * @return
      */
     protected int getXScale() {
-        return (xMax - (int) myOrigin.getX()) / myValues.keySet().size();
+        return (xMax - (int) getMyOrigin().getX()) / myValues.keySet().size();
     }
 
     /**
@@ -144,7 +150,7 @@ public class Graph<K extends Comparable<? super K>,
      * @return
      */
     protected int getYScale() {
-        return ((int) myOrigin.getY() - yMax) / myValues.values().size();
+        return ((int) getMyOrigin().getY() - yMax) / myValues.values().size();
     }
     
     /**
@@ -154,20 +160,36 @@ public class Graph<K extends Comparable<? super K>,
      * y values of the data to actual points on the screen).
      * 
      */
-    protected List<Point2D> getPoints() {
+    protected List<Point2D> calculatePoints() {
         int count = 1;
 
         for(K k : myValues.keySet()) {
-            Point2D point = new Point2D.Double(getXScale() * count + myOrigin.getX(), 
+            Point2D point = new Point2D.Double(getXScale() * count + getMyOrigin().getX(), 
                     yValuesToPoints.get(myValues.get(k)).doubleValue());
 
-            if(!myPoints.contains(point)) {
-                myPoints.add(point);
+            if(!getMyPoints().contains(point)) {
+                getMyPoints().add(point);
             }
 
             count ++;
         }
         
+        return getMyPoints();
+    }
+
+    protected void setMyPoints (List<Point2D> myPoints) {
+        this.myPoints = myPoints;
+    }
+
+    protected List<Point2D> getMyPoints () {
         return myPoints;
+    }
+
+    private void setMyOrigin (Point2D myOrigin) {
+        this.myOrigin = myOrigin;
+    }
+
+    public Point2D getMyOrigin () {
+        return myOrigin;
     }
 }

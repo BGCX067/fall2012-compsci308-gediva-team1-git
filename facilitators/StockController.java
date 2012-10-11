@@ -14,7 +14,7 @@ import views.Button;
 import views.Canvas;
 import views.Header;
 import views.Menu;
-import views.StockLineGraph;
+import views.LineGraph;
 import model.StockModel;
 
 public class StockController extends Controller{
@@ -56,7 +56,8 @@ public class StockController extends Controller{
         tree.put(new Date(2012, 10, 20), 50.0);
         tree.put(new Date(2011, 10, 15), 60.0);
         tree.put(new Date(2000, 5, 9), 10.0);
-        StockLineGraph g = new StockLineGraph(new Point2D.Double(200, 200), new Dimension(500, 500), 
+        tree.put(new Date(2009, 5, 6), 15.0);
+        LineGraph g = new LineGraph(new Point2D.Double(200, 200), new Dimension(500, 500), 
                 tree, "time", "yaxis");
         getCanvas().addView(g);
         

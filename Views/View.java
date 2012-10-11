@@ -8,11 +8,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComponent;
 
 public class View extends JComponent {
     
-    private ArrayList<View> myChildren = new ArrayList<View>();
+    private List<View> myChildren = new ArrayList<View>();
     private Color myBackgroundColor = Color.WHITE;
     private Color myBorderColor = Color.BLACK;
     private Point2D myPosition;
