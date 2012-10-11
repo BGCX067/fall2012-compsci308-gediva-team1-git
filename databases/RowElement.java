@@ -17,7 +17,7 @@ public abstract class RowElement <T> implements Comparable<RowElement <T>> {
     
     public abstract T getPrimaryValue();
     
-    public abstract void parseData (String rdata);
+    public abstract void addData (String rdata);
     
     public abstract void addData (T rdata);
 

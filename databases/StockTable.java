@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class StockTable extends DataTable<Double> {
 
-    private ArrayList<StockRowElement> myDataRows;
 
     public StockTable () {
         super();
@@ -16,12 +15,13 @@ public class StockTable extends DataTable<Double> {
     }
 
     @Override
-    public void newRow (String s) {
+    public void newRow (String sRow) {
         StockRowElement row = new StockRowElement();
-        myDataRows.add(row);
-        String[] sarray = s.split(",");
+        String[] sarray = sRow.split(",");
         for (String rdata : sarray) {
-            row.parseData(rdata);
+            String mdata=rdata.replace("-","");
+            row.addData(mdata);
         }
+        super.myDataRows.add(row);
     }
 }

@@ -25,16 +25,32 @@ public class StockModel extends AbstractModel {
      */
     private static final List<String> REQUEST_TYPES =
             new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
+    public static final String SYMBOL = "Symbol";
+    public static final String COMPANY_NAME = "Company Name";
+    public static final String LAST_PRICE = "Last Price";
+    public static final String DATE = "Date";
+    public static final String CLOSE = "Close";
 
     // Holds stock name, symbol, last closing price (formatted $xx.xx)
     private Map<String, String> stockInfo;
     private StockTable myDataTable;
 
-    public StockModel () {
+    public StockModel (String symbol, String companyName) {
+        super();
         stockInfo = new HashMap<String, String>();
+
+        stockInfo.put(SYMBOL, symbol);
+        stockInfo.put(COMPANY_NAME, companyName);
+
         myDataTable = new StockTable();
     }
-
+    
+    public void setStockInfo(){
+        myDataTable.sortbyColumn(DATE);
+        List<Double> list = myDataTable.columnValues(CLOSE);
+        stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
+    }
+    
     /**
      * parses the data and performs some stock specific parsing, like extracting
      * the name and ticker symbol.
@@ -47,7 +63,7 @@ public class StockModel extends AbstractModel {
             while ((currentline = s.readLine()) != null) {
                 myDataTable.newRow(currentline);
             }
-
+            setStockInfo();
             return true;
         }
         catch (IOException e) {
@@ -66,7 +82,7 @@ public class StockModel extends AbstractModel {
 
     @Override
     public String getIdentifier () {
-        return new String(stockInfo.get("symbol"));
+        return new String(stockInfo.get(SYMBOL));
     }
 
     @Override
@@ -79,29 +95,15 @@ public class StockModel extends AbstractModel {
          */
         if (!"".equals(requestType) && !myDataTable.columnNames().contains(requestType)) {
             try {
-                RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
-                        .invoke(null, myDataTable);
+                RequestProcessor.processMovingAverage(myDataTable);
+             //   RequestProcessor.class.getMethod("process" + requestType.replaceAll(" ", ""))
+              //          .invoke(myDataTable);
             }
             catch (SecurityException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+
         }
         return new StockDataSet(myDataTable);
     }
@@ -115,14 +117,13 @@ public class StockModel extends AbstractModel {
         private static final double MOVING_AVERAGE_WEIGHT = 0.9;
 
         // used through reflection
-        @SuppressWarnings("unused")
         static void processMovingAverage (StockTable st) {
 
             // need in order time to get moving avg
-            st.sortbyColumn("Date"); // TODO: make this work????
+            st.sortbyColumn(DATE); // TODO: check this assumption
 
             // ready/initialize calculations
-            List<Double> list = st.columnValues("Close");
+            List<Double> list = st.columnValues(CLOSE);
             List<Double> result = new ArrayList<Double>(list.size());
             result.set(0, list.get(0));
 

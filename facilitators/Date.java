@@ -6,27 +6,27 @@ package facilitators;
  * 
  */
 
-public class Date implements Comparable<Date>{
+public class Date implements Comparable<Date> {
     private int myYear;
     private int myMonth;
     private int myDay;
-    
-    public Date(int year, int month, int day) {
+
+    public Date (int year, int month, int day) {
         myYear = year;
         myMonth = month;
         myDay = day;
     }
-    
-    public String toString() {
+
+    public String toString () {
         return myMonth + "-" + myDay + "-" + myYear;
     }
-    
-    public String getLongFormat() {
-        String months[] = {"Jan", "Feb", "Mar", "Apr", "May",
-                "June", "July", "Aug", "Sept", "Oct",
-                "Nov", "Dec"};
+
+    public String getLongFormat () {
+        String months[] =
+                { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov",
+                 "Dec" };
         String month = months[myMonth];
-        
+
         return month + " " + myDay + ", " + myYear;
     }
 
@@ -74,22 +74,16 @@ public class Date implements Comparable<Date>{
 
     /**
      * Sorts date by year, then month, then day
-     *
+     * 
      * @param d the day to compare against
      */
     @Override
     public int compareTo (Date d) {
-        if(getYear() != d.getYear()) {
-            return getYear() - d.getYear();
-        }
-        
-        if(getMonth() != d.getMonth()) {
-            return getMonth() - d.getMonth();
-        }
-        
+        if (getYear() != d.getYear()) { return getYear() - d.getYear(); }
+
+        if (getMonth() != d.getMonth()) { return getMonth() - d.getMonth(); }
+
         return getDay() - d.getDay();
     }
-    
-    
-    
+
 }

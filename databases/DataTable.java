@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class DataTable<T> {
 
     private List<String> myColumnNames;
-    private List<RowElement<T>> myDataRows;
+    protected List<RowElement<T>> myDataRows;
 
     public DataTable () {
         myColumnNames = new ArrayList<String>();
@@ -17,8 +17,8 @@ public abstract class DataTable<T> {
     }
 
     public DataTable (DataTable<T> st) {
-        myColumnNames = new ArrayList<String>(st.myColumnNames);
-        myDataRows = new ArrayList<RowElement<T>>(st.myDataRows);
+        myColumnNames = new ArrayList<String>(st.columnNames());//blantant error
+        myDataRows = new ArrayList<RowElement<T>>(st.getDataRows());
     }
 
     public void setColumnNames (String s) {
@@ -55,7 +55,7 @@ public abstract class DataTable<T> {
 
     public void parseColumnValues (String colname, Iterator<String> it) {
         for (RowElement<T> row : myDataRows) {
-            row.parseData(it.next());
+            row.addData(it.next());
         }
     }
     
@@ -80,10 +80,18 @@ public abstract class DataTable<T> {
     public List<T> columnValues (String attribute) {
         int index = myColumnNames.indexOf(attribute);
         List<T> result = new ArrayList<T>();
-        for (RowElement<T> row : myDataRows) {
-            result.add(row.getEntry(index));
+        for(int i=0; i<myDataRows.size();i++){
+            result.add(myDataRows.get(i).getEntry(index));
         }
         return Collections.unmodifiableList(result);
+    }
+    
+    public void removeRow (int index) {
+        myDataRows.remove(index);
+    }
+        
+    public List<RowElement<T>> getDataRows(){
+        return myDataRows;
     }
 
 }
