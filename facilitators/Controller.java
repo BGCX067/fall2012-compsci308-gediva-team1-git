@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import javax.swing.JFileChooser;
 import views.Canvas;
-import views.ErrorView;
+import views.labels.ErrorView;
 
 public abstract class Controller {
     private Canvas myCanvas;

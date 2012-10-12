@@ -10,12 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import views.Button;
 import views.Canvas;
-import views.Header;
-import views.Menu;
 import views.graphs.BarGraph;
 import views.graphs.LineGraph;
+import views.labels.Button;
+import views.labels.ErrorView;
+import views.labels.Header;
+import views.labels.Menu;
 import model.StockModel;
 
 public class StockController extends Controller{
@@ -69,6 +70,8 @@ public class StockController extends Controller{
         types.add("Candle Sticks");
         createButtons(types, defaultMenu);
         
+        ErrorView e = new ErrorView(new Point2D.Double(100, 100), new Dimension(100,100), "Test error");
+        getCanvas().addView(e);
     }
     
     // there is a button corresponding to each request type in the model

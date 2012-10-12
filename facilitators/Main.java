@@ -44,7 +44,7 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         
-        Controller controller = new StockController(display);
+//        Controller controller = new StockController(display);
 
     }
 }
