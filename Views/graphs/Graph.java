@@ -6,13 +6,12 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
+import facilitators.Constants;
 import views.View;
 
 /**
@@ -36,7 +35,6 @@ import views.View;
  */
 public abstract class Graph<K extends Comparable<? super K>, 
         V extends Comparable<? super V>> extends View {
-
     private Point2D myOrigin;
     private Map<K, V> myXValuesToYValues;
     private Map<V, Number> yValuesToYPixelVal;
@@ -51,11 +49,11 @@ public abstract class Graph<K extends Comparable<? super K>,
         super(position, size);
 
         //offset origin to make room for axis labels
-        setMyOrigin(new Point2D.Double(getPosition().getX() + 10,
-                getPosition().getY() + getSize().height - 10));
+        setMyOrigin(new Point2D.Double(getPosition().getX() + Constants.GRAPH_ORIGIN_OFFSET,
+                getPosition().getY() + getSize().height - Constants.GRAPH_ORIGIN_OFFSET));
 
-        yAxisHeight = (int) getMyOrigin().getY() - getSize().height + 20;
-        xAxisLength = getSize().width + (int) getMyOrigin().getX() - 20;
+        yAxisHeight = (int) getMyOrigin().getY() - getSize().height + Constants.GRAPH_ORIGIN_OFFSET + 10;
+        xAxisLength = getSize().width + (int) getMyOrigin().getX() - Constants.GRAPH_ORIGIN_OFFSET - 10;
 
         yAxisLabel = y;
         xAxisLabel = x;
@@ -90,10 +88,10 @@ public abstract class Graph<K extends Comparable<? super K>,
         pen.drawLine((int) getMyOrigin().getX(), (int) getMyOrigin().getY(),
                 xAxisLength, (int) getMyOrigin().getY());
 
-        pen.drawString(yAxisLabel, (int) getPosition().getX() - 10,
+        pen.drawString(yAxisLabel, (int) getPosition().getX() - 20,
                 ((int) getMyOrigin().getY() + yAxisHeight) / 2);
         pen.drawString(xAxisLabel, ((int) getMyOrigin().getX() + xAxisLength) / 2,
-                (int) getMyOrigin().getY() + 10);
+                (int) getMyOrigin().getY() + 20);
 
         writeAxesValues(pen);
     }
@@ -128,7 +126,7 @@ public abstract class Graph<K extends Comparable<? super K>,
         int yAxisPosition = (int) getMyOrigin().getY() - getYScale();
 
         pen.setColor(Color.BLACK);
-        Font label = new Font("Helvetica", Font.BOLD, 14);
+        Font label = new Font("Helvetica", Font.BOLD, 12);
         pen.setFont(label);
 
         while (xValues.hasNext()) {
@@ -171,8 +169,8 @@ public abstract class Graph<K extends Comparable<? super K>,
      * @param y the y value to print
      */
     private void drawAxesValues(Graphics2D pen, int xPos, int yPos, K x, V y){
-        pen.drawString(x.toString(), xPos, (int) getMyOrigin().getY() - 5);
-        pen.drawString(y.toString(), (int) getMyOrigin().getX() - 5, yPos);
+        pen.drawString(x.toString(), xPos - 25, (int) getMyOrigin().getY() - 5);
+        pen.drawString(y.toString(), (int) getMyOrigin().getX() - 25, yPos + 5);
 
         yValuesToYPixelVal.put(y, yPos);
     }
