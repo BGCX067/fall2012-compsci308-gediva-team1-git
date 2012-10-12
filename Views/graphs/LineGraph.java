@@ -27,7 +27,7 @@ public class LineGraph extends Graph<Date, Double> {
     /**
      * Paints the points and the line connecting them.
      */ 
-    public void paintGraph(Graphics2D pen) {
+    public void paintData(Graphics2D pen) {
         setMyPoints((ArrayList<Point2D>) calculatePoints());
 
         //fill in the points
@@ -40,7 +40,8 @@ public class LineGraph extends Graph<Date, Double> {
     }
 
     /**
-     * Connects all of the points in the graph.
+     * Connects all of the points in the graph
+     * with a line.
      *
      * @param pen
      */

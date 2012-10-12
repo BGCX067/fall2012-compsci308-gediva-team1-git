@@ -20,9 +20,10 @@ public class BarGraph extends Graph<Date, Double> {
     }
     
     /**
-     * Paints the points and the line connecting them.
+     * Paints the bars corresponding
+     * to the data held by the graph.
      */ 
-    public void paintGraph(Graphics2D pen) {
+    public void paintData(Graphics2D pen) {
         setMyPoints((ArrayList<Point2D>) calculatePoints());
 
         //fill in the points
@@ -34,6 +35,12 @@ public class BarGraph extends Graph<Date, Double> {
         drawBars(pen);
     }
     
+    /**
+     * Draws the bars representing the data held by the graph
+     * on the screen.
+     *
+     * @param pen
+     */
     private void drawBars(Graphics2D pen){
         for(int x = 0; x < getMyPoints().size(); x ++) {
             Point2D curPoint = getMyPoints().get(x);
