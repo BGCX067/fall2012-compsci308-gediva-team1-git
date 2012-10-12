@@ -68,6 +68,8 @@ public class StockController extends Controller{
         LineGraph g = new LineGraph(new Point2D.Double(200, 200), new Dimension(500, 500), 
                 tree, "time", "yaxis");
         getCanvas().addView(g);
+        
+        getCanvas().update();
 
     }
     
