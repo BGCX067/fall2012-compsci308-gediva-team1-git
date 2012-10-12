@@ -1,4 +1,4 @@
-package model.responses;
+package models.responses;
 
 import java.util.List;
 //import javax.media.jai.util.Range;

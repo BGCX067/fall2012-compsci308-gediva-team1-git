@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import views.Canvas;
-import model.StockModel;
 //import views.Canvas;
-import model.responses.StockDataSet;
+import models.StockModel;
+import models.responses.StockDataSet;
 
 
 public class Main {

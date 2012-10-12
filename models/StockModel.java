@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.responses.IDataSet;
-import model.responses.StockDataSet;
+import models.responses.IDataSet;
+import models.responses.StockDataSet;
 import databases.StockTable;
 
 

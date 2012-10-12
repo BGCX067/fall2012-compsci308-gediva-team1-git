@@ -1,4 +1,4 @@
-package facilitators;
+package controllers;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import facilitators.Constants;
+import facilitators.Date;
 import views.Canvas;
 import views.graphs.BarGraph;
 import views.graphs.LineGraph;
@@ -17,7 +19,7 @@ import views.labels.Button;
 import views.labels.ErrorView;
 import views.labels.Header;
 import views.labels.Menu;
-import model.StockModel;
+import models.StockModel;
 
 public class StockController extends Controller{
 

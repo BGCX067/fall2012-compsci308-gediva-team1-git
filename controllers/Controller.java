@@ -1,9 +1,10 @@
-package facilitators;
+package controllers;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.io.File;
 import javax.swing.JFileChooser;
+import facilitators.Constants;
 import views.Canvas;
 import views.labels.ErrorView;
 

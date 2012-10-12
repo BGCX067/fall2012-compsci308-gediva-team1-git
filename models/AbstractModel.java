@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.List;
 import parsers.FileParser;
 import parsers.GenericParser;
 import parsers.WebParser;
-import model.responses.IDataSet;
+import models.responses.IDataSet;
 import databases.DataTable;
 
 
