@@ -3,14 +3,14 @@ package databases;
 import java.util.ArrayList;
 
 
-public class StockTable extends DataTable<Double> {
+public class StockTable extends DataTable<Comparable> {
 
 
     public StockTable () {
         super();
     }
     
-    public StockTable (DataTable<Double> st) {
+    public StockTable (DataTable<Comparable> st) {
         super(st);
     }
 
@@ -19,8 +19,7 @@ public class StockTable extends DataTable<Double> {
         StockRowElement row = new StockRowElement();
         String[] sarray = sRow.split(",");
         for (String rdata : sarray) {
-            String mdata=rdata.replace("-","");
-            row.addData(mdata);
+            row.addData(rdata);
         }
         super.myDataRows.add(row);
     }

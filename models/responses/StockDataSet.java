@@ -6,17 +6,17 @@ import databases.DataTable;
 import databases.StockTable;
 
 
-public class StockDataSet implements IDataSet<Double> {
+public class StockDataSet implements IDataSet<Comparable> {
 
     private StockTable myTable;
 
-    public StockDataSet (DataTable<Double> st) {
+    public StockDataSet (DataTable<Comparable> st) {
         myTable = new StockTable(st);
     }
 
     @Override
-    public List<Double> getData (String attribute) {
-          List<Double> list = myTable.columnValues(attribute);
+    public List<Comparable> getData (String attribute) {
+          List<Comparable> list = myTable.columnValues(attribute);
         //  for (int i = list.size() - 1; i >= 0; i--) {
         //      if (!range.contains(list.get(i))) {
         //          myTable.removeRow(i);
@@ -52,7 +52,7 @@ public class StockDataSet implements IDataSet<Double> {
     }
 
     @Override
-    public IDataSet<Double> range (String attribute) {
+    public IDataSet<Comparable> range (String attribute) {
         // TODO Auto-generated method stub
         return null;
     }

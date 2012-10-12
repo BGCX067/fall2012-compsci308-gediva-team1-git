@@ -16,9 +16,18 @@ public class Date implements Comparable<Date> {
         myMonth = month;
         myDay = day;
     }
+    
+    public Date (String year, String month, String day) {
+        myYear = Integer.parseInt(year);
+        myMonth = Integer.parseInt(month);
+        myDay = Integer.parseInt(day);
+    }
 
     public String toString () {
-        return myMonth + "-" + myDay + "-" + myYear;
+        // for the short format, we take the last two digits
+        // of the year using a mod operator
+        int formattedYear = myYear % 100;
+        return myMonth + "-" + myDay + "-" + formattedYear;
     }
 
     public String getLongFormat () {
@@ -75,7 +84,7 @@ public class Date implements Comparable<Date> {
     /**
      * Sorts date by year, then month, then day
      * 
-     * @param d the day to compare against
+     * @param d the date to compare against
      */
     @Override
     public int compareTo (Date d) {

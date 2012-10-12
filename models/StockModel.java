@@ -49,8 +49,8 @@ public class StockModel extends AbstractModel {
     
     public void setStockInfo(){
         myDataTable.sortbyColumn(DATE);
-        List<Double> list = myDataTable.columnValues(CLOSE);
-        stockInfo.put(LAST_PRICE, String.format("%.2f", list.get(list.size() - 1)));
+        List<Comparable> list = myDataTable.columnValues(CLOSE);
+        stockInfo.put(LAST_PRICE, "$" + String.format("%.2f", (Double) list.get(list.size() - 1)));
     }
     
     /**
@@ -88,7 +88,7 @@ public class StockModel extends AbstractModel {
     }
 
     @Override
-    public IDataSet<Double> process (String requestType) {
+    public IDataSet<Comparable> process (String requestType) {
         /*
          * do nothing if the requestType is empty or if the value is already
          * computed
@@ -125,13 +125,13 @@ public class StockModel extends AbstractModel {
             st.sortbyColumn(DATE); // TODO: check this assumption
 
             // ready/initialize calculations
-            List<Double> list = st.columnValues(CLOSE);
-            List<Double> result = new ArrayList<Double>(list.size());
+            List<Comparable> list = st.columnValues(CLOSE);
+            List<Comparable> result = new ArrayList<Comparable>(list.size());
             result.set(0, list.get(0));
 
             for (int i = 1; i < list.size(); i++) {
-                result.set(i, result.get(i - 1) * (1 - MOVING_AVERAGE_WEIGHT) + list.get(i - 1) *
-                              MOVING_AVERAGE_WEIGHT);
+                result.set(i, (Double) result.get(i - 1) * (1 - MOVING_AVERAGE_WEIGHT)
+                        + (Double) list.get(i - 1) * MOVING_AVERAGE_WEIGHT);
             }
 
             // fill in results
