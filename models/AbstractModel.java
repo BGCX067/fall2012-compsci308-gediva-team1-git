@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import parsers.FileParser;
 import parsers.GenericParser;
 import parsers.WebParser;
@@ -91,6 +92,6 @@ public abstract class AbstractModel {
      */
     public abstract IDataSet<?> process (String requestType);
 
-    public abstract List<String> getRequestTypes ();
+    public abstract Set<String> getRequestTypes ();
     
 }

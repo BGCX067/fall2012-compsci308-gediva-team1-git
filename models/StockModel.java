@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import models.responses.IDataSet;
 import models.responses.StockDataSet;
 import databases.StockTable;
@@ -23,8 +25,8 @@ public class StockModel extends AbstractModel {
      * these must correspond to methods in this.RequestProcessor
      * a method must exist with name: "process" + string.removeWhitespace()
      */
-    private static final List<String> REQUEST_TYPES =
-            new ArrayList<String>(Arrays.asList(new String[] { "Moving Average" }));
+    private static final Set<String> REQUEST_TYPES =
+            new HashSet<String>(Arrays.asList(new String[] { "Moving Average" }));
     public static final String SYMBOL = "Symbol";
     public static final String COMPANY_NAME = "Company Name";
     public static final String LAST_PRICE = "Last Price";
@@ -109,7 +111,7 @@ public class StockModel extends AbstractModel {
     }
 
     @Override
-    public List<String> getRequestTypes () {
+    public Set<String> getRequestTypes () {
         return REQUEST_TYPES;
     }
 

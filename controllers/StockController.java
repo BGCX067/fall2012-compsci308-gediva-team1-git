@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import javax.swing.JFileChooser;
 import facilitators.Constants;
 import facilitators.Date;
 import views.Canvas;
@@ -20,6 +21,7 @@ import views.labels.ErrorView;
 import views.labels.Header;
 import views.labels.Menu;
 import models.StockModel;
+import models.responses.StockDataSet;
 
 public class StockController extends Controller{
 
@@ -27,11 +29,16 @@ public class StockController extends Controller{
     
     public StockController(Canvas c) {
         super.init(c);
+        
+        System.out.println(currentStock.getStockInfo());
+        System.out.println(currentStock.getRequestTypes());
+        StockDataSet resultSet = (StockDataSet) currentStock.process("");
+        System.out.println(resultSet.getData("Close"));
     }
     
     @Override
     protected void startModel (File f) {
-        currentStock = new StockModel("TRLL", "Troll Technologies LLC");
+        currentStock = new StockModel("MS","Morgan Stanley");
         currentStock.initialize(f);
     }
 
@@ -43,19 +50,16 @@ public class StockController extends Controller{
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
         
-        // Map info = currentStock.getStockInfo();
-        Map<String, String> info = new HashMap<String, String>();
-        info.put("name", "Apple Inc.");
-        info.put("symbol", "AAPL");
-        info.put("price", "652.59");
+        Map<String, String> info = currentStock.getStockInfo();
         Header defaultHeader = new Header(new Point2D.Double(0,0),
                 new Dimension(1000, 30),
-                info.get("name"),
-                info.get("symbol"),
-                info.get("price"));
+                info.get("Company Name"),
+                info.get("Symbol"),
+                info.get("Last Price"));
         getCanvas().addView(defaultHeader);
         
-        //practice graph
+        createButtons(currentStock.getRequestTypes(), defaultMenu);
+        
         TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
         tree.put(new Date(2012, 10, 20), 50.0);
         tree.put(new Date(2011, 10, 15), 60.0);
@@ -64,16 +68,7 @@ public class StockController extends Controller{
         LineGraph g = new LineGraph(new Point2D.Double(200, 200), new Dimension(500, 500), 
                 tree, "time", "yaxis");
         getCanvas().addView(g);
-        
-        //createButtons(currentStock.getRequestTypes(), defaultMenu);
-        Set<String> types = new HashSet<String>();
-        types.add("Closing Price");
-        types.add("Moving Average");
-        types.add("Candle Sticks");
-        createButtons(types, defaultMenu);
-        
-        ErrorView e = new ErrorView(new Point2D.Double(100, 100), new Dimension(100,100), "Test error");
-        getCanvas().addView(e);
+
     }
     
     // there is a button corresponding to each request type in the model
