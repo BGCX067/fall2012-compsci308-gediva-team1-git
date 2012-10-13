@@ -1,12 +1,17 @@
 package views.labels;
 
+import controllers.Controller;
+import views.View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
-import views.View;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class creates the buttons displayed
@@ -19,6 +24,9 @@ public class Button extends View {
     private Color myTextColor = Color.BLUE;
     private Color myBackgroundColor = Color.LIGHT_GRAY;
     private String myMessage;
+    private Method myMethod;
+    private Map<String, String> myAttributes;
+    private Controller myResponder;
 
     /**
      * Initializes a button's position, size and label.
@@ -27,11 +35,13 @@ public class Button extends View {
      * @param size of the button
      * @param message displayed on the button
      */
+
     public Button(Point2D position, Dimension size, String message) {
         super(position, size);
         myMessage = message;
         setFocusable(true);
         requestFocus();
+        myAttributes = new HashMap<String, String>();
     }
 
     /**
@@ -76,8 +86,47 @@ public class Button extends View {
                 (int) getPosition().getY() + PADDING_TOP);
     }
 
+    /**
+     * Adds attributes to this button (determines what to do).
+     *
+     * @param key the action
+     * @param value the result
+     */
+    public void addAttribute(String key, String value) {
+        myAttributes.put(key, value);
+    }
+
+    /**
+     * Sets the method for this button.
+     *
+     * @param m the method to set
+     */
+    public void setMethod(Method m) {
+        myMethod = m;
+    }
+
+    /**
+     * Set the instance that will respond to clicks.
+     *
+     * @param c the controller of the button
+     */
+    public void setResponder(Controller c) {
+        myResponder = c;
+    }
+
     @Override
     public void mouseClicked(Point p) {
-        System.out.println("The " + myMessage + " button was pressed");
+        try {
+            myMethod.invoke(myResponder, myAttributes);
+        }
+        catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

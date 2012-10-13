@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import views.graphs.LineGraph;
 import views.labels.Button;
 import views.labels.Header;
 import views.labels.Menu;
+import java.lang.reflect.Method;
 
 /**
  * The controller that is used when downloading
@@ -45,7 +45,6 @@ public class StockController extends Controller {
         super.init(c);
         chooseUrlBySymbol();
         startCanvas();
-
         System.out.println(myCurrentStock.getStockInfo());
         System.out.println(myCurrentStock.getRequestTypes());
         StockDataSet resultSet = (StockDataSet) myCurrentStock.process("");
@@ -167,8 +166,22 @@ public class StockController extends Controller {
                     positionOfNextButton);
             Dimension buttonSize = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
             Button btn = new Button(buttonPosition, buttonSize, label);
+            try {
+                Class mapClass = new HashMap<String, String>().getClass();
+                Method method = this.getClass().getDeclaredMethod("buttonTest", new Class[] {mapClass});
+                btn.setMethod(method);
+                btn.setResponder(this);
+              } catch (SecurityException e) {
+                e.printStackTrace();
+              } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            btn.addAttribute("type", label);
             m.addChild(btn);
             positionOfNextButton += BUTTON_POSITION;
         }
+    }
+    public void buttonTest(HashMap<String, String> attributes) {
+        System.out.println("The " + attributes.get("type") + "Button was pressed.");
     }
 }
