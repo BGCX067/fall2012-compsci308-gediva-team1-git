@@ -2,7 +2,10 @@ package models;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,7 +50,7 @@ public class StockModel extends AbstractModel {
         myDataTable = new StockTable();
     }
     
-    public void setStockInfo(){
+    public void updateLastPrice(){
         myDataTable.sortbyColumn(DATE);
         List<Comparable> list = myDataTable.columnValues(CLOSE);
         stockInfo.put(LAST_PRICE, "$" + String.format("%.2f", (Double) list.get(list.size() - 1)));
@@ -65,7 +68,9 @@ public class StockModel extends AbstractModel {
             while ((currentline = s.readLine()) != null) {
                 myDataTable.newRow(currentline);
             }
-            setStockInfo();
+            List<String> names = myDataTable.columnNames();
+            System.out.println(myDataTable.columnNames().toString());
+            updateLastPrice();
             return true;
         }
         catch (IOException e) {
@@ -80,6 +85,11 @@ public class StockModel extends AbstractModel {
      */
     public Map<String, String> getStockInfo () {
         return Collections.unmodifiableMap(stockInfo);
+    }
+    
+    public void setStockInfo(String symbol, String name) {
+        stockInfo.put(SYMBOL, symbol);
+        stockInfo.put(COMPANY_NAME, name);
     }
 
     @Override

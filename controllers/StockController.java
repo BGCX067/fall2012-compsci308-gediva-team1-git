@@ -3,7 +3,10 @@ package controllers;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -31,18 +34,68 @@ public class StockController extends Controller{
     public StockController(Canvas c) {
         super.init(c);
         
-//        System.out.println(currentStock.getStockInfo());
-//        System.out.println(currentStock.getRequestTypes());
-//        StockDataSet resultSet = (StockDataSet) currentStock.process("");
-//        resultSet.sort("Date");
-//        System.out.println(resultSet.getData("Close"));
-//        System.out.println(resultSet.getData("Date"));
+        chooseUrlBySymbol();
+        startCanvas();
+        
+        System.out.println(currentStock.getStockInfo());
+        System.out.println(currentStock.getRequestTypes());
+        StockDataSet resultSet = (StockDataSet) currentStock.process("");
+        resultSet.sort("Date");
+        System.out.println(resultSet.getData("Close"));
+        System.out.println(resultSet.getData("Date"));
     }
     
     @Override
     protected void startModel (File f) {
         currentStock = new StockModel("MS","Morgan Stanley");
         currentStock.initialize(f);
+    }
+    
+    @Override
+    protected void startModel (String f) {
+        currentStock = new StockModel("MS","Morgan Stanley");
+        currentStock.initialize(f);
+    }
+    
+    // for url stuff, providing the symbol for the model means we can
+    // scrape the name and set the StockInfo accordingly
+    protected void startModel (String f, String symbol, String name) {
+        currentStock = new StockModel(symbol, name);
+        currentStock.initialize(f);
+    }
+    
+    public void chooseUrlBySymbol() {
+        String symbol = "";
+        System.out.println("Enter a stock symbol: ");
+        
+        try {
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+            symbol = bufferRead.readLine();
+        }
+        catch(IOException e)
+        {
+                e.printStackTrace();
+        }
+        
+        String name = "";
+        System.out.println("Enter the company name: ");
+        
+        try {
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+            name = bufferRead.readLine();
+        }
+        catch(IOException e)
+        {
+                e.printStackTrace();
+        }
+        startModel(getStockSourceUrl(symbol), symbol, name);
+        startCanvas();
+    }
+    
+    private String getStockSourceUrl(String symbol) {
+        // this url returns a csv file from google.
+        return "http://www.google.com/finance/historical?q=" 
+                + symbol + "&output=csv";
     }
 
     @Override

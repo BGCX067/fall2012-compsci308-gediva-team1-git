@@ -24,6 +24,7 @@ public abstract class DataTable<T> {
     public void setColumnNames (String s) {
         String[] sArray = s.split(",");
         for (String cname : sArray) {
+            cname = cname.replaceAll("[^A-Za-z0-9]", ""); //remove abnormal characters
             myColumnNames.add(cname);
         }
     }

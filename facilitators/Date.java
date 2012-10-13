@@ -10,6 +10,9 @@ public class Date implements Comparable<Date> {
     private int myYear;
     private int myMonth;
     private int myDay;
+    private static String[] months =
+        { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov",
+        "Dec" };
 
     public Date (int year, int month, int day) {
         myYear = year;
@@ -19,7 +22,11 @@ public class Date implements Comparable<Date> {
     
     public Date (String year, String month, String day) {
         myYear = Integer.parseInt(year);
-        myMonth = Integer.parseInt(month);
+        try {
+            myMonth = Integer.parseInt(month);
+        } catch (Exception e) {
+            myMonth = convertMonthToInt(month);
+        }
         myDay = Integer.parseInt(day);
     }
 
@@ -31,11 +38,7 @@ public class Date implements Comparable<Date> {
     }
 
     public String getLongFormat () {
-        String months[] =
-                { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov",
-                 "Dec" };
         String month = months[myMonth];
-
         return month + " " + myDay + ", " + myYear;
     }
 
@@ -93,6 +96,15 @@ public class Date implements Comparable<Date> {
         if (getMonth() != d.getMonth()) { return getMonth() - d.getMonth(); }
 
         return getDay() - d.getDay();
+    }
+    
+    private int convertMonthToInt(String month) {
+        for (int i = 0; i < months.length; i++) {
+            if (months[i].equals(month))
+                return i;
+        }
+        // something went wrong
+        return -1;
     }
 
 }

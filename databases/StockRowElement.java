@@ -15,8 +15,11 @@ public class StockRowElement extends RowElement<Comparable> {
     @Override
     public void addData (String rdata) {
         try {
-            String date_regex = "((?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3}))[-:\\/.](?:[0]?[1-9]|[1][012])[-:\\/.](?:(?:[0-2]?\\d{1})|(?:[3][01]{1})))(?![\\d])";
-            if (rdata.matches(date_regex)) {
+            // form1 regex is dates of form yyyy-mm-dd, e.g. 1992-09-29
+            String dateForm1 = "((?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3}))[-:\\/.](?:[0]?[1-9]|[1][012])[-:\\/.](?:(?:[0-2]?\\d{1})|(?:[3][01]{1})))(?![\\d])";
+            // form2 regex is dates of form dd-month-yy, e.g. 29-Sep-92
+            String dateForm2 = "((?:(?:[0-2]?\\d{1})|(?:[3][01]{1}))[-:\\/.](?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Sept|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[-:\\/.](?:(?:\\d{1}\\d{1})))(?![\\d])";
+            if (rdata.matches(dateForm1) || rdata.matches(dateForm2)) {
                 try {
                     String[] d = rdata.split("-");
                     Date date = new Date(d[0], d[1], d[2]);
@@ -48,7 +51,7 @@ public class StockRowElement extends RowElement<Comparable> {
     @Override
     public void addData (Comparable rdata) {
         // TODO Auto-generated method stub
-        
+        super.myData.add(rdata);
     }
 
 }
