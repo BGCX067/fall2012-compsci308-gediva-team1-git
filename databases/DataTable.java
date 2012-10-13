@@ -48,7 +48,9 @@ public abstract class DataTable<T> {
     public void setColumnNames (String s) {
         String[] sArray = s.split(",");
         for (String cname : sArray) {
-            myColumnNames.add(cname);
+            //remove abnormal characters
+            String modcname = cname.replaceAll("[^A-Za-z0-9]", "");
+            myColumnNames.add(modcname);
         }
     }
 
@@ -71,7 +73,7 @@ public abstract class DataTable<T> {
     public void setPrimaryKey (String colname) {
         int primaryindex = myColumnNames.indexOf(colname);
         for (RowElement<T> row : getMyDataRows()) {
-            row.setPrimaryIndex(primaryindex);
+            row.setMyPrimaryIndex(primaryindex);
         }
     }
 

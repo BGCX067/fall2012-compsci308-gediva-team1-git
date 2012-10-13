@@ -1,29 +1,42 @@
 package databases;
 
-import java.util.ArrayList;
 import facilitators.Date;
+import java.util.ArrayList;
 
+/**
+ * This class encompasses the information needed to
+ * store and modify elements of a row of stock data.
+ */
 public class StockRowElement extends RowElement<Comparable> {
+
+    /**
+     * Initializes an element of a row of stock data.
+     */
     public StockRowElement () {
-        super.myData = new ArrayList<Comparable>();
+        setMyData(new ArrayList<Comparable>());
     }
 
     @Override
     public void addData (String rdata) {
         try {
-            String date_regex = "((?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3}))[-:\\/.](?:[0]?[1-9]|[1][012])[-:\\/.](?:(?:[0-2]?\\d{1})|(?:[3][01]{1})))(?![\\d])";
-            if (rdata.matches(date_regex)) {
+            // form1 regex is dates of form yyyy-mm-dd, e.g. 1992-09-29
+            String dateForm1 = "((?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3}))[-:\\/.](?:[0]?[1-9]|[1][012])[-:\\/.](?:(?:[0-2]?\\d{1})|(?:[3][01]{1})))(?![\\d])";
+
+            // form2 regex is dates of form dd-month-yy, e.g. 29-Sep-92
+            String dateForm2 = "((?:(?:[0-2]?\\d{1})|(?:[3][01]{1}))[-:\\/.](?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Sept|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[-:\\/.](?:(?:\\d{1}\\d{1})))(?![\\d])";
+
+            if (rdata.matches(dateForm1) || rdata.matches(dateForm2)) {
                 try {
                     String[] d = rdata.split("-");
                     Date date = new Date(d[0], d[1], d[2]);
-                    super.myData.add(date);
+                    super.getMyData().add(date);
                 }
                 catch (Exception e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-            } else {
-                super.myData.add(new Double(rdata));
+            }
+            else {
+                super.getMyData().add(new Double(rdata));
             }
         }
         catch (RuntimeException e) {
@@ -33,14 +46,21 @@ public class StockRowElement extends RowElement<Comparable> {
 
     @Override
     public Comparable getPrimaryValue () {
-        return super.myData.get(myPrimaryIndex);
+        return super.getMyData().get(getMyPrimaryIndex());
     }
 
     @Override
     public int compareTo (RowElement<Comparable> r) {
-        return getPrimaryValue().compareTo(((StockRowElement) r).getPrimaryValue());
+        return getPrimaryValue().compareTo(
+                ((StockRowElement) r).getPrimaryValue());
     }
 
-    @Override
-    public void addData (Comparable rdata) {}
+    /**
+     * Adds another element to this row of stock data.
+     *
+     * @param rdata the data to add to this row
+     */
+    public void addData (Comparable rdata) {
+        super.getMyData().add(rdata);
+    }
 }
