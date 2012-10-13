@@ -17,28 +17,8 @@ public class StockDataSet implements IDataSet<Comparable> {
     @Override
     public List<Comparable> getData (String attribute) {
           List<Comparable> list = myTable.columnValues(attribute);
-        //  for (int i = list.size() - 1; i >= 0; i--) {
-        //      if (!range.contains(list.get(i))) {
-        //          myTable.removeRow(i);
-        //      }
-        //  }
         return myTable.columnValues(attribute);
     }
-    
-   // public StockDataSet range()
-
-   // @Override
-   // public StockDataSet range (String attribute){
-            //, Range range) {
-      //  myTable.sortbyColumn(attribute);
-      //  List<Double> list = myTable.columnValues(attribute);
-      //  for (int i = list.size() - 1; i >= 0; i--) {
-      //      if (!range.contains(list.get(i))) {
-      //          myTable.removeRow(i);
-     //       }
-    //    }
-   //     return this;
-   // }
 
     @Override
     public StockDataSet sort (String attribute) {
@@ -49,12 +29,6 @@ public class StockDataSet implements IDataSet<Comparable> {
     @Override
     public List<String> attributes () {
         return myTable.columnNames();
-    }
-
-    @Override
-    public IDataSet<Comparable> range (String attribute) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
