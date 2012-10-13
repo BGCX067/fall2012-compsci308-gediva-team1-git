@@ -30,8 +30,7 @@ public class StockController extends Controller{
     public StockController(Canvas c) {
         super.init(c);
         
-        chooseUrlBySymbol();
-        startCanvas();
+        startMenu();
         
 //        System.out.println(currentStock.getStockInfo());
 //        System.out.println(currentStock.getRequestTypes());
@@ -85,7 +84,6 @@ public class StockController extends Controller{
                 e.printStackTrace();
         }
         startModel(getStockSourceUrl(symbol), symbol, name);
-        startCanvas();
     }
     
     private String getStockSourceUrl(String symbol) {
@@ -96,21 +94,8 @@ public class StockController extends Controller{
 
     @Override
     protected void startCanvas () {
-        // set up menu
-        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
-        Dimension menuSize = new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
-        Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
-        getCanvas().addView(defaultMenu);
         
-        Map<String, String> info = currentStock.getStockInfo();
-        Header defaultHeader = new Header(new Point2D.Double(0,0),
-                new Dimension(1000, 30),
-                info.get("Company Name"),
-                info.get("Symbol"),
-                info.get("Last Price"));
-        getCanvas().addView(defaultHeader);
-        
-        createButtons(currentStock.getRequestTypes(), defaultMenu);
+        startHeader();
         
         TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
         StockDataSet resultSet = (StockDataSet) currentStock.process("");
@@ -139,32 +124,105 @@ public class StockController extends Controller{
 
     }
     
+    public void startMenu() {
+        // set up menu
+        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
+        Dimension menuSize = new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
+        Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
+        getCanvas().addView(defaultMenu);
+        
+        createButtons(null, defaultMenu);
+    }
+    
+    public void startHeader() {
+        Map<String, String> info = currentStock.getStockInfo();
+        Header defaultHeader = new Header(new Point2D.Double(0,0),
+                new Dimension(1000, 30),
+                info.get("Company Name"),
+                info.get("Symbol"),
+                info.get("Last Price"));
+        getCanvas().addView(defaultHeader);
+    }
+    
     // there is a button corresponding to each request type in the model
     // this helper method populates the menu with them.
     private void createButtons (Set<String> requestTypes, Menu m) {
         int positionOfNextButton = 40;
-        for (String label : requestTypes) {
-            Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
-            Dimension buttonSize = new Dimension(180, 35);
-            Button btn = new Button(buttonPosition, buttonSize, label);
-            try {
-                Class mapClass = new HashMap<String, String>().getClass();
-                Method method = this.getClass().getDeclaredMethod("buttonTest", new Class[] {mapClass});
-                btn.setMethod(method);
-                btn.setResponder(this);
-              } catch (SecurityException e) {
-                e.printStackTrace();
-              } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+        
+        if (requestTypes != null) {
+            //-- create buttons based on available request types...
+            for (String label : requestTypes) {
+                Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
+                Dimension buttonSize = new Dimension(180, 35);
+                Button btn = new Button(buttonPosition, buttonSize, label);
+                
+                btn.addAttribute("type", label);
+                m.addChild(btn);
+                positionOfNextButton += 45;
             }
-            btn.addAttribute("type", label);
-            m.addChild(btn);
-            positionOfNextButton += 45;
         }
+        
+        
+        //-- create buttons for data loading...
+        positionOfNextButton += 45;
+        Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
+        Dimension buttonSize = new Dimension(180, 35);
+        Button btn = new Button(buttonPosition, buttonSize, "Load File");
+        setMethodForButton("respondToChooseFile", btn);
+        btn.setResponder(this);
+        m.addChild(btn);
+        
+        positionOfNextButton += 45;
+        buttonPosition = new Point2D.Double(10, positionOfNextButton);
+        btn = new Button(buttonPosition, buttonSize, "Load from Url");
+        setMethodForButton("respondToChooseUrl", btn);
+        btn.setResponder(this);
+        m.addChild(btn);
+        
+        positionOfNextButton += 45;
+        buttonPosition = new Point2D.Double(10, positionOfNextButton);
+        btn = new Button(buttonPosition, buttonSize, "Load from Symbol");
+        setMethodForButton("repondToChooseSymbol", btn);
+        btn.setResponder(this);
+        m.addChild(btn);
+        
+        getCanvas().update();
+        
     }
     
     public void buttonTest(HashMap<String, String> attributes) {
         System.out.println("The " + attributes.get("type") + "Button was pressed.");
+    }
+    
+    public void setMethodForButton(String methodName, Button btn) {
+        try {
+            Class mapClass = new HashMap<String, String>().getClass();
+            Method method = this.getClass().getDeclaredMethod(methodName, new Class[] {mapClass});
+            btn.setMethod(method);
+            btn.setResponder(this);
+          } catch (SecurityException e) {
+            e.printStackTrace();
+          } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // button responders....
+    
+    
+    public void repondToChooseSymbol(HashMap<String, String> attributes) {
+        chooseUrlBySymbol();
+        startCanvas();
+    }
+    
+    public void respondToChooseUrl(HashMap<String, String> attributes) {
+        chooseUrl();
+        startCanvas();
+    }
+    
+    public void respondToChooseFile(HashMap<String, String> attributes) {
+        chooseFile();
+        startCanvas();
     }
     
 }

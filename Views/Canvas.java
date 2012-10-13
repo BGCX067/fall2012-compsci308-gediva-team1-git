@@ -36,7 +36,7 @@ public class Canvas extends JComponent {
         rootView.addChild(v);
     }
     
-    public void update() {
+    public synchronized void update() {
         repaint();
     }
     
