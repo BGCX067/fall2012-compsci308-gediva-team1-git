@@ -2,12 +2,38 @@ package models.responses;
 
 import java.util.List;
 
+/**
+ * Provides an interface for a set
+ * of data.
+ *
+ * @param <T> the type of data in the
+ * data set.
+ */
 public interface IDataSet<T> {
 
-    public List<T> getData (String attribute);
-    
-    public IDataSet<T> sort (String attribute);
+    /**
+     * Gets the data according to an attribute.
+     *
+     * @param attribute what to look for
+     * when getting the data.
+     */
+    List<T> getData(String attribute);
 
-    public List<String> attributes ();
+    /**
+     * Sorts the data in the data set
+     * according to an attribute.
+     *
+     * @param attribute what to sort
+     * the data by.
+     */
+    IDataSet<T> sort(String attribute);
+
+    /**
+     * Returns a list of attributes held
+     * by the data table.
+     *
+     * @return
+     */
+    List<String> attributes();
 
 }
