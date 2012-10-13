@@ -1,8 +1,8 @@
 package models;
 
+import databases.StockTable;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import models.responses.IDataSet;
 import models.responses.StockDataSet;
-import databases.StockTable;
-
 
 public class StockModel extends AbstractModel {
 

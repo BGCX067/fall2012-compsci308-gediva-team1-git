@@ -1,22 +1,27 @@
 package models.responses;
 
-import java.util.List;
-//import javax.media.jai.util.Range;
 import databases.DataTable;
 import databases.StockTable;
+import java.util.List;
 
-
+/**
+ * Instance of IDataSet that is specific to stock data.
+ */
 public class StockDataSet implements IDataSet<Comparable> {
-
     private StockTable myTable;
 
+    /**
+     * Initializes this stock data set.
+     *
+     * @param st the data table that holds the data
+     * for this data set.
+     */
     public StockDataSet (DataTable<Comparable> st) {
         myTable = new StockTable(st);
     }
 
     @Override
     public List<Comparable> getData (String attribute) {
-          List<Comparable> list = myTable.columnValues(attribute);
         return myTable.columnValues(attribute);
     }
 

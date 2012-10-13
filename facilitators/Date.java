@@ -16,7 +16,7 @@ public class Date implements Comparable<Date> {
         myMonth = month;
         myDay = day;
     }
-    
+
     public Date (String year, String month, String day) {
         myYear = Integer.parseInt(year);
         myMonth = Integer.parseInt(month);
@@ -94,5 +94,4 @@ public class Date implements Comparable<Date> {
 
         return getDay() - d.getDay();
     }
-
 }

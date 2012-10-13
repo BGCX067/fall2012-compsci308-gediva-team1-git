@@ -1,15 +1,11 @@
 package databases;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import facilitators.Date;
 
-
 public class StockRowElement extends RowElement<Comparable> {
-   // ArrayList<Double> myData;
-
     public StockRowElement () {
-        super.myData = (ArrayList<Comparable>) new ArrayList<Comparable>();
+        super.myData = new ArrayList<Comparable>();
     }
 
     @Override
@@ -46,9 +42,5 @@ public class StockRowElement extends RowElement<Comparable> {
     }
 
     @Override
-    public void addData (Comparable rdata) {
-        // TODO Auto-generated method stub
-        
-    }
-
+    public void addData (Comparable rdata) {}
 }

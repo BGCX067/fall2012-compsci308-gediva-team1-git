@@ -8,11 +8,20 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import javax.swing.JComponent;
 
-
+/**
+ * This class describes how to display/initialize
+ * the canvas (window screen displayed to the user)
+ * for the current program.
+ */
 public class Canvas extends JComponent {
-    
-    View rootView;
-        
+    private View myRootView;
+
+    /**
+     * Initializes the canvas (window screen)
+     * to be displayed to the user.
+     *
+     * @param size of the canvas
+     */
     public Canvas (Dimension size) {
      // request component size
         setPreferredSize(size);
@@ -21,35 +30,46 @@ public class Canvas extends JComponent {
         requestFocus();
         Point2D rootPosition = new Point2D.Double(0, 0);
         Dimension rootSize = new Dimension(getWidth() , getHeight());
-        rootView = new View(rootPosition, rootSize);
+        myRootView = new View(rootPosition, rootSize);
         repaint();
         initListener();
     }
-    
+
     @Override
     public void paint(Graphics g) {
         Graphics2D pen = (Graphics2D) g;
-        rootView.paint(pen);
+        myRootView.paint(pen);
     }
-    
+
+    /**
+     * Adds a view (graph or label) to the root view.
+     *
+     * @param v the view to be added
+     */
     public void addView(View v) {
-        rootView.addChild(v);
+        myRootView.addChild(v);
     }
-    
+
+    /**
+     * Updates all of the views of this canvas.
+     */
     public void update() {
         repaint();
     }
-    
+
+    /**
+     * Initializes a listener to listen for mouse
+     * events.
+     */
     private void initListener() {
         addMouseListener(new MouseListener() {
             @Override
             public void mousePressed (MouseEvent e) {
-                
             }
 
             @Override
             public void mouseClicked (MouseEvent e) {
-               rootView.mouseClicked(e.getPoint());
+                myRootView.mouseClicked(e.getPoint());
             }
 
             @Override
@@ -61,9 +81,8 @@ public class Canvas extends JComponent {
             }
 
             @Override
-            public void mouseReleased (MouseEvent e) {   
+            public void mouseReleased (MouseEvent e) {
             }
         });
     }
-    
 }
