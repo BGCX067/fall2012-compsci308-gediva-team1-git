@@ -42,9 +42,6 @@ public abstract class GenericParser {
             e.printStackTrace();
             throw new IOException("IOException");
         }
-        finally {
-            System.out.println("Sorry, try reloading the program.");
-        }
     }
 
     protected abstract Reader getReader (String name) throws IOException;

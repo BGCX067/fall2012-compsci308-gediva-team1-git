@@ -43,16 +43,7 @@ public class StockController extends Controller {
      */
     public StockController(Canvas c) {
         super.init(c);
-        
         startMenu();
-        
-//        System.out.println(currentStock.getStockInfo());
-//        System.out.println(currentStock.getRequestTypes());
-//        StockDataSet resultSet = (StockDataSet) currentStock.process("");
-//        resultSet.sort("Date");
-//        System.out.println(resultSet.getData("Close"));
-//        System.out.println(resultSet.getData("Date"));
-
     }
 
     @Override
@@ -113,9 +104,9 @@ public class StockController extends Controller {
 
     @Override
     protected void startCanvas () {
-        
+
         startHeader();
-        
+
         TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
         StockDataSet resultSet = (StockDataSet) myCurrentStock.process("");
         List<Comparable> datesList = resultSet.getData("Date");
@@ -142,17 +133,17 @@ public class StockController extends Controller {
         getCanvas().addView(g);
         getCanvas().update();
     }
-    
+
     public void startMenu() {
         // set up menu
         Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
         Dimension menuSize = new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
-        
+
         createButtons(null, defaultMenu);
     }
-    
+
     public void startHeader() {
         Map<String, String> info = myCurrentStock.getStockInfo();
         Header defaultHeader = new Header(new Point2D.Double(0,0),
@@ -179,8 +170,7 @@ public class StockController extends Controller {
 //                positionOfNextButton += BUTTON_POSITION;
 //            }
 //        }
-        
-        
+
         //-- create buttons for data loading...
         positionOfNextButton += 45;
         Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
@@ -189,57 +179,55 @@ public class StockController extends Controller {
         setMethodForButton("respondToChooseFile", btn);
         btn.setResponder(this);
         m.addChild(btn);
-        
         positionOfNextButton += 45;
         buttonPosition = new Point2D.Double(10, positionOfNextButton);
         btn = new Button(buttonPosition, buttonSize, "Load from Url");
         setMethodForButton("respondToChooseUrl", btn);
         btn.setResponder(this);
         m.addChild(btn);
-        
+
         positionOfNextButton += 45;
         buttonPosition = new Point2D.Double(10, positionOfNextButton);
         btn = new Button(buttonPosition, buttonSize, "Load from Symbol");
         setMethodForButton("repondToChooseSymbol", btn);
         btn.setResponder(this);
         m.addChild(btn);
-        
+
         getCanvas().update();
-        
     }
     public void buttonTest(HashMap<String, String> attributes) {
         System.out.println("The " + attributes.get("type") + "Button was pressed.");
     }
-    
+
     public void setMethodForButton(String methodName, Button btn) {
         try {
             Class mapClass = new HashMap<String, String>().getClass();
             Method method = this.getClass().getDeclaredMethod(methodName, new Class[] {mapClass});
             btn.setMethod(method);
             btn.setResponder(this);
-          } catch (SecurityException e) {
+        }
+        catch (SecurityException e) {
             e.printStackTrace();
-          } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
-    
+
     // button responders....
-    
-    
+
     public void repondToChooseSymbol(HashMap<String, String> attributes) {
         chooseUrlBySymbol();
         startCanvas();
     }
-    
+
     public void respondToChooseUrl(HashMap<String, String> attributes) {
         chooseUrl();
         startCanvas();
     }
-    
+
     public void respondToChooseFile(HashMap<String, String> attributes) {
         chooseFile();
         startCanvas();
     }
-    
 }
