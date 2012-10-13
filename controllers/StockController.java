@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
@@ -8,24 +7,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import javax.swing.JFileChooser;
-import facilitators.Constants;
-import facilitators.Date;
-import views.Canvas;
-import views.graphs.BarGraph;
-import views.graphs.LineGraph;
-import views.labels.Button;
-import views.labels.ErrorView;
-import views.labels.Header;
-import views.labels.Menu;
 import models.StockModel;
 import models.responses.StockDataSet;
+import views.Canvas;
+import views.graphs.LineGraph;
+import views.labels.Button;
+import views.labels.Header;
+import views.labels.Menu;
+import facilitators.Constants;
+import facilitators.Date;
+import java.lang.reflect.Method;
 
 public class StockController extends Controller{
 
@@ -37,12 +33,12 @@ public class StockController extends Controller{
         chooseUrlBySymbol();
         startCanvas();
         
-        System.out.println(currentStock.getStockInfo());
-        System.out.println(currentStock.getRequestTypes());
-        StockDataSet resultSet = (StockDataSet) currentStock.process("");
-        resultSet.sort("Date");
-        System.out.println(resultSet.getData("Close"));
-        System.out.println(resultSet.getData("Date"));
+//        System.out.println(currentStock.getStockInfo());
+//        System.out.println(currentStock.getRequestTypes());
+//        StockDataSet resultSet = (StockDataSet) currentStock.process("");
+//        resultSet.sort("Date");
+//        System.out.println(resultSet.getData("Close"));
+//        System.out.println(resultSet.getData("Date"));
     }
     
     @Override
@@ -151,9 +147,24 @@ public class StockController extends Controller{
             Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
             Dimension buttonSize = new Dimension(180, 35);
             Button btn = new Button(buttonPosition, buttonSize, label);
+            try {
+                Class mapClass = new HashMap<String, String>().getClass();
+                Method method = this.getClass().getDeclaredMethod("buttonTest", new Class[] {mapClass});
+                btn.setMethod(method);
+                btn.setResponder(this);
+              } catch (SecurityException e) {
+                e.printStackTrace();
+              } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            btn.addAttribute("type", label);
             m.addChild(btn);
             positionOfNextButton += 45;
         }
+    }
+    
+    public void buttonTest(HashMap<String, String> attributes) {
+        System.out.println("The " + attributes.get("type") + "Button was pressed.");
     }
     
 }

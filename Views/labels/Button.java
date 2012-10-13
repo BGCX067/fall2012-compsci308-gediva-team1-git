@@ -8,6 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import views.View;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import controllers.Controller;
+import controllers.StockController;
 
 public class Button extends View {
     
@@ -15,6 +21,9 @@ public class Button extends View {
     private Color myBackgroundColor = Color.LIGHT_GRAY;
     private static int myRadius = 5;
     private String myMessage;
+    private Method myMethod;
+    private Map<String, String> myAttributes;
+    private Controller myResponder;
     
     // constants
     private int PADDING_TOP = 25;
@@ -24,7 +33,8 @@ public class Button extends View {
         super(position, size);
         myMessage = message;
         setFocusable(true);
-        requestFocus();        
+        requestFocus();
+        myAttributes = new HashMap<String, String>();
     }
     
     public Button(Point2D position, Dimension size, String message, Color bgColor, Color textColor) {
@@ -50,9 +60,30 @@ public class Button extends View {
                 (int) getPosition().getY() + PADDING_TOP);
     }
     
+    public void addAttribute(String key, String value) {
+        myAttributes.put(key, value);
+    }
+    
+    public void setMethod(Method m) {
+        myMethod = m;
+    }
+    
+    // set the instance that will resopnd to clicks
+    public void setResponder(Controller c) {
+        myResponder = c;
+    }
+    
     @Override
     public void mouseClicked(Point p) {
-        System.out.println("The "+ myMessage +" button was pressed");
+        try {
+            myMethod.invoke(myResponder, myAttributes);
+          } catch (IllegalArgumentException e) {
+              e.printStackTrace();
+          } catch (IllegalAccessException e) {
+              e.printStackTrace();
+          } catch (InvocationTargetException e) {
+              e.printStackTrace();
+          }
     }
     
 }
