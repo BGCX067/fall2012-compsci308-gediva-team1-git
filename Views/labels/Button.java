@@ -1,7 +1,8 @@
-package Views.labels;
+package views.labels;
 
 import controllers.Controller;
-import Views.View;
+import controllers.StockController;
+import views.View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -95,15 +96,32 @@ public class Button extends View {
     public void addAttribute(String key, String value) {
         myAttributes.put(key, value);
     }
-
+    
+    
     /**
      * Sets the method for this button.
+     * The method m must be a method of the
+     * controller c.
      *
-     * @param m the method to set
+     * @param m the name of the method to set
+     * @param c the controller of the button
      */
-    public void setMethod(Method m) {
-        myMethod = m;
+    public void setMethod(String m, StockController c) {
+        try {
+            Class mapClass = new HashMap<String, String>().getClass();
+            Method method = c.getClass().getDeclaredMethod(m, new Class[] {mapClass});
+            myMethod = method;
+            myResponder = c;
+        }
+        catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
+
+    
 
     /**
      * Set the instance that will respond to clicks.
