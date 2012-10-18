@@ -128,6 +128,7 @@ public class View extends JComponent {
             Rectangle bounds = new Rectangle(p, child.getSize());
             if (bounds.contains(point)) {
                 child.mouseClicked(point);
+                break;
             }
         }
     }
