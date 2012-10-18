@@ -49,12 +49,19 @@ public class Canvas extends JComponent {
     public void addView(View v) {
         myRootView.addChild(v);
     }
-    
+
     /**
      * Updates all of the views of this canvas.
      */
     public void update() {
         repaint();
+    }
+
+    /**
+     * @return the root view
+     */
+    public View getRoot() {
+        return myRootView;
     }
 
     /**

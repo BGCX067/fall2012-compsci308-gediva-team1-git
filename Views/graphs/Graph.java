@@ -134,6 +134,18 @@ public abstract class Graph<K extends Comparable<? super K>,
     protected abstract void paintData(Graphics2D pen);
 
     /**
+     * Returns the type of graph.
+     */
+    public abstract String getType();
+
+    /**
+     * @return the map of x values to y values
+     */
+    public Map<K, V> getVals() {
+        return myXValuesToYValues;
+    }
+
+    /**
      * Writes all the values (and tick marks) along the
      * x and y axes.
      *

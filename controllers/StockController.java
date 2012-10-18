@@ -136,8 +136,10 @@ public class StockController extends Controller {
 
     public void startMenu() {
         // set up menu
-        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
-        Dimension menuSize = new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
+        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH
+                - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
+        Dimension menuSize = new Dimension(Constants.MENU_WIDTH,
+                Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
 
@@ -158,18 +160,6 @@ public class StockController extends Controller {
     // this helper method populates the menu with them.
     private void createButtons (Set<String> requestTypes, Menu m) {
         int positionOfNextButton = BUTTON_POSITION;
-//        if (requestTypes != null) {
-//            for (String label : requestTypes) {
-//                Point2D buttonPosition = new Point2D.Double(10,
-//                        positionOfNextButton);
-//                Dimension buttonSize = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-//                Button btn = new Button(buttonPosition, buttonSize, label);
-//                setMethodForButton("buttonTest", btn);
-//                btn.addAttribute("type", label);
-//                m.addChild(btn);
-//                positionOfNextButton += BUTTON_POSITION;
-//            }
-//        }
 
         //-- create buttons for data loading...
         positionOfNextButton += 45;
@@ -179,6 +169,7 @@ public class StockController extends Controller {
         setMethodForButton("respondToChooseFile", btn);
         btn.setResponder(this);
         m.addChild(btn);
+
         positionOfNextButton += 45;
         buttonPosition = new Point2D.Double(10, positionOfNextButton);
         btn = new Button(buttonPosition, buttonSize, "Load from Url");
@@ -189,14 +180,18 @@ public class StockController extends Controller {
         positionOfNextButton += 45;
         buttonPosition = new Point2D.Double(10, positionOfNextButton);
         btn = new Button(buttonPosition, buttonSize, "Load from Symbol");
-        setMethodForButton("repondToChooseSymbol", btn);
+        setMethodForButton("respondToChooseSymbol", btn);
+        btn.setResponder(this);
+        m.addChild(btn);
+
+        positionOfNextButton += 45;
+        buttonPosition = new Point2D.Double(10, positionOfNextButton);
+        btn = new Button(buttonPosition, buttonSize, "Switch graph view");
+        setMethodForButton("respondToToggleGraph", btn);
         btn.setResponder(this);
         m.addChild(btn);
 
         getCanvas().update();
-    }
-    public void buttonTest(HashMap<String, String> attributes) {
-        System.out.println("The " + attributes.get("type") + "Button was pressed.");
     }
 
     public void setMethodForButton(String methodName, Button btn) {
@@ -216,7 +211,7 @@ public class StockController extends Controller {
 
     // button responders....
 
-    public void repondToChooseSymbol(HashMap<String, String> attributes) {
+    public void respondToChooseSymbol(HashMap<String, String> attributes) {
         chooseUrlBySymbol();
         startCanvas();
     }
@@ -229,5 +224,10 @@ public class StockController extends Controller {
     public void respondToChooseFile(HashMap<String, String> attributes) {
         chooseFile();
         startCanvas();
+    }
+
+    public void respondToToggleGraph(HashMap<String, String> attributes) {
+        toggleGraph();
+        getCanvas().update();
     }
 }

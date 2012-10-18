@@ -43,13 +43,7 @@ public class BarGraph extends Graph<Date, Double> {
     public void paintData(Graphics2D pen) {
         setMyPoints((ArrayList<Point2D>) calculatePoints());
 
-        //fill in the points
-        for (Point2D p : getMyPoints()) {
-            pen.fillOval((int) p.getX(), (int) p.getY(),
-                    Constants.GRAPH_POINT_SIZE, Constants.GRAPH_POINT_SIZE);
-        }
-
-        //connect the points
+        //make the bars
         drawBars(pen);
     }
 
@@ -66,5 +60,12 @@ public class BarGraph extends Graph<Date, Double> {
             pen.fillRect((int)curPoint.getX() - 2, (int)curPoint.getY(),
                     BAR_SIZE, (int)(getMyOrigin().getY() - curPoint.getY()));
         }
+    }
+
+    /**
+     * Returns the type of this graph (bar).
+     */
+    public String getType() {
+        return "Bar";
     }
 }

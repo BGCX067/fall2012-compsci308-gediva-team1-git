@@ -106,6 +106,13 @@ public class View extends JComponent {
     }
 
     /**
+     * Returns the type of view.
+     */
+    public String getType() {
+        return "";
+    }
+
+    /**
      * Decides where the mouse is clicked and determines
      * whether the click is handled by this view or
      * one of its children.
@@ -137,5 +144,12 @@ public class View extends JComponent {
      */
     public Dimension getSize() {
         return mySize;
+    }
+
+    /**
+     * @return the list of children of this view
+     */
+    public List<View> getChildren() {
+        return myChildren;
     }
 }

@@ -76,4 +76,11 @@ public class LineGraph extends Graph<Date, Double> {
                     (int) nextPoint.getX(), (int) nextPoint.getY());
         }
     }
+
+    /**
+     * Returns the type of this graph (line).
+     */
+    public String getType() {
+        return "Line";
+    }
 }

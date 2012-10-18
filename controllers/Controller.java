@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JFileChooser;
 import views.Canvas;
+import views.View;
+import views.graphs.BarGraph;
+import views.graphs.LineGraph;
 import views.labels.ErrorView;
 
 /**
@@ -61,6 +64,29 @@ public abstract class Controller {
             e.printStackTrace();
         }
         startModel(url);
+    }
+
+    /**
+     * Toggles the type of graph on the screen between
+     * line or bar graph.
+     */
+    public void toggleGraph() {
+        for (View v : myCanvas.getRoot().getChildren()) {
+            if (v.getType().equals("Bar")) {
+                BarGraph b = (BarGraph) v;
+                LineGraph l = new LineGraph(b.getPosition(),
+                        b.getSize(), b.getVals(), "Date", "Price");
+                myCanvas.getRoot().removeChild(v);
+                myCanvas.getRoot().addChild(l);
+            }
+            else if (v.getType().equals("Line")) {
+                LineGraph l = (LineGraph) v;
+                BarGraph b = new BarGraph(l.getPosition(),
+                        l.getSize(), l.getVals(), "Date", "Price");
+                myCanvas.getRoot().removeChild(v);
+                myCanvas.getRoot().addChild(b);
+            }
+        }
     }
 
     protected abstract void startModel(File f);
