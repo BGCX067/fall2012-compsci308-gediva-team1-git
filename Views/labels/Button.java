@@ -1,7 +1,7 @@
-package views.labels;
+package Views.labels;
 
 import controllers.Controller;
-import views.View;
+import Views.View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

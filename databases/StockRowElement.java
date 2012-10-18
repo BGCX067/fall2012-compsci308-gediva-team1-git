@@ -30,13 +30,14 @@ public class StockRowElement extends RowElement<Comparable> {
                     String[] d = rdata.split("-");
                     Date date = new Date(d[0], d[1], d[2]);
                     super.getMyData().add(date);
+                    addData(date);
                 }
                 catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }
             else {
-                super.getMyData().add(new Double(rdata));
+            		addData(new Double(rdata));
             }
         }
         catch (RuntimeException e) {
@@ -61,6 +62,6 @@ public class StockRowElement extends RowElement<Comparable> {
      * @param rdata the data to add to this row
      */
     public void addData (Comparable rdata) {
-        super.getMyData().add(rdata);
+        myData.add(rdata);
     }
 }

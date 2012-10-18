@@ -1,4 +1,4 @@
-package views.graphs;
+package Views.graphs;
 
 import facilitators.Constants;
 import facilitators.Date;

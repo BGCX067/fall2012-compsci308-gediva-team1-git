@@ -91,7 +91,7 @@ public class StockModel extends AbstractModel {
     }
 
     /**
-     * Returns basic info about the stockÐ name, ticker symbol, etc.
+     * Returns basic info about the stockï¿½ name, ticker symbol, etc.
      */
     public Map<String, String> getStockInfo () {
         return Collections.unmodifiableMap(myStockInfo);

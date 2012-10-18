@@ -17,8 +17,7 @@ The google code repository is at: http://code.google.com/p/fall2012-compsci308-g
 The project was mainly split up into two working groups: the model group (Lance and Mark) and the view group (Alex and Jesse).
 You can start the project by running Main.java. This will then give you a choice to load data from either: a file, a website URL,
   or you can type in the stock symbol and company name to load from a website (if you do not know the URL). We include one data
-  file, which is located in the data package (the file is called data.csv). There is, however, a concurrent modification exception
-  that occurs during run time after a set of data has been loaded from either a file or from the web. There are two different ways
+  file, which is located in the data package (the file is called data.csv).  There are two different ways
   to view the data, either as a line graph or a bar graph.
 
 These are all issues that we will fix as we complete this assignment and move on to Part III.

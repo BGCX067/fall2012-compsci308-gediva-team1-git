@@ -16,11 +16,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import models.StockModel;
 import models.responses.StockDataSet;
-import views.Canvas;
-import views.graphs.LineGraph;
-import views.labels.Button;
-import views.labels.Header;
-import views.labels.Menu;
+import Views.Canvas;
+import Views.graphs.LineGraph;
+import Views.labels.Button;
+import Views.labels.Header;
+import Views.labels.Menu;
 import java.lang.reflect.Method;
 
 /**
@@ -116,7 +116,6 @@ public class StockController extends Controller {
         Date date;
         Double price;
 
-        // for now, limit the number of points to 20
         int counter = 0;
         while (dates.hasNext() && prices.hasNext() && counter < 20) {
             date = (Date) dates.next();

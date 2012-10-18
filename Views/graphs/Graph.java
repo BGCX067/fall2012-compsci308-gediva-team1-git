@@ -1,4 +1,4 @@
-package views.graphs;
+package Views.graphs;
 
 import facilitators.Constants;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import views.View;
+import Views.View;
 
 /**
  * @author: Jesse Starr

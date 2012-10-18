@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class RowElement <T> implements Comparable<RowElement <T>> {
     private int myPrimaryIndex = 0;
-    private ArrayList<T> myData;
+    protected ArrayList<T> myData;
 
     protected T getEntry(int index) {
         return getMyData().get(index);

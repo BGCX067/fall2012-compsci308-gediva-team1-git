@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JFileChooser;
-import views.Canvas;
-import views.View;
-import views.graphs.BarGraph;
-import views.graphs.LineGraph;
-import views.labels.ErrorView;
+import Views.Canvas;
+import Views.View;
+import Views.graphs.BarGraph;
+import Views.graphs.LineGraph;
+import Views.labels.ErrorView;
 
 /**
  * Abstract controller class that defines
@@ -89,10 +89,6 @@ public abstract class Controller {
         }
     }
 
-    protected abstract void startModel(File f);
-    protected abstract void startModel(String f);
-    protected abstract void startCanvas();
-
     private void showError() {
         Point2D errorPosition = new Point2D.Double(0, 0);
         Dimension errorSize = new Dimension(Constants.CANVAS_WIDTH,
@@ -107,4 +103,9 @@ public abstract class Controller {
     protected Canvas getCanvas() {
         return myCanvas;
     }
+    
+    protected abstract void startModel(File f);
+    protected abstract void startModel(String f);
+    protected abstract void startCanvas();
+
 }

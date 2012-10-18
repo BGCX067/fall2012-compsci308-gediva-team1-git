@@ -1,11 +1,11 @@
-package views.labels;
+package Views.labels;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import views.View;
+import Views.View;
 
 /**
  * This class describes how to paint the menu

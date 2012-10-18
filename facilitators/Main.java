@@ -1,10 +1,11 @@
 package facilitators;
 
+import Views.Canvas;
 import controllers.Controller;
 import controllers.StockController;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import views.Canvas;
+
 
 /**
  * The main class for the program.
