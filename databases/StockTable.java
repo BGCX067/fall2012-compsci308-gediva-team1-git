@@ -30,7 +30,13 @@ public class StockTable extends DataTable<Comparable> {
      */
     public void newRow (String sRow) {
         StockRowElement row = new StockRowElement();
-        String[] sarray = sRow.split(",");
+        String[] sarray={};
+        
+        for (String d: myDelimiters){
+            sarray = sRow.split(d);
+            if(!sarray[0].equals(sRow)) break;
+        }
+        
         for (String rdata : sarray) {
             row.addData(rdata);
         }

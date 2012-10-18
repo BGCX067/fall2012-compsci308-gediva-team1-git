@@ -16,6 +16,7 @@ import java.util.List;
 public abstract class DataTable<T> {
     private List<String> myColumnNames;
     private List<RowElement<T>> myDataRows;
+    protected List<String> myDelimiters;
 
     /**
      * Constructor for the data table.
@@ -25,6 +26,9 @@ public abstract class DataTable<T> {
     public DataTable () {
         myColumnNames = new ArrayList<String>();
         setMyDataRows(new ArrayList<RowElement<T>>());
+        myDelimiters=new ArrayList<String>();
+        myDelimiters.add(",");
+        myDelimiters.add(" ");
     }
 
     /**
