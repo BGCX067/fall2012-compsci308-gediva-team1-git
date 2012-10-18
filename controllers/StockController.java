@@ -16,11 +16,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import models.StockModel;
 import models.responses.StockDataSet;
-import Views.Canvas;
-import Views.graphs.LineGraph;
-import Views.labels.Button;
-import Views.labels.Header;
-import Views.labels.Menu;
+import views.Canvas;
+import views.graphs.LineGraph;
+import views.labels.Button;
+import views.labels.Header;
+import views.labels.Menu;
 import java.lang.reflect.Method;
 
 /**
@@ -160,52 +160,24 @@ public class StockController extends Controller {
     private void createButtons (Set<String> requestTypes, Menu m) {
         int positionOfNextButton = BUTTON_POSITION;
 
-        //-- create buttons for data loading...
-        positionOfNextButton += 45;
-        Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
-        Dimension buttonSize = new Dimension(180, 35);
-        Button btn = new Button(buttonPosition, buttonSize, "Load File");
-        setMethodForButton("respondToChooseFile", btn);
-        btn.setResponder(this);
-        m.addChild(btn);
-
-        positionOfNextButton += 45;
-        buttonPosition = new Point2D.Double(10, positionOfNextButton);
-        btn = new Button(buttonPosition, buttonSize, "Load from Url");
-        setMethodForButton("respondToChooseUrl", btn);
-        btn.setResponder(this);
-        m.addChild(btn);
-
-        positionOfNextButton += 45;
-        buttonPosition = new Point2D.Double(10, positionOfNextButton);
-        btn = new Button(buttonPosition, buttonSize, "Load from Symbol");
-        setMethodForButton("respondToChooseSymbol", btn);
-        btn.setResponder(this);
-        m.addChild(btn);
-
-        positionOfNextButton += 45;
-        buttonPosition = new Point2D.Double(10, positionOfNextButton);
-        btn = new Button(buttonPosition, buttonSize, "Switch graph view");
-        setMethodForButton("respondToToggleGraph", btn);
-        btn.setResponder(this);
-        m.addChild(btn);
+        String btnNames[] = {"Load File", "Load from Url",
+                "Load from Symbol", "Switch graph view"};
+        
+        String btnMethods[] = {"respondToChooseFile", "respondToChooseUrl",
+                "respondToChooseSymbol", "respondToToggleGraph"};
+        
+        
+        for (int i = 0; i < btnNames.length; i++) {
+            positionOfNextButton += 45;
+            Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
+            Dimension buttonSize = new Dimension(180, 35);
+            Button btn = new Button(buttonPosition, buttonSize, btnNames[i]);
+            btn.setMethod(btnMethods[i], this);
+            btn.setResponder(this);
+            m.addChild(btn);
+        }
 
         getCanvas().update();
-    }
-
-    public void setMethodForButton(String methodName, Button btn) {
-        try {
-            Class mapClass = new HashMap<String, String>().getClass();
-            Method method = this.getClass().getDeclaredMethod(methodName, new Class[] {mapClass});
-            btn.setMethod(method);
-            btn.setResponder(this);
-        }
-        catch (SecurityException e) {
-            e.printStackTrace();
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
     }
 
     // button responders....

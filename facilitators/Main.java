@@ -1,6 +1,6 @@
 package facilitators;
 
-import Views.Canvas;
+import views.Canvas;
 import controllers.Controller;
 import controllers.StockController;
 import java.awt.Dimension;

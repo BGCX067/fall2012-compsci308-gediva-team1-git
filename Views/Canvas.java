@@ -1,4 +1,4 @@
-package Views;
+package views;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
