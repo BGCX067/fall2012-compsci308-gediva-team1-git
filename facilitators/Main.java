@@ -1,10 +1,10 @@
 package facilitators;
 
-import views.Canvas;
 import controllers.Controller;
 import controllers.StockController;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import displays.Canvas;
 
 
 /**

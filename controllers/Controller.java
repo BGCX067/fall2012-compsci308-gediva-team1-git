@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JFileChooser;
-import views.Canvas;
-import views.View;
-import views.graphs.BarGraph;
-import views.graphs.LineGraph;
-import views.labels.ErrorView;
+import displays.Canvas;
+import displays.View;
+import displays.graphs.BarGraph;
+import displays.graphs.LineGraph;
+import displays.labels.ErrorView;
 
 /**
  * Abstract controller class that defines

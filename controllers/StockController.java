@@ -16,12 +16,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import models.StockModel;
 import models.responses.StockDataSet;
-import views.Canvas;
-import views.graphs.LineGraph;
-import views.labels.Button;
-import views.labels.Header;
-import views.labels.Menu;
 import java.lang.reflect.Method;
+import displays.Canvas;
+import displays.graphs.LineGraph;
+import displays.labels.Button;
+import displays.labels.Header;
+import displays.labels.Menu;
 
 /**
  * The controller that is used when downloading
@@ -29,9 +29,11 @@ import java.lang.reflect.Method;
  *
  */
 public class StockController extends Controller {
-    private static final int BUTTON_POSITION = 40;
+    private static final int BUTTON_POSITION_Y = 40;
+    private static final int BUTTON_POSITION_X = 10;
     private static final int BUTTON_HEIGHT = 35;
     private static final int BUTTON_WIDTH = 180;
+    private static final int BUTTON_SPACING = 45;
     private StockModel myCurrentStock;
 
     /**
@@ -158,7 +160,7 @@ public class StockController extends Controller {
     // there is a button corresponding to each request type in the model
     // this helper method populates the menu with them.
     private void createButtons (Set<String> requestTypes, Menu m) {
-        int positionOfNextButton = BUTTON_POSITION;
+        int yPositionOfNextButton = BUTTON_POSITION_Y;
 
         String btnNames[] = {"Load File", "Load from Url",
                 "Load from Symbol", "Switch graph view"};
@@ -168,9 +170,9 @@ public class StockController extends Controller {
         
         
         for (int i = 0; i < btnNames.length; i++) {
-            positionOfNextButton += 45;
-            Point2D buttonPosition = new Point2D.Double(10, positionOfNextButton);
-            Dimension buttonSize = new Dimension(180, 35);
+            yPositionOfNextButton += BUTTON_SPACING;
+            Point2D buttonPosition = new Point2D.Double(BUTTON_POSITION_X, yPositionOfNextButton);
+            Dimension buttonSize = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
             Button btn = new Button(buttonPosition, buttonSize, btnNames[i]);
             btn.setMethod(btnMethods[i], this);
             btn.setResponder(this);
