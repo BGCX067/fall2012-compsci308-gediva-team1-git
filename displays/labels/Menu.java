@@ -10,6 +10,8 @@ import displays.View;
 /**
  * This class describes how to paint the menu
  * on the canvas.
+ * 
+ * @author Alex Browne and Jesse Starr
  */
 public class Menu extends View {
     private static final int PADDING_TOP = 25;

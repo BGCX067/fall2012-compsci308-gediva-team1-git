@@ -12,6 +12,8 @@ import javax.swing.JComponent;
  * This class describes how to display/initialize
  * the canvas (window screen displayed to the user)
  * for the current program.
+ * 
+ * @author Alex Browne and Jesse Starr
  */
 public class Canvas extends JComponent {
     private View myRootView;

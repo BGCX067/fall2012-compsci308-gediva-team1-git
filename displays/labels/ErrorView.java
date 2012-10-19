@@ -10,6 +10,8 @@ import displays.View;
 /**
  * This class specifies how to display an
  * error on the canvas.
+ * 
+ * @author Alex Browne and Jesse Starr
  */
 public class ErrorView extends View {
     private static final int PADDING_TOP = 25;

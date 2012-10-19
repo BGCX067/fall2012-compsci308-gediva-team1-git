@@ -5,6 +5,8 @@ import java.util.ArrayList;
 /**
  * Provides an abstract representation of an elemnt of data
  * contained within a row of the DataTable.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  *
  * @param <T>
  */

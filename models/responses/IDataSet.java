@@ -5,6 +5,8 @@ import java.util.List;
 /**
  * Provides an interface for a set
  * of data.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  *
  * @param <T> the type of data in the
  * data set.

@@ -11,6 +11,8 @@ import java.util.List;
  * data table used by the rest of the
  * program.
  * 
+ * @author Lance Co Ting Keh and Mark Govea
+ * 
  * @param <T> is the type of data represented
  *        in the table.
  */

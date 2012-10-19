@@ -27,6 +27,7 @@ import models.responses.StockDataSet;
  * The controller that is used when downloading
  * stock data.
  * 
+ * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class StockController extends Controller {
     private static final int BUTTON_POSITION_Y = 40;

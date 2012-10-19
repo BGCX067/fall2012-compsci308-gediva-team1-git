@@ -17,6 +17,8 @@ import models.responses.StockDataSet;
 /**
  * This class holds all the info and describes how to
  * use/modify it for a current stock.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  */
 public class StockModel extends AbstractModel {
 

@@ -10,11 +10,13 @@ import displays.Canvas;
 /**
  * The main class for the program.
  * Begins the program.
+ * 
+ * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class Main {
 
-    private static final Dimension SIZE = new Dimension(
-            Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
+    private static final Dimension SIZE =
+            new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
 
     private static final String TITLE = "GEDIVA";
 

@@ -9,6 +9,9 @@ import java.net.URLConnection;
 /**
  * Creates a parser that takes information from
  * the web.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
+ * based off of code by Robert C. Duvall
  */
 public class WebParser extends GenericParser {
     static final String HYPERTEXT_PROTOCOL = "http:";

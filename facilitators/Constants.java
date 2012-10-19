@@ -4,7 +4,8 @@ package facilitators;
  * This class provides an easy way
  * to access constants that are
  * commonly used throughout the program.
- *
+ * 
+ * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class Constants {
     public static final int CANVAS_WIDTH = 1000;

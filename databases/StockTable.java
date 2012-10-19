@@ -3,6 +3,8 @@ package databases;
 /**
  * Specifies an instance of DataTable for implementing
  * stock data.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  */
 public class StockTable extends DataTable<Comparable> {
     /**

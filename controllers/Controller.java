@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
  * some methods to be used by a subclass
  * of controller specific to a type of data.
  * 
+ * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public abstract class Controller {
     private static final JFileChooser CHOOSER = new JFileChooser(

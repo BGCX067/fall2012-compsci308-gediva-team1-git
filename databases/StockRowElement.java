@@ -6,6 +6,8 @@ import java.util.ArrayList;
 /**
  * This class encompasses the information needed to
  * store and modify elements of a row of stock data.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  */
 public class StockRowElement extends RowElement<Comparable> {
 

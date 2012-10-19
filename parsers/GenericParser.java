@@ -9,8 +9,8 @@ import java.io.Reader;
  * Abstract class for a file parser from which
  * to get the data.
  *
- * @author GedivaTeam1
- *
+ * @author Lance Co Ting Keh and Mark Govea
+ * based off of code by Robert C. Duvall
  */
 public abstract class GenericParser {
     /**
@@ -24,7 +24,7 @@ public abstract class GenericParser {
      * @param name is the name of the file from which
      * to read
      *
-     * @return
+     * @return BufferedReader - parser from a specified input
      * @throws IOException for any other error
      */
     public BufferedReader generateReader(String name) throws IOException {
@@ -34,8 +34,8 @@ public abstract class GenericParser {
         catch (FileNotFoundException e) {
             System.err.println("File not found exception: " + e.getMessage());
             e.printStackTrace();
-            throw new FileNotFoundException("FileNotFoundException:"
-                    + " Make sure the file is accessible");
+            throw new FileNotFoundException("FileNotFoundException:" +
+                    " Make sure the file is accessible");
         }
         catch (IOException e) {
             System.err.println("Caught IOException: " + e.getMessage());
@@ -50,7 +50,7 @@ public abstract class GenericParser {
      * Determines whether the file is readable/openable.
      *
      * @param name is the name of the file
-     * @return
+     * @return the reader can support this input type
      */
     public abstract Boolean isSupported(String name);
 }

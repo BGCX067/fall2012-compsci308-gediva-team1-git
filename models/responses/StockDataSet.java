@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Instance of IDataSet that is specific to stock data.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  */
 public class StockDataSet implements IDataSet<Comparable> {
     private StockTable myTable;

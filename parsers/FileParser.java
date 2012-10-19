@@ -8,6 +8,9 @@ import java.io.Reader;
 /**
  * Creates a parser that takes information from
  * a file.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
+ * based off of code by Robert C. Duvall
  */
 public class FileParser extends GenericParser {
     /**
@@ -21,7 +24,7 @@ public class FileParser extends GenericParser {
      * Initializes the parser to read from a file.
      *
      * @param file the file from which to read
-     * @return
+     * @return Reader - can read from specified file
      * @throws IOException the exception to be thrown
      * if the file is invalid
      */

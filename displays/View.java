@@ -15,6 +15,8 @@ import javax.swing.JComponent;
  * its children. The root view (in canvas) is actually the only
  * paint method called explicitly by the program, and that root view calls
  * paint on all it's children recursively.
+ * 
+ * @author Alex Browne and Jesse Starr
  */
 public class View extends JComponent {
     private List<View> myChildren = new ArrayList<View>();

@@ -17,6 +17,8 @@ import displays.View;
 /**
  * This class creates the buttons displayed
  * on the side of the window.
+ * 
+ * @author Alex Browne and Jesse Starr
  */
 public class Button extends View {
     private static final int PADDING_TOP = 25;

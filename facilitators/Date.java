@@ -3,17 +3,20 @@ package facilitators;
 /**
  * A basic utility class for storing dates in a readable
  * and manipulatable format.
- *
+ * 
+ * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class Date implements Comparable<Date> {
-    private static String[] ourMonths = {"Jan", "Feb", "Mar",
-        "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    private static String[] ourMonths = { "Jan", "Feb", "Mar", "Apr", "May",
+                                         "June", "July", "Aug", "Sept", "Oct",
+                                         "Nov", "Dec" };
     private int myYear;
     private int myMonth;
     private int myDay;
 
     /**
      * Initializes a date if the info is in number format.
+     * 
      * @param year of the date
      * @param month of the date
      * @param day of the date
@@ -26,7 +29,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * Initializes a date if the input is in string format.
-     *
+     * 
      * @param year of the date
      * @param month of the date
      * @param day of the date
@@ -104,7 +107,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * Sorts date by year, then month, then day.
-     *
+     * 
      * @param d the date to compare against
      */
     @Override
@@ -116,11 +119,9 @@ public class Date implements Comparable<Date> {
         return getDay() - d.getDay();
     }
 
-    private int convertMonthToInt(String month) {
+    private int convertMonthToInt (String month) {
         for (int i = 0; i < ourMonths.length; i++) {
-            if (ourMonths[i].equals(month)) {
-                return i;
-            }
+            if (ourMonths[i].equals(month)) { return i; }
         }
         // something went wrong
         return -1;

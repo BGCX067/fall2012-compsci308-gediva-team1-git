@@ -18,6 +18,8 @@ import parsers.WebParser;
 /**
  * Describes the abstract implementation for the
  * model used by the program.
+ * 
+ * @author Lance Co Ting Keh and Mark Govea
  */
 public abstract class AbstractModel {
 
