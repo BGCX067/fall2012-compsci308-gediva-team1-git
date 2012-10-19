@@ -5,18 +5,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+
 /**
  * Abstract class for initializing the
  * data table used by the rest of the
  * program.
- *
+ * 
  * @param <T> is the type of data represented
- * in the table.
+ *        in the table.
  */
 public abstract class DataTable<T> {
+    protected static final String[] DELIMITERS = { ",", "\t", " " };
+
     private List<String> myColumnNames;
     private List<RowElement<T>> myDataRows;
-    protected List<String> myDelimiters;
 
     /**
      * Constructor for the data table.
@@ -26,17 +28,14 @@ public abstract class DataTable<T> {
     public DataTable () {
         myColumnNames = new ArrayList<String>();
         setMyDataRows(new ArrayList<RowElement<T>>());
-        myDelimiters=new ArrayList<String>();
-        myDelimiters.add(",");
-        myDelimiters.add(" ");
     }
 
     /**
      * Initializes this data table based on
      * one that is passed in.
-     *
+     * 
      * @param startFrom is the data table from which to
-     * initialize the current data table
+     *        initialize the current data table
      */
     public DataTable (DataTable<T> startFrom) {
         myColumnNames = new ArrayList<String>(startFrom.columnNames());
@@ -45,14 +44,22 @@ public abstract class DataTable<T> {
 
     /**
      * Sets the column names of this data table.
-     *
+     * 
      * @param s is the string holding the column
-     * names (all separated by commas).
+     *        names (all separated by commas).
      */
     public void setColumnNames (String s) {
-        String[] sArray = s.split(",");
+        String[] sArray = {};
+
+        for (String d : DELIMITERS) {
+            sArray = s.split(d);
+            if (!sArray[0].equals(s)) {
+                break;
+            }
+        }
+
         for (String cname : sArray) {
-            //remove abnormal characters
+            // remove abnormal characters
             String modcname = cname.replaceAll("[^A-Za-z0-9]", "");
             myColumnNames.add(modcname);
         }
@@ -62,17 +69,17 @@ public abstract class DataTable<T> {
      * Abstract method that is filled out by
      * a specific instance of DataTable used
      * to add a new row.
-     *
+     * 
      * @param s is the string holding the new
-     * data (separated by commas).
+     *        data (separated by commas).
      */
     protected abstract void newRow (String s);
 
     /**
      * Setting a column as the primary key.
-     *
+     * 
      * @param colname is the name of the column
-     * from which to set the primary key.
+     *        from which to set the primary key.
      */
     public void setPrimaryKey (String colname) {
         int primaryindex = myColumnNames.indexOf(colname);
@@ -83,9 +90,9 @@ public abstract class DataTable<T> {
 
     /**
      * Sorts the data table by column.
-     *
+     * 
      * @param colname is the name of the column
-     * from which to base the sorting procedure.
+     *        from which to base the sorting procedure.
      */
     public void sortbyColumn (String colname) {
         setPrimaryKey(colname);
@@ -94,9 +101,9 @@ public abstract class DataTable<T> {
 
     /**
      * Adds an empty column to the data table.
-     *
+     * 
      * @param colname the name of the column
-     * to be added.
+     *        to be added.
      */
     public void addColumn (String colname) {
         myColumnNames.add(colname);
@@ -149,9 +156,9 @@ public abstract class DataTable<T> {
 
     /**
      * Removes the row specified by index.
-     *
+     * 
      * @param index the position of the row
-     * to be removed (from the top).
+     *        to be removed (from the top).
      */
     public void removeRow (int index) {
         getMyDataRows().remove(index);

@@ -32,7 +32,7 @@ public class StockTable extends DataTable<Comparable> {
         StockRowElement row = new StockRowElement();
         String[] sarray={};
         
-        for (String d: myDelimiters){
+        for (String d: DELIMITERS){
             sarray = sRow.split(d);
             if(!sarray[0].equals(sRow)) break;
         }
