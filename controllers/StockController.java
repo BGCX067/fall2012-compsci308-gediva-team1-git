@@ -1,5 +1,10 @@
 package controllers;
 
+import displays.Canvas;
+import displays.graphs.LineGraph;
+import displays.labels.Button;
+import displays.labels.Header;
+import displays.labels.Menu;
 import facilitators.Constants;
 import facilitators.Date;
 import java.awt.Dimension;
@@ -16,17 +21,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import models.StockModel;
 import models.responses.StockDataSet;
-import java.lang.reflect.Method;
-import displays.Canvas;
-import displays.graphs.LineGraph;
-import displays.labels.Button;
-import displays.labels.Header;
-import displays.labels.Menu;
+
 
 /**
  * The controller that is used when downloading
  * stock data.
- *
+ * 
  */
 public class StockController extends Controller {
     private static final int BUTTON_POSITION_Y = 40;
@@ -40,10 +40,11 @@ public class StockController extends Controller {
      * Initializes the stock controller by
      * calling the initializer for the
      * superclass.
+     * 
      * @param c is the canvas from which
-     * this controller is initialized.
+     *        this controller is initialized.
      */
-    public StockController(Canvas c) {
+    public StockController (Canvas c) {
         super.init(c);
         startMenu();
     }
@@ -71,13 +72,13 @@ public class StockController extends Controller {
      * Lets the user choose a source URL by the symbol
      * of a stock that they want.
      */
-    public void chooseUrlBySymbol() {
+    public void chooseUrlBySymbol () {
         String symbol = "";
         System.out.println("Enter a stock symbol: ");
 
         try {
-            BufferedReader bufferRead = new BufferedReader(
-                    new InputStreamReader(System.in));
+            BufferedReader bufferRead =
+                    new BufferedReader(new InputStreamReader(System.in));
             symbol = bufferRead.readLine();
         }
         catch (IOException e) {
@@ -88,8 +89,8 @@ public class StockController extends Controller {
         System.out.println("Enter the company name: ");
 
         try {
-            BufferedReader bufferRead = new BufferedReader(
-                    new InputStreamReader(System.in));
+            BufferedReader bufferRead =
+                    new BufferedReader(new InputStreamReader(System.in));
             name = bufferRead.readLine();
         }
         catch (IOException e) {
@@ -98,10 +99,10 @@ public class StockController extends Controller {
         startModel(getStockSourceUrl(symbol), symbol, name);
     }
 
-    private String getStockSourceUrl(String symbol) {
+    private String getStockSourceUrl (String symbol) {
         // this url returns a csv file from google.
-        return "http://www.google.com/finance/historical?q="
-                + symbol + "&output=csv";
+        return "http://www.google.com/finance/historical?q=" + symbol +
+               "&output=csv";
     }
 
     @Override
@@ -126,34 +127,44 @@ public class StockController extends Controller {
             counter++;
         }
 
-        LineGraph g = new LineGraph(new Point2D.Double(0,
-                Constants.HEADER_HEIGHT),
-                new Dimension(Constants.CANVAS_WIDTH - Constants.MENU_WIDTH,
-                        Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT),
-                tree, "date", "price");
+        LineGraph g =
+                new LineGraph(new Point2D.Double(0, Constants.HEADER_HEIGHT),
+                              new Dimension(Constants.CANVAS_WIDTH -
+                                            Constants.MENU_WIDTH,
+                                            Constants.CANVAS_HEIGHT -
+                                                    Constants.HEADER_HEIGHT),
+                              tree, "date", "price");
         getCanvas().addView(g);
         getCanvas().update();
     }
 
-    public void startMenu() {
+    /**
+     * Generates the view's menu and puts it in the canvas
+     */
+    public void startMenu () {
         // set up menu
-        Point2D menuPosition = new Point2D.Double(Constants.CANVAS_WIDTH
-                - Constants.MENU_WIDTH, Constants.HEADER_HEIGHT);
-        Dimension menuSize = new Dimension(Constants.MENU_WIDTH,
-                Constants.CANVAS_HEIGHT - Constants.HEADER_HEIGHT);
+        Point2D menuPosition =
+                new Point2D.Double(Constants.CANVAS_WIDTH -
+                                   Constants.MENU_WIDTH,
+                                   Constants.HEADER_HEIGHT);
+        Dimension menuSize =
+                new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT -
+                                                    Constants.HEADER_HEIGHT);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
         getCanvas().addView(defaultMenu);
 
         createButtons(null, defaultMenu);
     }
 
-    public void startHeader() {
+    /**
+     * Generates a header for the current stock and puts it in the canvas
+     */
+    public void startHeader () {
         Map<String, String> info = myCurrentStock.getStockInfo();
-        Header defaultHeader = new Header(new Point2D.Double(0,0),
-                new Dimension(1000, 30),
-                info.get("Company Name"),
-                info.get("Symbol"),
-                info.get("Last Price"));
+        Header defaultHeader =
+                new Header(new Point2D.Double(0, 0), new Dimension(1000, 30),
+                           info.get("Company Name"), info.get("Symbol"),
+                           info.get("Last Price"));
         getCanvas().addView(defaultHeader);
     }
 
@@ -162,16 +173,18 @@ public class StockController extends Controller {
     private void createButtons (Set<String> requestTypes, Menu m) {
         int yPositionOfNextButton = BUTTON_POSITION_Y;
 
-        String btnNames[] = {"Load File", "Load from Url",
-                "Load from Symbol", "Switch graph view"};
-        
-        String btnMethods[] = {"respondToChooseFile", "respondToChooseUrl",
-                "respondToChooseSymbol", "respondToToggleGraph"};
-        
-        
+        String btnNames[] =
+                { "Load File", "Load from Url", "Load from Symbol",
+                 "Switch graph view" };
+
+        String btnMethods[] =
+                { "respondToChooseFile", "respondToChooseUrl",
+                 "respondToChooseSymbol", "respondToToggleGraph" };
+
         for (int i = 0; i < btnNames.length; i++) {
             yPositionOfNextButton += BUTTON_SPACING;
-            Point2D buttonPosition = new Point2D.Double(BUTTON_POSITION_X, yPositionOfNextButton);
+            Point2D buttonPosition =
+                    new Point2D.Double(BUTTON_POSITION_X, yPositionOfNextButton);
             Dimension buttonSize = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
             Button btn = new Button(buttonPosition, buttonSize, btnNames[i]);
             btn.setMethod(btnMethods[i], this);
@@ -184,22 +197,42 @@ public class StockController extends Controller {
 
     // button responders....
 
-    public void respondToChooseSymbol(HashMap<String, String> attributes) {
+    /**
+     * functionality for the "Load from Symbol" button
+     * 
+     * @param attributes Button attributes (unused for this function)
+     */
+    public void respondToChooseSymbol (HashMap<String, String> attributes) {
         chooseUrlBySymbol();
         startCanvas();
     }
 
-    public void respondToChooseUrl(HashMap<String, String> attributes) {
+    /**
+     * functionality for the "Load from URL" button
+     * 
+     * @param attributes Button attributes (unused for this function)
+     */
+    public void respondToChooseUrl (HashMap<String, String> attributes) {
         chooseUrl();
         startCanvas();
     }
 
-    public void respondToChooseFile(HashMap<String, String> attributes) {
+    /**
+     * functionality for the "Load File" button
+     * 
+     * @param attributes Button attributes (unused for this function)
+     */
+    public void respondToChooseFile (HashMap<String, String> attributes) {
         chooseFile();
         startCanvas();
     }
 
-    public void respondToToggleGraph(HashMap<String, String> attributes) {
+    /**
+     * functionality for the "Switch graph view" button
+     * 
+     * @param attributes Button attributes (unused for this function)
+     */
+    public void respondToToggleGraph (HashMap<String, String> attributes) {
         toggleGraph();
         getCanvas().update();
     }
