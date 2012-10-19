@@ -23,8 +23,8 @@ import javax.swing.JFileChooser;
  * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public abstract class Controller {
-    private static final JFileChooser CHOOSER = new JFileChooser(
-            System.getProperties().getProperty("user.dir"));
+    private static final JFileChooser CHOOSER = new JFileChooser(System
+            .getProperties().getProperty("user.dir"));
     private Canvas myCanvas;
 
     /**
@@ -74,22 +74,26 @@ public abstract class Controller {
      */
     public void toggleGraph () {
         for (View v : myCanvas.getRoot().getChildren()) {
+            BarGraph b = null;
+            LineGraph l = null;
             if ("Bar".equals(v.getType())) {
-                BarGraph b = (BarGraph) v;
-                LineGraph l =
+                b = (BarGraph) v;
+                l =
                         new LineGraph(b.getPosition(), b.getSize(),
                                       b.getVals(), "Date", "Price");
-                myCanvas.getRoot().removeChild(v);
-                myCanvas.getRoot().addChild(l);
+
             }
             else if ("Line".equals(v.getType())) {
-                LineGraph l = (LineGraph) v;
-                BarGraph b =
-                        new BarGraph(l.getPosition(), l.getSize(), l.getVals(),
-                                     "Date", "Price");
-                myCanvas.getRoot().removeChild(v);
-                myCanvas.getRoot().addChild(b);
+                l = (LineGraph) v;
+                b =
+                        new BarGraph(l.getPosition(), l.getSize(),
+                                     l.getVals(), "Date", "Price");
             }
+            else {
+                break;
+            }
+            myCanvas.getRoot().removeChild(v);
+            myCanvas.getRoot().addChild(l);
         }
     }
 
@@ -101,8 +105,8 @@ public abstract class Controller {
                 new ErrorView(
                               errorPosition,
                               errorSize,
-                              "Either the file was invalid or not found :" +
-                                  "(\n Please close the app and try again.");
+                              "Either the file was invalid or not found :"
+                                      + "(\n Please close the app and try again.");
         myCanvas.addView(errorMessage);
     }
 
