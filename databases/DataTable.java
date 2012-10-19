@@ -112,12 +112,13 @@ public abstract class DataTable<T> {
 
     }
 
-    public void parseColumnValues (String colname, Iterator<String> it) {
-        for (RowElement<T> row : getMyDataRows()) {
-            row.addData(it.next());
-        }
-    }
-
+    /**
+     * Sets the values for one column (and all RowElements)
+     * 
+     * @param colname name on the column to set
+     * @param it iterator with values to be set (in the same order as the
+     *        corresponding rows)
+     */
     public void setColumnValues (String colname, Iterator<T> it) {
         for (RowElement<T> row : getMyDataRows()) {
             row.addData(it.next());
@@ -147,6 +148,13 @@ public abstract class DataTable<T> {
         return Collections.unmodifiableList(myColumnNames);
     }
 
+    /**
+     * Returns the values of one column in an unmodifiable list (in the same
+     * order as the current rows)
+     * 
+     * @param attribute name of the column to get data from
+     * @return unmodifiable list of the specified column's data
+     */
     public List<T> columnValues (String attribute) {
         int index = myColumnNames.indexOf(attribute);
         List<T> result = new ArrayList<T>();
