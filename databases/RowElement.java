@@ -1,6 +1,6 @@
 package databases;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides an abstract representation of an elemnt of data
@@ -12,16 +12,16 @@ import java.util.ArrayList;
  */
 public abstract class RowElement <T> implements Comparable<RowElement <T>> {
     private int myPrimaryIndex = 0;
-    protected ArrayList<T> myData;
+    private List<T> myData;
 
     protected T getEntry(int index) {
-        return getMyData().get(index);
+        return getData().get(index);
     }
 
     /**
      * Returns the primary value.
      */
-    public abstract T getPrimaryValue();
+    protected abstract T getPrimaryValue();
 
     /**
      * Adds data to this element if the data
@@ -29,7 +29,7 @@ public abstract class RowElement <T> implements Comparable<RowElement <T>> {
      *
      * @param rdata the data to be added
      */
-    public abstract void addData (String rdata);
+    protected abstract void addData (String rdata);
 
     /**
      * Adds data to this element in the data
@@ -37,16 +37,16 @@ public abstract class RowElement <T> implements Comparable<RowElement <T>> {
      *
      * @param rdata the data to be added
      */
-    public abstract void addData (T rdata);
+    protected abstract void addData (T rdata);
 
     @Override
     public abstract int compareTo (RowElement<T> r);
 
-    protected void setMyData (ArrayList<T> data) {
+    protected void setData (List<T> data) {
         this.myData = data;
     }
 
-    protected ArrayList<T> getMyData () {
+    protected List<T> getData () {
         return myData;
     }
 
