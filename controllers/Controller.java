@@ -2,17 +2,10 @@ package controllers;
 
 import displays.Canvas;
 import displays.View;
-import displays.graphs.BarGraph;
-import displays.graphs.LineGraph;
-import displays.labels.ErrorView;
-import facilitators.Constants;
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import javax.swing.JFileChooser;
 
 
 /**
@@ -23,8 +16,6 @@ import javax.swing.JFileChooser;
  * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public abstract class Controller {
-    private static final JFileChooser CHOOSER = new JFileChooser(System
-            .getProperties().getProperty("user.dir"));
     private Canvas myCanvas;
 
     /**
@@ -41,11 +32,10 @@ public abstract class Controller {
      * data.
      */
     public void chooseFile () {
-        int response = CHOOSER.showOpenDialog(null);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            startModel(CHOOSER.getSelectedFile());
+        try {
+            startModel(View.chooseFile());
         }
-        else {
+        catch (RuntimeException e) {
             showError();
         }
     }
@@ -73,41 +63,11 @@ public abstract class Controller {
      * line or bar graph.
      */
     public void toggleGraph () {
-        for (View v : myCanvas.getRoot().getChildren()) {
-            BarGraph b = null;
-            LineGraph l = null;
-            if ("Bar".equals(v.getType())) {
-                b = (BarGraph) v;
-                l =
-                        new LineGraph(b.getPosition(), b.getSize(),
-                                      b.getVals(), "Date", "Price");
-
-            }
-            else if ("Line".equals(v.getType())) {
-                l = (LineGraph) v;
-                b =
-                        new BarGraph(l.getPosition(), l.getSize(),
-                                     l.getVals(), "Date", "Price");
-            }
-            else {
-                break;
-            }
-            myCanvas.getRoot().removeChild(v);
-            myCanvas.getRoot().addChild(l);
-        }
+        View.toggleGraph(myCanvas);
     }
 
     private void showError () {
-        Point2D errorPosition = new Point2D.Double(0, 0);
-        Dimension errorSize =
-                new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
-        ErrorView errorMessage =
-                new ErrorView(
-                              errorPosition,
-                              errorSize,
-                              "Either the file was invalid or not found :"
-                                      + "(\n Please close the app and try again.");
-        myCanvas.addView(errorMessage);
+        View.showFileSelectionError(myCanvas);
     }
 
     protected Canvas getCanvas () {
