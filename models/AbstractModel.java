@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import models.responses.IDataSet;
 import parsers.FileParser;
 import parsers.GenericParser;
@@ -112,5 +111,5 @@ public abstract class AbstractModel {
     /**
      * Returns a list of possible request types.
      */
-    public abstract Set<String> getRequestTypes ();
+    public abstract String[] getRequestTypes ();
 }

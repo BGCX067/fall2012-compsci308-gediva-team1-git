@@ -17,7 +17,9 @@ public interface IDataSet<T> {
      * Gets the data according to an attribute.
      *
      * @param attribute what to look for
-     * when getting the data.
+     *        when getting the data.
+     * @return a list containing ordered
+     *        data of the specified attribute
      */
     List<T> getData(String attribute);
 
@@ -26,7 +28,8 @@ public interface IDataSet<T> {
      * according to an attribute.
      *
      * @param attribute what to sort
-     * the data by.
+     *        the data by.
+     * @return a sorted version of the dataSet
      */
     IDataSet<T> sort(String attribute);
 
@@ -34,7 +37,7 @@ public interface IDataSet<T> {
      * Returns a list of attributes held
      * by the data table.
      *
-     * @return
+     * @return list of attributes
      */
     List<String> attributes();
 

@@ -4,15 +4,13 @@ import databases.StockTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import models.responses.IDataSet;
 import models.responses.StockDataSet;
+
 
 /**
  * This class holds all the info and describes how to
@@ -22,15 +20,15 @@ import models.responses.StockDataSet;
  */
 public class StockModel extends AbstractModel {
 
-    /**
-     * Contains a list of possible evaluation methods.
+    /* 
+     * REQUEST_TYPES contains a list of possible evaluation methods.
      * We also support "no-action" calls with the empty string () as an argument
-     *
+     * 
      * These must correspond to methods in this.RequestProcessor
      * a method must exist with name: "process" + string.removeWhitespace().
      */
-    private static final Set<String> REQUEST_TYPES =
-            new HashSet<String>(Arrays.asList(new String[] {"Moving Average"}));
+    private static final String[] REQUEST_TYPES =
+            new String[] { "Moving Average" };
     private static final String SYMBOL = "Symbol";
     private static final String COMPANY_NAME = "Company Name";
     private static final String LAST_PRICE = "Last Price";
@@ -43,7 +41,7 @@ public class StockModel extends AbstractModel {
 
     /**
      * Initializes a model specific to stock data.
-     *
+     * 
      * @param symbol the ticker symbol of the stock
      * @param companyName the name of the company
      */
@@ -60,17 +58,18 @@ public class StockModel extends AbstractModel {
     /**
      * Updates the price of the current stock.
      */
-    public void updateLastPrice() {
+    public void updateLastPrice () {
         myDataTable.sortbyColumn(DATE);
         List<Comparable> list = myDataTable.columnValues(CLOSE);
-        myStockInfo.put(LAST_PRICE, "$" + String.format("%.2f",
-                (Double) list.get(list.size() - 1)));
+        myStockInfo.put(LAST_PRICE,
+                        "$" + String.format("%.2f", (Double) list.get(
+                                        list.size() - 1)));
     }
 
     /**
      * Parses the data and performs some stock specific parsing, like extracting
      * the name and ticker symbol.
-     *
+     * 
      * @param s the source from which to load
      */
     @Override
@@ -99,11 +98,11 @@ public class StockModel extends AbstractModel {
 
     /**
      * Sets the symbol and stock name.
-     *
+     * 
      * @param symbol the ticker symbol of the stock
      * @param name of the stock
      */
-    public void setStockInfo(String symbol, String name) {
+    public void setStockInfo (String symbol, String name) {
         myStockInfo.put(SYMBOL, symbol);
         myStockInfo.put(COMPANY_NAME, name);
     }
@@ -118,11 +117,11 @@ public class StockModel extends AbstractModel {
         /*
          * do nothing if the requestType is empty or if the value is already
          * computed
-         *
+         * 
          * else, call the request type
          */
-        if (!"".equals(requestType)
-                && !myDataTable.columnNames().contains(requestType)) {
+        if (!"".equals(requestType) &&
+            !myDataTable.columnNames().contains(requestType)) {
             try {
                 RequestProcessor.processMovingAverage(myDataTable);
             }
@@ -135,7 +134,7 @@ public class StockModel extends AbstractModel {
     }
 
     @Override
-    public Set<String> getRequestTypes () {
+    public String[] getRequestTypes () {
         return REQUEST_TYPES;
     }
 
@@ -157,15 +156,14 @@ public class StockModel extends AbstractModel {
             result.set(0, list.get(0));
 
             for (int i = 1; i < list.size(); i++) {
-                result.set(i, (Double) result.get(i - 1)
-                        * (1 - MOVING_AVERAGE_WEIGHT)
-                        + (Double) list.get(i - 1) * MOVING_AVERAGE_WEIGHT);
+                result.set(i, (Double) result.get(i - 1) *
+                           (1 - MOVING_AVERAGE_WEIGHT) +
+                           (Double) list.get(i - 1) * MOVING_AVERAGE_WEIGHT);
             }
 
             // fill in results
-            st.addColumn("Moving Average");
-            st.setColumnValues("Moving Average", result.listIterator());
+            st.addColumn(REQUEST_TYPES[0]);
+            st.setColumnValues(REQUEST_TYPES[0], result.listIterator());
         }
-
     }
 }
