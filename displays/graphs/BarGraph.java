@@ -1,6 +1,5 @@
 package displays.graphs;
 
-import facilitators.Constants;
 import facilitators.Date;
 import java.awt.Dimension;
 import java.awt.Graphics2D;

@@ -20,14 +20,14 @@ public class LineGraph extends Graph<Date, Double> {
 
     /**
      * Initializes a line graph from given information.
-     *
+     * 
      * @param position the position of the top left corner
-     * of the graph window
-     *
+     *        of the graph window
+     * 
      * @param size of the window of the graph
      * @param values a map of x values to corresponding
-     * y values
-     *
+     *        y values
+     * 
      * @param xAxisLabel the label on the x axis
      * @param yAxisLabel the label on the y axis
      */

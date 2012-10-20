@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import displays.View;
 
 /**
- * @author: Jesse Starr
+ * @author Jesse Starr
  *
  * Generic graph class, used to make
  * graphs (x and y axis types) for sets of data. Graph takes
@@ -65,20 +65,20 @@ public abstract class Graph<K extends Comparable<? super K>,
             String x, String y) {
         super(position, size);
 
-        setMyOrigin(new Point2D.Double(getPosition().getX()
-                + Constants.GRAPH_ORIGIN_OFFSET,
-                getPosition().getY() + getSize().height
-                - Constants.GRAPH_ORIGIN_OFFSET));
+        setMyOrigin(new Point2D.Double(getPosition().getX() +
+                    Constants.GRAPH_ORIGIN_OFFSET,
+                getPosition().getY() + getSize().height -
+                    Constants.GRAPH_ORIGIN_OFFSET));
 
-        myYAxisHeight = (int) getMyOrigin().getY()
-                - getSize().height
-                + Constants.GRAPH_ORIGIN_OFFSET
-                + AXIS_EDGE_BUFFER;
+        myYAxisHeight = (int) getMyOrigin().getY() -
+                getSize().height +
+                Constants.GRAPH_ORIGIN_OFFSET +
+                AXIS_EDGE_BUFFER;
 
-        myXAxisLength = getSize().width
-                + (int) getMyOrigin().getX()
-                - Constants.GRAPH_ORIGIN_OFFSET
-                - AXIS_EDGE_BUFFER;
+        myXAxisLength = getSize().width +
+                (int) getMyOrigin().getX() -
+                Constants.GRAPH_ORIGIN_OFFSET -
+                AXIS_EDGE_BUFFER;
 
         myYAxisLabel = y;
         myXAxisLabel = x;
@@ -114,12 +114,12 @@ public abstract class Graph<K extends Comparable<? super K>,
         pen.drawLine((int) getMyOrigin().getX(), (int) getMyOrigin().getY(),
                 myXAxisLength, (int) getMyOrigin().getY());
 
-        pen.drawString(myYAxisLabel, (int) getPosition().getX()
-                - AXIS_LABEL_BUFFER,
+        pen.drawString(myYAxisLabel,
+                       (int) getPosition().getX() - AXIS_LABEL_BUFFER,
                 ((int) getMyOrigin().getY() + myYAxisHeight) / 2);
 
-        pen.drawString(myXAxisLabel, ((int) getMyOrigin().getX()
-                + myXAxisLength) / 2,
+        pen.drawString(myXAxisLabel,
+                       ((int) getMyOrigin().getX() + myXAxisLength) / 2,
                 (int) getMyOrigin().getY() + AXIS_LABEL_BUFFER);
 
         writeAxesValues(pen);
@@ -224,8 +224,8 @@ public abstract class Graph<K extends Comparable<? super K>,
      * @return
      */
     protected int getXScale() {
-        return (myXAxisLength - (int) getMyOrigin().getX())
-                / myXValuesToYValues.keySet().size();
+        return (myXAxisLength - (int) getMyOrigin().getX()) /
+                myXValuesToYValues.keySet().size();
     }
 
     /**
@@ -235,8 +235,8 @@ public abstract class Graph<K extends Comparable<? super K>,
      * @return
      */
     protected int getYScale() {
-        return ((int) getMyOrigin().getY() - myYAxisHeight)
-                / myXValuesToYValues.values().size();
+        return ((int) getMyOrigin().getY() - myYAxisHeight) /
+                myXValuesToYValues.values().size();
     }
 
     /**
@@ -252,8 +252,8 @@ public abstract class Graph<K extends Comparable<? super K>,
         int count = 1;
 
         for (K k : myXValuesToYValues.keySet()) {
-            Point2D point = new Point2D.Double(getXScale() * count
-                    + getMyOrigin().getX(),
+            Point2D point = new Point2D.Double(getXScale() * count +
+                    getMyOrigin().getX(),
                     myYValuesToYPixelVal.get(
                             myXValuesToYValues.get(k)).doubleValue());
 
