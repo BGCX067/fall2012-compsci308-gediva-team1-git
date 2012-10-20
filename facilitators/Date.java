@@ -7,9 +7,9 @@ package facilitators;
  * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class Date implements Comparable<Date> {
-    private static String[] ourMonths = { "Jan", "Feb", "Mar", "Apr", "May",
-                                         "June", "July", "Aug", "Sept", "Oct",
-                                         "Nov", "Dec" };
+    private static final String[] MONTHS = { "Jan", "Feb", "Mar", "Apr",
+                                            "May", "June", "July", "Aug",
+                                            "Sept", "Oct", "Nov", "Dec" };
     private int myYear;
     private int myMonth;
     private int myDay;
@@ -59,7 +59,7 @@ public class Date implements Comparable<Date> {
      * Returns the long format of the date.
      */
     public String getLongFormat () {
-        String month = ourMonths[myMonth];
+        String month = MONTHS[myMonth];
         return month + " " + myDay + ", " + myYear;
     }
 
@@ -120,8 +120,8 @@ public class Date implements Comparable<Date> {
     }
 
     private int convertMonthToInt (String month) {
-        for (int i = 0; i < ourMonths.length; i++) {
-            if (ourMonths[i].equals(month)) { return i; }
+        for (int i = 0; i < MONTHS.length; i++) {
+            if (MONTHS[i].equals(month)) { return i; }
         }
         // something went wrong
         return -1;
