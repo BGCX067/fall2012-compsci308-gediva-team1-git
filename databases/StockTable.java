@@ -16,9 +16,9 @@ public class StockTable extends DataTable<Comparable> {
 
     /**
      * Initializes a data table for stock info.
-     *
+     * 
      * @param st is the data table from which to
-     * initialize.
+     *        initialize.
      */
     public StockTable (DataTable<Comparable> st) {
         super(st);
@@ -26,19 +26,21 @@ public class StockTable extends DataTable<Comparable> {
 
     /**
      * Add a new row to this data table.
-     *
+     * 
      * @param sRow the row to add to the data
-     * table (info is separated by commas).
+     *        table (info is separated by commas).
      */
     public void newRow (String sRow) {
         StockRowElement row = new StockRowElement();
-        String[] sarray={};
-        
-        for (String d: DELIMITERS){
+        String[] sarray = {};
+
+        for (String d : DELIMITERS) {
             sarray = sRow.split(d);
-            if(!sarray[0].equals(sRow)) break;
+            if (!sarray[0].equals(sRow)) {
+                break;
+            }
         }
-        
+
         for (String rdata : sarray) {
             row.addData(rdata);
         }
