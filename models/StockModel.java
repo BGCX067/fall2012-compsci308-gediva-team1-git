@@ -81,8 +81,6 @@ public class StockModel extends AbstractModel {
             while ((currentline = s.readLine()) != null) {
                 myDataTable.newRow(currentline);
             }
-            List<String> names = myDataTable.columnNames();
-            System.out.println(myDataTable.columnNames().toString());
             updateLastPrice();
             return true;
         }
