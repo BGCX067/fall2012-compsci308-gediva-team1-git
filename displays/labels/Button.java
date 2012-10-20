@@ -91,20 +91,19 @@ public class Button extends View {
 
     /**
      * Adds attributes to this button (determines what to do).
-     *
+     * 
      * @param key the action
      * @param value the result
      */
-    public void addAttribute(String key, String value) {
+    public void addAttribute (String key, String value) {
         myAttributes.put(key, value);
     }
-    
-    
+
     /**
      * Sets the method for this button.
      * The method m must be a method of the
      * controller c.
-     *
+     * 
      * @param m the name of the method to set
      * @param c the controller of the button
      */
@@ -123,14 +122,12 @@ public class Button extends View {
         }
     }
 
-    
-
     /**
      * Set the instance that will respond to clicks.
-     *
+     * 
      * @param c the controller of the button
      */
-    public void setResponder(Controller c) {
+    public void setResponder (Controller c) {
         myResponder = c;
     }
 

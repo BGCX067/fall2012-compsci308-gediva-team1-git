@@ -1,11 +1,12 @@
 package displays.labels;
 
+import displays.View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import displays.View;
+
 
 /**
  * This class describes how to paint the menu
@@ -21,15 +22,15 @@ public class Menu extends View {
 
     /**
      * Initializes the menu to be painted.
-     *
+     * 
      * @param position of the top left corner
      * @param size of the menu
      * @param title of the menu
      * @param bgColor background color
      * @param textColor text color
      */
-    public Menu(Point2D position, Dimension size,
-            String title, Color bgColor, Color textColor) {
+    public Menu (Point2D position, Dimension size, String title,
+                 Color bgColor, Color textColor) {
         super(position, size, bgColor);
         myTitle = title;
         myTextColor = textColor;
@@ -37,18 +38,18 @@ public class Menu extends View {
 
     /**
      * Initializes the menu to be painted.
-     *
+     * 
      * @param position of the top left corner
      * @param size of the menu
      * @param title of the menu
      */
-    public Menu(Point2D position, Dimension size, String title) {
+    public Menu (Point2D position, Dimension size, String title) {
         super(position, size);
         myTitle = title;
     }
 
     @Override
-    public void paint(Graphics2D pen) {
+    public void paint (Graphics2D pen) {
         super.paint(pen);
         Font large = new Font("Helvetica", Font.BOLD, 18);
         pen.setColor(myTextColor);
