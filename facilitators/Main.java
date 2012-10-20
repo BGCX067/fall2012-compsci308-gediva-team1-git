@@ -2,9 +2,9 @@ package facilitators;
 
 import controllers.Controller;
 import controllers.StockController;
+import displays.Canvas;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import displays.Canvas;
 
 
 /**
@@ -20,6 +20,11 @@ public class Main {
 
     private static final String TITLE = "GEDIVA";
 
+    /**
+     * Runs the GEDIVA project
+     * 
+     * @param args unused inputs
+     */
     public static void main (String[] args) {
         Canvas display = new Canvas(SIZE);
 
