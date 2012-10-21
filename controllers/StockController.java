@@ -110,98 +110,13 @@ public class StockController extends Controller {
         myViewFactory.startCanvas(getCanvas(),
                                   myCurrentStock.process(""),
                                   myCurrentStock.getStockInfo());
-        startHeader();
-
-        Map<Date, Double> map = new TreeMap<Date, Double>();
-        StockDataSet resultSet = (StockDataSet) myCurrentStock.process("");
-        List<Comparable> datesList = resultSet.getData("Date");
-        List<Comparable> pricesList = resultSet.getData("Close");
-        Iterator dates = datesList.iterator();
-        Iterator prices = pricesList.iterator();
-        Date date;
-        Double price;
-
-        int counter = 0;
-        while (dates.hasNext() && prices.hasNext() && counter < 20) {
-            date = (Date) dates.next();
-            price = (Double) prices.next();
-            map.put(date, price);
-            counter++;
-        }
-
-        LineGraph g =
-                new LineGraph(new Point2D.Double(0, Constants.HEADER_HEIGHT),
-                              new Dimension(Constants.CANVAS_WIDTH -
-                                            Constants.MENU_WIDTH,
-                                            Constants.CANVAS_HEIGHT -
-                                                    Constants.HEADER_HEIGHT),
-                              map, "date", "price");
-        getCanvas().addView(g);
-        getCanvas().update();
     }
 
     /**
      * Generates the view's menu and puts it in the canvas
      */
     public void startMenu () {
-        // set up menu
-        Point2D menuPosition =
-                new Point2D.Double(Constants.CANVAS_WIDTH -
-                                   Constants.MENU_WIDTH,
-                                   Constants.HEADER_HEIGHT);
-        Dimension menuSize =
-                new Dimension(Constants.MENU_WIDTH, Constants.CANVAS_HEIGHT -
-                                                    Constants.HEADER_HEIGHT);
-        Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
-        getCanvas().addView(defaultMenu);
-
-        createButtons(null, defaultMenu);
-    }
-
-    /**
-     * Generates a header for the current stock and puts it in the canvas
-     */
-    public void startHeader () {
-        Map<String, String> info = myCurrentStock.getStockInfo();
-        Header defaultHeader =
-                new Header(new Point2D.Double(0, 0),
-                           new Dimension(Constants.CANVAS_WIDTH, Constants.HEADER_HEIGHT),
-                           info.get("Company Name"), info.get("Symbol"),
-                           info.get("Last Price"));
-        getCanvas().addView(defaultHeader);
-    }
-
-    // there is a button corresponding to each request type in the model
-    // this helper method populates the menu with them.
-    private void createButtons (Set<String> requestTypes, Menu m) {
-        int yPositionOfNextButton = Constants.BUTTON_POSITION_Y;
-
-        String[] btnNames = {
-            "Load File",
-            "Load from Url",
-            "Load from Symbol",
-            "Switch graph view"
-        };
-
-        String[] btnMethods = {
-            "respondToChooseFile",
-            "respondToChooseUrl",
-            "respondToChooseSymbol",
-            "respondToToggleGraph"
-        };
-
-        for (int i = 0; i < btnNames.length; i++) {
-            yPositionOfNextButton += Constants.BUTTON_SPACING;
-            Point2D buttonPosition =
-                    new Point2D.Double(Constants.BUTTON_POSITION_X, yPositionOfNextButton);
-            Dimension buttonSize = new Dimension(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT);
-            Button btn = new Button(buttonPosition, buttonSize, btnNames[i]);
-            btn.setMethod(btnMethods[i], this);
-            btn.setResponder(this);
-            m.addChild(btn);
-        }
-
-        getCanvas().update();
+        myViewFactory.startMenu(getCanvas());
     }
 
     // button responders....
