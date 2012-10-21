@@ -32,9 +32,24 @@ public class Constants {
      * default size of points on the generated plot/graph
      */
     public static final int GRAPH_POINT_SIZE = 5;
+    /**
+     * default vertical button positioning within the menu
+     */
     public static final int BUTTON_POSITION_Y = 40;
+    /**
+     * default horizontal button positioning within the menu
+     */
     public static final int BUTTON_POSITION_X = 10;
+    /**
+     * default button height within the menu
+     */
     public static final int BUTTON_HEIGHT = 35;
+    /**
+     * default button width within the menu
+     */
     public static final int BUTTON_WIDTH = 180;
+    /**
+     * default button spacing within the menu
+     */
     public static final int BUTTON_SPACING = 45;
 }
