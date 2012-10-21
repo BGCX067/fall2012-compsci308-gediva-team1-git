@@ -1,6 +1,7 @@
 package controllers;
 
 import displays.Canvas;
+import displays.StockViewFactory;
 import displays.graphs.LineGraph;
 import displays.labels.Button;
 import displays.labels.Header;
@@ -30,12 +31,9 @@ import models.responses.StockDataSet;
  * @author Lance Co Ting Keh, Alex Browne, Jesse Starr, and Mark Govea
  */
 public class StockController extends Controller {
-    private static final int BUTTON_POSITION_Y = 40;
-    private static final int BUTTON_POSITION_X = 10;
-    private static final int BUTTON_HEIGHT = 35;
-    private static final int BUTTON_WIDTH = 180;
-    private static final int BUTTON_SPACING = 45;
+
     private StockModel myCurrentStock;
+    private StockViewFactory myViewFactory;
 
     /**
      * Initializes the stock controller by
@@ -47,7 +45,8 @@ public class StockController extends Controller {
      */
     public StockController (Canvas c) {
         super.init(c);
-        startMenu();
+        myViewFactory = new StockViewFactory(this);
+        myViewFactory.startMenu(c);
     }
 
     @Override
@@ -108,10 +107,12 @@ public class StockController extends Controller {
 
     @Override
     protected void startCanvas () {
-
+        myViewFactory.startCanvas(getCanvas(),
+                                  myCurrentStock.process(""),
+                                  myCurrentStock.getStockInfo());
         startHeader();
 
-        TreeMap<Date, Double> tree = new TreeMap<Date, Double>();
+        Map<Date, Double> map = new TreeMap<Date, Double>();
         StockDataSet resultSet = (StockDataSet) myCurrentStock.process("");
         List<Comparable> datesList = resultSet.getData("Date");
         List<Comparable> pricesList = resultSet.getData("Close");
@@ -124,7 +125,7 @@ public class StockController extends Controller {
         while (dates.hasNext() && prices.hasNext() && counter < 20) {
             date = (Date) dates.next();
             price = (Double) prices.next();
-            tree.put(date, price);
+            map.put(date, price);
             counter++;
         }
 
@@ -134,7 +135,7 @@ public class StockController extends Controller {
                                             Constants.MENU_WIDTH,
                                             Constants.CANVAS_HEIGHT -
                                                     Constants.HEADER_HEIGHT),
-                              tree, "date", "price");
+                              map, "date", "price");
         getCanvas().addView(g);
         getCanvas().update();
     }
@@ -163,7 +164,8 @@ public class StockController extends Controller {
     public void startHeader () {
         Map<String, String> info = myCurrentStock.getStockInfo();
         Header defaultHeader =
-                new Header(new Point2D.Double(0, 0), new Dimension(1000, 30),
+                new Header(new Point2D.Double(0, 0),
+                           new Dimension(Constants.CANVAS_WIDTH, Constants.HEADER_HEIGHT),
                            info.get("Company Name"), info.get("Symbol"),
                            info.get("Last Price"));
         getCanvas().addView(defaultHeader);
@@ -172,21 +174,27 @@ public class StockController extends Controller {
     // there is a button corresponding to each request type in the model
     // this helper method populates the menu with them.
     private void createButtons (Set<String> requestTypes, Menu m) {
-        int yPositionOfNextButton = BUTTON_POSITION_Y;
+        int yPositionOfNextButton = Constants.BUTTON_POSITION_Y;
 
-        String btnNames[] =
-                { "Load File", "Load from Url", "Load from Symbol",
-                 "Switch graph view" };
+        String[] btnNames = {
+            "Load File",
+            "Load from Url",
+            "Load from Symbol",
+            "Switch graph view"
+        };
 
-        String btnMethods[] =
-                { "respondToChooseFile", "respondToChooseUrl",
-                 "respondToChooseSymbol", "respondToToggleGraph" };
+        String[] btnMethods = {
+            "respondToChooseFile",
+            "respondToChooseUrl",
+            "respondToChooseSymbol",
+            "respondToToggleGraph"
+        };
 
         for (int i = 0; i < btnNames.length; i++) {
-            yPositionOfNextButton += BUTTON_SPACING;
+            yPositionOfNextButton += Constants.BUTTON_SPACING;
             Point2D buttonPosition =
-                    new Point2D.Double(BUTTON_POSITION_X, yPositionOfNextButton);
-            Dimension buttonSize = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
+                    new Point2D.Double(Constants.BUTTON_POSITION_X, yPositionOfNextButton);
+            Dimension buttonSize = new Dimension(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT);
             Button btn = new Button(buttonPosition, buttonSize, btnNames[i]);
             btn.setMethod(btnMethods[i], this);
             btn.setResponder(this);
