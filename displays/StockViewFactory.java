@@ -23,9 +23,17 @@ import models.responses.IDataSet;
  * @author Mark Govea, Alex Browne, Lance Co Ting Keh, and Jesse Starr
  */
 public class StockViewFactory {
+    private static final int MAX_GRAPH_DATA_POINTS = 20;
     private StockController myController;
     private Canvas myCanvas;
 
+    /**
+     * In charge of populating a canvas on behalf of a controller
+     * Specific to stocks
+     * 
+     * @param controller in charge of event handling
+     * @param canvas to populate
+     */
     public StockViewFactory (StockController controller, Canvas canvas) {
         myController = controller;
         myCanvas = canvas;
@@ -51,14 +59,13 @@ public class StockViewFactory {
     }
 
     /**
-     * Populate 
+     * Populates a line graph with data and puts it and a header onto the canvas
      * 
-     * @param dataSet
-     * @param info
+     * @param dataSet contains the data to be used in the graph
+     * @param info contains the info to put in the header
      */
-    public void startCanvas (
-                                    IDataSet<Comparable> dataSet,
-                                    Map<String, String> info) {
+    public void startCanvas (IDataSet<Comparable> dataSet,
+                             Map<String, String> info) {
 
         startHeader(info);
 
@@ -71,7 +78,9 @@ public class StockViewFactory {
         Double price;
 
         int counter = 0;
-        while (dates.hasNext() && prices.hasNext() && counter < 20) {
+        while (dates.hasNext() &&
+               prices.hasNext() &&
+               counter < MAX_GRAPH_DATA_POINTS) {
             date = (Date) dates.next();
             price = (Double) prices.next();
             map.put(date, price);
