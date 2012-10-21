@@ -32,11 +32,9 @@ public abstract class Controller {
      * data.
      */
     public void chooseFile () {
-        try {
-            startModel(View.chooseFile());
-        }
-        catch (RuntimeException e) {
-            showError();
+        File file = View.chooseFile(myCanvas);
+        if (file != null) {
+            startModel(file);
         }
     }
 
@@ -64,10 +62,6 @@ public abstract class Controller {
      */
     public void toggleGraph () {
         View.toggleGraph(myCanvas);
-    }
-
-    private void showError () {
-        View.showFileSelectionError(myCanvas);
     }
 
     protected Canvas getCanvas () {

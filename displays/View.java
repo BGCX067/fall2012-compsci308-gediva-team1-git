@@ -1,9 +1,11 @@
 package displays;
 
 import displays.graphs.BarGraph;
+import displays.graphs.Graph;
 import displays.graphs.LineGraph;
 import displays.labels.ErrorView;
 import facilitators.Constants;
+import facilitators.Date;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -11,6 +13,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
@@ -171,15 +175,20 @@ public class View extends JComponent {
      * Brings up a file dialogue box that allows the user to choose a
      * file from the filesystem
      * 
-     * @return chosen file
+     * @param canvas to display error if something goes wrong with file selection
+     * @return chosen file (may be null if there is an error with file selection)
      */
-    public static File chooseFile () {
+    public static File chooseFile (Canvas canvas) {
         int response = CHOOSER.showOpenDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
             return CHOOSER.getSelectedFile();
         }
         else {
-            throw new RuntimeException("File chooser could not get the selected file");
+            showError(canvas,
+                                   "File selection failed:" +
+                                   "\nEither the file was invalid or not found :(" +
+                                   "\nPlease close the app and try again. ");
+            return null;
         }
     }
 
@@ -190,41 +199,60 @@ public class View extends JComponent {
      */
     public static void toggleGraph (Canvas canvas) {
         for (View v : canvas.getRoot().getChildren()) {
-            BarGraph b = null;
-            LineGraph l = null;
             if ("Bar".equals(v.getType())) {
-                b = (BarGraph) v;
-                l = new LineGraph(b.getPosition(), b.getSize(),
-                                  b.getVals(), "Date", "Price");
-
+                toggleGraphHelper(canvas,
+                                  LineGraph.class.getConstructors()[0],
+                                  (BarGraph) v);
             }
             else if ("Line".equals(v.getType())) {
-                l = (LineGraph) v;
-                b = new BarGraph(l.getPosition(), l.getSize(),
-                                 l.getVals(), "Date", "Price");
+                toggleGraphHelper(canvas,
+                                  BarGraph.class.getConstructors()[0],
+                                  (LineGraph) v);
             }
-            else {
-                break;
-            }
-            canvas.getRoot().removeChild(v);
-            canvas.getRoot().addChild(l);
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private static void toggleGraphHelper (Canvas canvas,
+                                           Constructor<?> constructor,
+                                           Graph<Date, Double> oldGraph) {
+        Graph<Date, Double> newGraph = null;
+        try {
+            newGraph = (Graph<Date, Double>) constructor.newInstance(
+                                       oldGraph.getPosition(), oldGraph.getSize(),
+                                       oldGraph.getVals(), "Date", "Price");
+            canvas.getRoot().removeChild(oldGraph);
+            canvas.getRoot().addChild(newGraph);
+            return;
+        }
+        catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        showError(canvas, "Graph type toggling failed");
+    }
+
     /**
-     * Displays a 
+     * Displays a
      * 
      * @param canvas container in which to show the error
+     * @param message error message to display
      */
-    public static void showFileSelectionError (Canvas canvas) {
+    public static void showError (Canvas canvas, String message) {
         Point2D errorPosition = new Point2D.Double(0, 0);
         Dimension errorSize =
                 new Dimension(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
         ErrorView errorMessage =
                 new ErrorView(errorPosition, errorSize,
-                              "File selection failed:" +
-                                  "\nEither the file was invalid or not found :(" +
-                                  "\nPlease close the app and try again. ");
+                              message);
         canvas.addView(errorMessage);
     }
 
