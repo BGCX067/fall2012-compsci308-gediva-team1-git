@@ -45,8 +45,8 @@ public class StockController extends Controller {
      */
     public StockController (Canvas c) {
         super.init(c);
-        myViewFactory = new StockViewFactory(this);
-        myViewFactory.startMenu(c);
+        myViewFactory = new StockViewFactory(this, c);
+        myViewFactory.startMenu();
     }
 
     @Override
@@ -107,8 +107,7 @@ public class StockController extends Controller {
 
     @Override
     protected void startCanvas () {
-        myViewFactory.startCanvas(getCanvas(),
-                                  myCurrentStock.process(""),
+        myViewFactory.startCanvas(myCurrentStock.process(""),
                                   myCurrentStock.getStockInfo());
     }
 
@@ -116,7 +115,7 @@ public class StockController extends Controller {
      * Generates the view's menu and puts it in the canvas
      */
     public void startMenu () {
-        myViewFactory.startMenu(getCanvas());
+        myViewFactory.startMenu();
     }
 
     // button responders....

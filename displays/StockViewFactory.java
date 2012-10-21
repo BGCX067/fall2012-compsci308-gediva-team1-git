@@ -19,21 +19,22 @@ import models.responses.IDataSet;
 
 /**
  * 
+ * 
  * @author Mark Govea, Alex Browne, Lance Co Ting Keh, and Jesse Starr
  */
 public class StockViewFactory {
     private StockController myController;
+    private Canvas myCanvas;
 
-    public StockViewFactory (StockController controller) {
+    public StockViewFactory (StockController controller, Canvas canvas) {
         myController = controller;
+        myCanvas = canvas;
     }
 
     /**
      * Generates the view's menu and puts it in the canvas
-     * 
-     * @param canvas
      */
-    public void startMenu (Canvas canvas) {
+    public void startMenu () {
         // set up menu
         Point2D menuPosition =
                 new Point2D.Double(Constants.CANVAS_WIDTH -
@@ -44,23 +45,22 @@ public class StockViewFactory {
                               Constants.CANVAS_HEIGHT -
                               Constants.HEADER_HEIGHT);
         Menu defaultMenu = new Menu(menuPosition, menuSize, "Options");
-        canvas.addView(defaultMenu);
+        myCanvas.addView(defaultMenu);
 
-        createButtons(canvas, null, defaultMenu);
+        createButtons(null, defaultMenu);
     }
 
     /**
      * Populate 
      * 
-     * @param canvas
      * @param dataSet
      * @param info
      */
-    public void startCanvas (Canvas canvas,
+    public void startCanvas (
                                     IDataSet<Comparable> dataSet,
                                     Map<String, String> info) {
 
-        startHeader(canvas, info);
+        startHeader(info);
 
         Map<Date, Double> map = new TreeMap<Date, Double>();
         List<Comparable> datesList = dataSet.getData("Date");
@@ -85,14 +85,14 @@ public class StockViewFactory {
                                             Constants.CANVAS_HEIGHT -
                                                     Constants.HEADER_HEIGHT),
                               map, "date", "price");
-        canvas.addView(g);
-        canvas.update();
+        myCanvas.addView(g);
+        myCanvas.update();
     }
 
     /*
      * Generates a header for the current stock and puts it in the canvas
      */
-    private void startHeader (Canvas canvas, Map<String, String> info) {
+    private void startHeader (Map<String, String> info) {
         // Map<String, String> info = myCurrentStock.getStockInfo();
         Header defaultHeader =
                 new Header(new Point2D.Double(0, 0),
@@ -100,12 +100,12 @@ public class StockViewFactory {
                                          Constants.HEADER_HEIGHT),
                            info.get("Company Name"), info.get("Symbol"),
                            info.get("Last Price"));
-        canvas.addView(defaultHeader);
+        myCanvas.addView(defaultHeader);
     }
 
     // there is a button corresponding to each request type in the model
     // this helper method populates the menu with them.
-    private void createButtons (Canvas canvas, Set<String> requestTypes, Menu m) {
+    private void createButtons (Set<String> requestTypes, Menu m) {
         int yPositionOfNextButton = Constants.BUTTON_POSITION_Y;
 
         String[] btnNames = {
@@ -136,7 +136,7 @@ public class StockViewFactory {
             m.addChild(btn);
         }
 
-        canvas.update();
+        myCanvas.update();
     }
 
 }
