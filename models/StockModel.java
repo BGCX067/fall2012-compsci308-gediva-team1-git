@@ -58,7 +58,7 @@ public class StockModel extends AbstractModel {
     /**
      * Updates the price of the current stock.
      */
-    public void updateLastPrice () {
+    private void updateLastPrice () {
         myDataTable.sortbyColumn(DATE);
         List<Comparable> list = myDataTable.columnValues(CLOSE);
         myStockInfo.put(LAST_PRICE,
